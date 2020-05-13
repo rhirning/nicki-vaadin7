@@ -1,0 +1,7 @@
+**/.project
+**/.settings
+**/.settings/*
+**/target/
+**/bin/
+**/.classpath
+/cmd-mvn.cmd

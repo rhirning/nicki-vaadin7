@@ -1,0 +1,52 @@
+@import url(../reindeer/styles.css);
+
+/* Font */
+.v-theme-nicki .v-table div {
+	font-size: 10pt;
+}
+
+/* Lay the options horizontally */
+.v-theme-nicki .v-select-optiongroup-horizontal .v-select-option {
+    display: inline-block;
+}
+
+/* Avoid wrapping if the layout is too tight */
+.v-theme-nicki .v-select-optiongroup-horizontal {
+    white-space: nowrap;
+}
+
+/* Some extra spacing is needed */
+.v-theme-nicki .v-select-optiongroup-horizontal
+  .v-select-option.v-radiobutton {
+    padding-right: 10px;
+}
+
+/* Höhe von Textfeldern */
+.v-theme-nicki .v-textfield, .v-window .v-textfield {
+	height: 24px;
+	background: none;
+}
+
+/* Font von Popupmenu */
+.v-theme-nicki .v-contextmenu {
+	font-size: 10pt;
+}
+
+/* Tabelle richtig formatieren */
+.v-theme-nicki .v-table div {
+	font-size: 10pt;
+}
+
+/** DropDown */
+.v-theme-nicki .v-filterselect div, .v-theme-nicki .v-fiterselect-input {
+	height: 24px;
+	background: none;
+}
+
+.v-theme-nicki .v-filterselect-suggestmenu .gwt-MenuItem {
+	font-size: 10pt;
+}
+
+.v-theme-nicki .v-table-caption-container {
+	font-size: 10pt;
+}	
