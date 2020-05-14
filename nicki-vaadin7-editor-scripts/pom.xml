@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>nicki-vaadin7-editor-scripts</artifactId>
-	<name>nicki-editor-scripts</name>
+	<name>nicki-vaadin7-editor-scripts</name>
 	<parent>
 		<artifactId>nicki-vaadin7</artifactId>
 		<groupId>org.mgnl.nicki.vaadin7</groupId>
