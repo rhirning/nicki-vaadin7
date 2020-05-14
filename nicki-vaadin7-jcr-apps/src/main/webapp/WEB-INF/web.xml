@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="2.4"
+	xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	<display-name>nicki-apps</display-name>
+	<context-param>
+		<description>
+		Vaadin production mode</description>
+		<param-name>productionMode</param-name>
+		<param-value>false</param-value>
+	</context-param>
+	<filter>
+		<filter-name>Cache Filter</filter-name>
+		<filter-class>org.mgnl.nicki.cache.filter.CacheFilter</filter-class>
+		<init-param>
+			<param-name>config</param-name>
+			<param-value>/config/ehcache.xml</param-value>
+		</init-param>
+		<init-param>
+			<param-name>cacheName</param-name>
+			<param-value>nickiCache</param-value>
+		</init-param>
+		<init-param>
+			<param-name>pattern</param-name>
+			<param-value>.*\.png|.*\.gif</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>Cache Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<servlet>
+		<description>
+            Repository servlet that starts the repository and registers it to JNDI ans RMI.
+            If you already have the repository registered in this appservers JNDI context,
+            or if its accessible via RMI, you do not need to use this servlet.
+        </description>
+		<servlet-name>RepositoryStartup</servlet-name>
+		<servlet-class>org.apache.jackrabbit.j2ee.RepositoryStartupServlet</servlet-class>
+		<init-param>
+			<description>
+			Vaadin application class to start</description>
+			<param-name>bootstrap-config</param-name>
+			<param-value>/WEB-INF/conf/nicki/jcr.properties</param-value>
+		</init-param>
+
+		<!-- <init-param> <description>the repository config location</description> 
+			<param-name>repository-config</param-name> <param-value>/WEB-INF/repository/repository.xml</param-value> 
+			</init-param> <init-param> <description>the repository home</description> 
+			<param-name>repository-home</param-name> <param-value>D:/repositories/repository.nicki</param-value> 
+			</init-param> <init-param> <description>Repository Name under which the repository 
+			is registered via JNDI/RMI</description> <param-name>repository-name</param-name> 
+			<param-value>jackrabbit.repository</param-value> </init-param> -->
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+	<!-- ====================================================================== -->
+	<!-- R E P O S I T O R Y S E R V L E T -->
+	<!-- ====================================================================== -->
+	<servlet>
+		<description>
+            This servlet provides other servlets and jsps a common way to access
+            the repository. The repository can be accessed via JNDI, RMI or Webdav.
+        </description>
+		<servlet-name>Repository Access</servlet-name>
+		<servlet-class>org.apache.jackrabbit.j2ee.RepositoryAccessServlet</servlet-class>
+		<init-param>
+			<description></description>
+			<param-name>bootstrap-config</param-name>
+			<param-value>/WEB-INF/conf/nicki/jcr.properties</param-value>
+		</init-param>
+		<!-- <init-param> <param-name>repository.context.attribute.name</param-name> 
+			<param-value>javax.jcr.Repository</param-value> <description> If this is 
+			set, the RepositoryAccessServlet expects a Repository in the ServletContext 
+			attribute having this name. This allows servlets of this module to be used 
+			with repositories initialized by the jackrabbit-jcr-servlet module utilities. 
+			</description> </init-param> -->
+		<!-- <init-param> <param-name>repository-name</param-name> <param-value>jackrabbit.repository</param-value> 
+			<description>Repository Name that is used to retrieve it via JNDI</description> 
+			</init-param> -->
+		<!-- JNDI environment variables for creating the initial context (all init 
+			parameters starting with java.naming.* will be added to the initial context 
+			environment). -->
+		<!-- <init-param> <param-name>java.naming.provider.url</param-name> <param-value>http://www.apache.org/jackrabbit</param-value> 
+			</init-param> <init-param> <param-name>java.naming.factory.initial</param-name> 
+			<param-value>org.apache.jackrabbit.core.jndi.provider.DummyInitialContextFactory</param-value> 
+			</init-param> -->
+		<!-- RMI url, if RMI remoting is needed -->
+		<!-- <init-param> <param-name>rmi-uri</param-name> <param-value>///jackrabbit.repository</param-value> 
+			<description>The URI for the RMI connection.</description> </init-param> -->
+
+		<load-on-startup>3</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>Report Application</servlet-name>
+		<servlet-class>com.vaadin.terminal.gwt.server.ApplicationServlet</servlet-class>
+		<init-param>
+			<description>
+			Vaadin application class to start</description>
+			<param-name>application</param-name>
+			<param-value>org.mgnl.nicki.report.ReportApplication</param-value>
+		</init-param>
+	</servlet>
+	<servlet>
+		<servlet-name>Template Editor</servlet-name>
+		<servlet-class>com.vaadin.terminal.gwt.server.ApplicationServlet</servlet-class>
+		<init-param>
+			<description>
+			Vaadin application class to start</description>
+			<param-name>application</param-name>
+			<param-value>org.mgnl.nicki.editor.templates.TemplateEditor</param-value>
+		</init-param>
+	</servlet>
+	<servlet>
+		<servlet-name>Script Editor</servlet-name>
+		<servlet-class>com.vaadin.terminal.gwt.server.ApplicationServlet</servlet-class>
+		<init-param>
+			<description>
+			Vaadin application class to start</description>
+			<param-name>application</param-name>
+			<param-value>org.mgnl.nicki.editor.scripts.ScriptEditor</param-value>
+		</init-param>
+	</servlet>
+	<servlet>
+		<servlet-name>Catalog Editor</servlet-name>
+		<servlet-class>com.vaadin.terminal.gwt.server.ApplicationServlet</servlet-class>
+		<init-param>
+			<description>
+			Vaadin application class to start</description>
+			<param-name>application</param-name>
+			<param-value>org.mgnl.nicki.editor.catalogs.CatalogEditor</param-value>
+		</init-param>
+	</servlet>
+	<servlet>
+		<servlet-name>JCR Editor</servlet-name>
+		<servlet-class>com.vaadin.terminal.gwt.server.ApplicationServlet</servlet-class>
+		<init-param>
+			<description>
+			Vaadin application class to start</description>
+			<param-name>application</param-name>
+			<param-value>org.mgnl.nicki.editor.jcr.JcrEditor</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>JCR Editor</servlet-name>
+		<url-pattern>/editor/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Report Application</servlet-name>
+		<url-pattern>/reports/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Report Application</servlet-name>
+		<url-pattern>/VAADIN/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Template Editor</servlet-name>
+		<url-pattern>/templates/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Script Editor</servlet-name>
+		<url-pattern>/scripts/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Catalog Editor</servlet-name>
+		<url-pattern>/catalogs/*</url-pattern>
+	</servlet-mapping>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>

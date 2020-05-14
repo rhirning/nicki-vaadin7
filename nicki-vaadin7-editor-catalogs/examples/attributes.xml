@@ -1,0 +1,84 @@
+<examples>
+
+	<attributes>
+		<attribute name="reference"
+			contentClass="de.deron.projects.efg.editor.bu.ReferenceUserContent"
+			label="nicki.rights.attribute.reference.label" type="freeselect" />
+	</attributes>
+
+	<attributes>
+		<attribute name="reference"
+			contentClass="de.deron.projects.efg.editor.bu.ReferenceUserContent"
+			label="nicki.rights.attribute.reference.label" type="freeselect" />
+	</attributes>
+
+	<attributes>
+		<attribute name="reason" label="nicki.rights.attribute.reason.label"
+			type="text" />
+	</attributes>
+
+	<attributes>
+		<attribute name="reference"
+			contentClass="de.deron.projects.efg.editor.bu.ReferenceUserContent"
+			label="nicki.rights.attribute.reference.label" type="freeselect" />
+	</attributes>
+
+	<attributes>
+		<attribute name="reference"
+			contentClass="de.deron.projects.efg.editor.bu.ReferenceUserContent"
+			label="nicki.rights.attribute.reference.label" type="freeselect" />
+	</attributes>
+
+	<attributes>
+		<attribute name="referenceNeuwagen"
+			contentClass="de.deron.projects.efg.editor.bu.ReferenceUserContent"
+			label="nicki.rights.attribute.referenceNeuwagen.label" type="freeselect" />
+		<attribute name="referenceErsatzteillager"
+			contentClass="de.deron.projects.efg.editor.bu.ReferenceUserContent"
+			label="nicki.rights.attribute.referenceErsatzteillager.label" type="freeselect" />
+		<attribute name="referenceGarantie"
+			contentClass="de.deron.projects.efg.editor.bu.ReferenceUserContent"
+			label="nicki.rights.attribute.referenceGarantie.label" type="freeselect" />
+		<attribute name="referenceRechnungswesen"
+			contentClass="de.deron.projects.efg.editor.bu.ReferenceUserContent"
+			label="nicki.rights.attribute.referenceRechnungswesen.label" type="freeselect" />
+	</attributes>
+
+	<attributes>
+		<attribute name="domain" label="nicki.rights.attribute.domain.label"
+			contentClass="de.deron.projects.efg.editor.bu.DomainContent" type="select" />
+		<attribute name="secondaryDomain"
+			label="nicki.rights.attribute.secondaryDomain.label" contentClass="de.deron.projects.efg.editor.bu.DomainContent"
+			type="select" />
+	</attributes>
+
+	<attributes>
+		<attribute name="reference"
+			contentClass="de.deron.projects.efg.editor.bu.ReferenceUserContent"
+			label="nicki.rights.attribute.reference.label" type="freeselect" />
+		<attribute name="prefixr"
+			contentClass="de.deron.projects.efg.editor.bu.PrinterPrefixContent"
+			label="nicki.rights.attribute.printerprefix.label" type="static" />
+		<attribute name="printer" label="nicki.rights.attribute.printer.label"
+			type="text" />
+	</attributes>
+
+	<attributes>
+		<attribute name="reference"
+			contentClass="de.deron.projects.efg.editor.bu.ReferenceUserContent"
+			label="nicki.rights.attribute.reference.label" type="freeselect" />
+		<attribute name="roleVerkauf" label="nicki.rights.attribute.roleVerkauf.label"
+			type="checkbox" />
+		<attribute name="roleVertragsverwaltung"
+			label="nicki.rights.attribute.roleVertragsverwaltung.label" type="checkbox" />
+		<attribute name="roleInkasso" label="nicki.rights.attribute.roleInkasso.label"
+			type="checkbox" />
+		<attribute name="roleCRM" label="nicki.rights.attribute.roleCRM.label"
+			type="checkbox" />
+		<attribute name="wirtschaftsCDROM"
+			label="nicki.rights.attribute.wirtschaftsCDROM.label" type="checkbox" />
+	</attributes>
+
+
+
+</examples>

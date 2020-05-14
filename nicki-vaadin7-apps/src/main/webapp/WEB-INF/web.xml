@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="2.4"
+	xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	<display-name>nicki-apps</display-name>
+	<context-param>
+		<description>
+		Vaadin production mode</description>
+		<param-name>productionMode</param-name>
+		<param-value>false</param-value>
+	</context-param>
+	<session-config>
+		<session-timeout>120</session-timeout>
+	</session-config>
+	<filter>
+		<filter-name>SpnegoHttpFilter</filter-name>
+		<filter-class>org.mgnl.nicki.spnego.SpnegoHttpFilter</filter-class>
+	</filter>
+	<filter-mapping>
+	    <filter-name>SpnegoHttpFilter</filter-name>
+	    <url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<servlet>
+		<servlet-name>Report Application</servlet-name>
+		<servlet-class>org.mgnl.nicki.vaadin.base.application.NickiServlet</servlet-class>
+		<init-param>
+			<description>
+			Vaadin UI class to start</description>
+			<param-name>UI</param-name>
+			<param-value>org.mgnl.nicki.report.ReportApplication</param-value>
+		</init-param>
+	</servlet>
+	<servlet>
+		<servlet-name>User Admin</servlet-name>
+		<servlet-class>org.mgnl.nicki.vaadin.base.application.NickiServlet</servlet-class>
+		<init-param>
+			<description>
+			Vaadin UI class to start</description>
+			<param-name>UI</param-name>
+			<param-value>org.mgnl.nicki.user.admin.app.UserAdmin</param-value>
+		</init-param>
+	</servlet>
+	<servlet>
+		<servlet-name>Template Editor</servlet-name>
+		<servlet-class>org.mgnl.nicki.vaadin.base.application.NickiServlet</servlet-class>
+		<init-param>
+			<description>
+			Vaadin UI class to start</description>
+			<param-name>UI</param-name>
+			<param-value>org.mgnl.nicki.editor.templates.TemplateEditor</param-value>
+		</init-param>
+	</servlet>
+	<servlet>
+		<servlet-name>Project Editor</servlet-name>
+		<servlet-class>org.mgnl.nicki.vaadin.base.application.NickiServlet</servlet-class>
+		<init-param>
+			<description>
+			Vaadin UI class to start</description>
+			<param-name>UI</param-name>
+			<param-value>org.mgnl.nicki.editor.projects.core.ProjectEditor</param-value>
+		</init-param>
+	</servlet>
+	<servlet>
+		<servlet-name>Script Editor</servlet-name>
+		<servlet-class>org.mgnl.nicki.vaadin.base.application.NickiServlet</servlet-class>
+		<init-param>
+			<description>
+			Vaadin UI class to start</description>
+			<param-name>UI</param-name>
+			<param-value>org.mgnl.nicki.editor.scripts.ScriptEditor</param-value>
+		</init-param>
+	</servlet>
+	<servlet>
+		<servlet-name>Catalog Editor</servlet-name>
+		<servlet-class>org.mgnl.nicki.vaadin.base.application.NickiServlet</servlet-class>
+		<init-param>
+			<description>
+			Vaadin UI class to start</description>
+			<param-name>UI</param-name>
+			<param-value>org.mgnl.nicki.editor.catalogs.CatalogEditor</param-value>
+		</init-param>
+	</servlet>
+	<servlet>
+		<servlet-name>Log4j Editor</servlet-name>
+		<servlet-class>org.mgnl.nicki.vaadin.base.application.NickiServlet</servlet-class>
+		<init-param>
+			<description>
+			Vaadin UI class to start</description>
+			<param-name>UI</param-name>
+			<param-value>org.mgnl.nicki.editor.log4j.Log4jEditor</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Report Application</servlet-name>
+		<url-pattern>/reports/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>User Admin</servlet-name>
+		<url-pattern>/userAdmin/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Report Application</servlet-name>
+		<url-pattern>/VAADIN/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Template Editor</servlet-name>
+		<url-pattern>/templates/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Project Editor</servlet-name>
+		<url-pattern>/projects/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Script Editor</servlet-name>
+		<url-pattern>/scripts/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Catalog Editor</servlet-name>
+		<url-pattern>/catalogs/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Log4j Editor</servlet-name>
+		<url-pattern>/log4j/*</url-pattern>
+	</servlet-mapping>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>
