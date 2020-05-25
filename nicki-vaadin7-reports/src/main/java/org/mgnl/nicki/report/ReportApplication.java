@@ -25,9 +25,12 @@ package org.mgnl.nicki.report;
 import org.mgnl.nicki.editor.templates.TemplateEditor;
 import com.vaadin.ui.Component;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @SuppressWarnings("serial")
 public class ReportApplication extends TemplateEditor {
-	private ReportComponent reportApplicationComponent = new ReportComponent();
+	private @Getter @Setter ReportComponent reportApplicationComponent = new ReportComponent();
 
 	@Override
 	public Component getEditor() {
