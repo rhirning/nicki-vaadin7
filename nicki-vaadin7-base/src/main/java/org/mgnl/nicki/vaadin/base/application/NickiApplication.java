@@ -97,7 +97,7 @@ public abstract class NickiApplication extends UI implements Serializable {
 		view.setWidth("100%");
 		view.addComponent(new Label("Hallo"));
 		setContent(view);
-		Page.getCurrent().setTitle(I18n.getText(getI18nBase() + ".main.title"));
+		Page.getCurrent().setTitle(getApplicationTitle());
 
 		if (Config.getBoolean("nicki.application.auth.no")) {
 			try {
@@ -126,6 +126,10 @@ public abstract class NickiApplication extends UI implements Serializable {
 		}
 	}
 	
+	public String getApplicationTitle() {
+		return I18n.getText(getI18nBase() + ".main.title");
+	}
+
 	public void logout() {
 		setDoubleContext(null);
 		showLoginDialog();
