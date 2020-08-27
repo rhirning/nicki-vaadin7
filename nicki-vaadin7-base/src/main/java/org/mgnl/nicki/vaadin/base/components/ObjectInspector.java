@@ -123,7 +123,7 @@ public class ObjectInspector extends CustomComponent {
 
 	private Map<String, Object> getAttributes(ObjectWrapper objectWrapper) {
 		Map<String, Object> map = new HashMap<>();
-		addAllAttributes(map, objectWrapper.getObject().getClass(), objectWrapper);
+		addAllAttributes(map, objectWrapper.getObject().getClass(), objectWrapper.getObject());
 		return map;
 	}
 
