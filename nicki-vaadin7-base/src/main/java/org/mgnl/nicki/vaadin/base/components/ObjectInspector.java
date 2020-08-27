@@ -123,8 +123,8 @@ public class ObjectInspector extends CustomComponent {
 
 	private Map<String, Object> getAttributes(ObjectWrapper objectWrapper) {
 		Map<String, Object> map = new HashMap<>();
-		AccessibleObject.setAccessible(objectWrapper.getObject().getClass().getDeclaredFields(), true);
-		for (Field field : objectWrapper.getObject().getClass().getDeclaredFields()) {
+		AccessibleObject.setAccessible(objectWrapper.getObject().getClass().getFields(), true);
+		for (Field field : objectWrapper.getObject().getClass().getFields()) {
 			try {
 				field.setAccessible(true);
 				map.put(field.getName(), field.get(objectWrapper.getObject()));
