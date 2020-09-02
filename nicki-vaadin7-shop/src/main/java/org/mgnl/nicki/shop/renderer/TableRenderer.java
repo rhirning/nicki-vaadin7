@@ -42,7 +42,6 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Table;
 
 @SuppressWarnings("serial")
@@ -97,13 +96,9 @@ public class TableRenderer extends BaseTableRenderer implements ShopRenderer {
 					button.setIcon(Icon.HELP.getResource());
 					button.setDescription(article.getDescription());
 				}
-		        button.addClickListener(new Button.ClickListener() {
-					
-					@Override
-					public void buttonClick(ClickEvent event) {
-						CatalogArticle article = (CatalogArticle) event.getButton().getData();
-						addInstance(article);
-					}
+		        button.addClickListener(event -> {
+						CatalogArticle article1 = (CatalogArticle) event.getButton().getData();
+						addInstance(article1);
 				});
 
 				Item item = table.addItem(article);

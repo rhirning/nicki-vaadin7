@@ -68,18 +68,14 @@ public class CheckBoxDeletableContainer<T extends Deletable> extends IndexedCont
 			} else {
 				setValue(false);
 			}
-			addValueChangeListener(new ValueChangeListener() {
-
-				@Override
-				public void valueChange(Property.ValueChangeEvent event) {
+			addValueChangeListener(event -> {
 					@SuppressWarnings("unchecked")
-					T1 bean = (T1) getData();
+					T1 bean1 = (T1) getData();
 					if ((boolean) event.getProperty().getValue()) {
-						bean.delete();
+						bean1.delete();
 					} else {
-						bean.undelete();
+						bean1.undelete();
 					}
-				}
 			});
 		}
 

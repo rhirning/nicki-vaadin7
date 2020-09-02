@@ -43,7 +43,6 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
-import com.vaadin.ui.Button.ClickEvent;
 
 @SuppressWarnings("serial")
 public class RuleAttributeField extends BaseDynamicAttributeField implements DynamicAttributeField<String>, Serializable {
@@ -72,22 +71,9 @@ public class RuleAttributeField extends BaseDynamicAttributeField implements Dyn
 			String value = (String) valueObject;
 			addItem(value);
 		}
-		newEntryButton.addClickListener(new Button.ClickListener() {
-			public void buttonClick(ClickEvent event) {
-				addEntry(entries);
-			}
-		});
-		deleteEntryButton.addClickListener(new Button.ClickListener() {
-			public void buttonClick(ClickEvent event) {
-				deleteEntry(entries);
-			}
-		});
-		testButton.addClickListener(new Button.ClickListener() {
-			
-			public void buttonClick(ClickEvent event) {
-				showTest();
-			}
-		});
+		newEntryButton.addClickListener(event -> addEntry(entries));
+		deleteEntryButton.addClickListener(event -> deleteEntry(entries));
+		testButton.addClickListener(event -> showTest());
 	}
 	
 	protected void showTest() {

@@ -34,7 +34,6 @@ import org.mgnl.nicki.vaadin.base.editor.Icon;
 
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.TabSheet;
-import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
 import com.vaadin.ui.TabSheet.Tab;
 
 import lombok.extern.slf4j.Slf4j;
@@ -80,18 +79,14 @@ public class TabRenderer extends BaseShopRenderer implements ShopRenderer {
 		Tab tab = tabSheet.addTab(renderer.render(shopArticle, getInventory()), article.getDisplayName(), Icon.SETTINGS.getResource());
 		((AbstractComponent)tab.getComponent()).setData(renderer);
 		tab.getComponent().setHeight("100%");
-		tabSheet.addSelectedTabChangeListener(new TabSheet.SelectedTabChangeListener() {
-			
-			@Override
-			public void selectedTabChange(SelectedTabChangeEvent event) {
+		tabSheet.addSelectedTabChangeListener(event -> {
 				TabSheet source = (TabSheet) event.getSource();
 				AbstractComponent component = (AbstractComponent) source.getSelectedTab();
 				log.debug(component.getClass().getName());
-				ShopRenderer renderer = (ShopRenderer) component.getData();
-				if (renderer != null) {
-					renderer.render();
+				ShopRenderer renderer1 = (ShopRenderer) component.getData();
+				if (renderer1 != null) {
+					renderer1.render();
 				}
-			}
 		});
 		
 	}
@@ -103,17 +98,13 @@ public class TabRenderer extends BaseShopRenderer implements ShopRenderer {
 		Tab tab = tabSheet.addTab(renderer.render(page, getInventory()), page.getLabel());
 		((AbstractComponent)tab.getComponent()).setData(renderer);
 		((AbstractComponent)tab.getComponent()).setHeight("100%");
-		tabSheet.addSelectedTabChangeListener(new TabSheet.SelectedTabChangeListener() {
-			
-			@Override
-			public void selectedTabChange(SelectedTabChangeEvent event) {
+		tabSheet.addSelectedTabChangeListener(event -> {
 				TabSheet source = (TabSheet) event.getSource();
-				AbstractComponent tab = (AbstractComponent) source.getSelectedTab();
-				ShopRenderer renderer = (ShopRenderer) tab.getData();
-				if (renderer != null) {
-					renderer.render();
+				AbstractComponent tab1 = (AbstractComponent) source.getSelectedTab();
+				ShopRenderer renderer1 = (ShopRenderer) tab1.getData();
+				if (renderer1 != null) {
+					renderer1.render();
 				}
-			}
 		});
 	}
 }

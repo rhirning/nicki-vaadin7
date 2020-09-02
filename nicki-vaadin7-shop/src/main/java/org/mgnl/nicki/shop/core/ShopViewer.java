@@ -45,7 +45,6 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Window.CloseEvent;
 import com.vaadin.ui.Window.CloseListener;
 
@@ -106,9 +105,7 @@ public class ShopViewer extends CustomComponent implements ShopViewerComponent, 
 		layout.setWidth("100%");
 
 		saveButton = new Button(I18n.getText("nicki.editor.generic.button.save"));
-		saveButton.addClickListener(new Button.ClickListener() {
-			
-			public void buttonClick(ClickEvent event) {
+		saveButton.addClickListener(event -> {
 				if (getInventory() != null) {
 					// log.debug(getInventory().toString());
 					try {
@@ -128,14 +125,11 @@ public class ShopViewer extends CustomComponent implements ShopViewerComponent, 
 						log.error("Error", e);
 					}
 				}
-			}
 		});
 		
 
 		rememberButton = new Button(I18n.getText("nicki.editor.generic.button.remember"));
-		rememberButton.addClickListener(new Button.ClickListener() {
-			
-			public void buttonClick(ClickEvent event) {
+		rememberButton.addClickListener(event -> {
 				if (getInventory() != null) {
 					// log.debug(getInventory().toString());
 					try {
@@ -156,14 +150,11 @@ public class ShopViewer extends CustomComponent implements ShopViewerComponent, 
 						log.error("Error", e);
 					}
 				}
-			}
 		});
 		
 
 		showInventoryButton = new Button(I18n.getText("nicki.editor.generic.button.showInventory"));
-		showInventoryButton.addClickListener(new Button.ClickListener() {
-			
-			public void buttonClick(ClickEvent event) {
+		showInventoryButton.addClickListener(event -> {
 				if (getInventory() != null) {
 					InventoryViewer inventoryViewer = new InventoryViewer(getInventory());
 					Window newWindow = new Window(I18n.getText(parent.getI18nBase() + ".inventory.window.title"), inventoryViewer);
@@ -175,13 +166,10 @@ public class ShopViewer extends CustomComponent implements ShopViewerComponent, 
 					Notification.show(I18n.getText(parent.getI18nBase() + ".showInventory.empty"),
 							Notification.Type.HUMANIZED_MESSAGE);
 				}
-			}
 		});
 
 		showCartButton = new Button(I18n.getText("nicki.editor.generic.button.showCart"));
-		showCartButton.addClickListener(new Button.ClickListener() {
-			
-			public void buttonClick(ClickEvent event) {
+		showCartButton.addClickListener(event -> {
 				if (getInventory() != null) {
 					if (!getInventory().hasChanged()) {
 						Notification.show(I18n.getText(parent.getI18nBase() + ".showCart.empty"),
@@ -203,7 +191,6 @@ public class ShopViewer extends CustomComponent implements ShopViewerComponent, 
 					Notification.show(I18n.getText(parent.getI18nBase() + ".showCart.empty"),
 							Notification.Type.HUMANIZED_MESSAGE);
 				}
-			}
 		});
 
 		layout.addComponent(saveButton, "top:0.0px;left:20.0px;");

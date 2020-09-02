@@ -41,7 +41,6 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
 
 @SuppressWarnings("serial")
 public class DirectoryEditor extends CustomComponent implements ClassEditor {
@@ -78,13 +77,7 @@ public class DirectoryEditor extends CustomComponent implements ClassEditor {
 			MemberComponent comp = new MemberComponent(directory, member);
 			membersLayout.addComponent(comp);
 		}
-		saveButton.addClickListener(new Button.ClickListener() {
-			public void buttonClick(ClickEvent event) {
-				save();
-			
-			}
-		});
-
+		saveButton.addClickListener(event -> save());
 	}
 	
 	public void save() {

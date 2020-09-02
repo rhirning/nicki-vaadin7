@@ -27,10 +27,10 @@ import java.util.List;
 
 import org.mgnl.nicki.shop.core.ShopViewerComponent;
 import org.mgnl.nicki.shop.base.inventory.Inventory;
-import com.vaadin.ui.AbsoluteLayout;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextArea;
+import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 public abstract class BaseShopRenderer implements ShopRenderer {
@@ -54,7 +54,7 @@ public abstract class BaseShopRenderer implements ShopRenderer {
 	
 
 	public Component getXMLComponent(ShopViewerComponent shopViewerComponent) {
-		AbsoluteLayout layout = new AbsoluteLayout();
+		VerticalLayout layout = new VerticalLayout();
 		layout.setHeight("420px");
 		// textArea_1
 		TextArea xml = new TextArea();
@@ -62,7 +62,7 @@ public abstract class BaseShopRenderer implements ShopRenderer {
 		xml.setHeight("100%");
 		xml.setImmediate(false);
 		xml.setValue(shopViewerComponent.toString());
-		layout.addComponent(xml, "top:20.0px;left:20.0px;right:20.0px;");
+		layout.addComponent(xml);
 
 		return layout;
 	}

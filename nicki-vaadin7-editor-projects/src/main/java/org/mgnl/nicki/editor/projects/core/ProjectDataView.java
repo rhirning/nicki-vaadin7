@@ -42,7 +42,6 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
 
 public class ProjectDataView extends CustomComponent implements ClassEditor {
 	private static final long serialVersionUID = -8525549254470827769L;
@@ -131,10 +130,7 @@ public class ProjectDataView extends CustomComponent implements ClassEditor {
 		mainLayout.addComponent(projectDeputy);
 		
 		saveButton = new Button(I18n.getText("nicki.editor.generic.button.save"));
-		saveButton.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = -22841977280262789L;
-
-			public void buttonClick(ClickEvent event) {
+		saveButton.addClickListener(event -> {
 				try {
 					project.update();
 					Notification.show(I18n.getText("nicki.editor.save.info"));
@@ -142,7 +138,6 @@ public class ProjectDataView extends CustomComponent implements ClassEditor {
 					Notification.show(I18n.getText("nicki.editor.save.error"), 
 							e.getMessage(), Type.ERROR_MESSAGE);
 				}
-			}
 		});
 		mainLayout.addComponent(saveButton);
 

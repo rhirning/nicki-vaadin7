@@ -64,16 +64,10 @@ public abstract class EditableContainer<T extends Editable> extends IndexedConta
 			setCaption(title);
 			addStyleName("link");
 			setData(bean);
-			addClickListener(new ClickListener() {
-				private static final long serialVersionUID = -900229029571991404L;
-
-				@Override
-				public void buttonClick(ClickEvent event) {
+			addClickListener(event ->  {
 					@SuppressWarnings("unchecked")
-					T bean = (T) event.getButton().getData();
-					edit(bean);
-					
-				}
+					T b = (T) event.getButton().getData();
+					edit(b);
 			});
 		}
 		@Override

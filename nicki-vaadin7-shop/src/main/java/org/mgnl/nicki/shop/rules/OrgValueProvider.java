@@ -41,8 +41,6 @@ import com.vaadin.ui.AbstractSelect;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.OptionGroup;
-import com.vaadin.ui.Tree;
-import com.vaadin.ui.Tree.ExpandEvent;
 
 @SuppressWarnings("serial")
 public class OrgValueProvider extends BasicValueProvider implements ValueProviderComponent, Serializable {
@@ -71,12 +69,9 @@ public class OrgValueProvider extends BasicValueProvider implements ValueProvide
 		treeSelector.setItemCaptionMode(AbstractSelect.ItemCaptionMode.PROPERTY);
 		treeSelector.setItemIconPropertyId(TreeContainer.PROPERTY_ICON);
 
-		treeSelector.addListener(new Tree.ExpandListener() {
-
-			public void nodeExpand(ExpandEvent event) {
+		treeSelector.addExpandListener(event -> {
 				DynamicObject object = (DynamicObject) event.getItemId();
 				treeContainer.loadChildren(object);
-			}
 		});
 		layout.addComponent(treeSelector.getComponent());
 		

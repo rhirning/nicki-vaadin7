@@ -26,13 +26,8 @@ import java.util.List;
 
 import org.mgnl.nicki.vaadin.base.menu.application.MainView;
 
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.event.MouseEvents;
-import com.vaadin.event.MouseEvents.ClickEvent;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Table;
-import com.vaadin.ui.Table.CellStyleGenerator;
 import com.vaadin.ui.Table.ColumnHeaderMode;
 import com.vaadin.ui.VerticalLayout;
 
@@ -57,14 +52,7 @@ public class TableNavigation extends NavigationBase implements Navigation {
 		panel.setHeight("100px");
 		panel.setStyleName("logo");
 		layout.addComponent(panel);
-		panel.addClickListener(new MouseEvents.ClickListener() {
-			private static final long serialVersionUID = 4278900825719978293L;
-
-			@Override
-			public void click(ClickEvent event) {
-				restart();
-			}
-		});
+		panel.addClickListener(event -> restart());
 		table = new Table();
 		table.setImmediate(true);
 		table.setSelectable(true);
@@ -76,11 +64,7 @@ public class TableNavigation extends NavigationBase implements Navigation {
 		table.setHeight("100%");
 		table.setPageLength(0);
 
-		table.addValueChangeListener(new ValueChangeListener() {
-			private static final long serialVersionUID = -3655302097682416518L;
-
-			@Override
-			public void valueChange(ValueChangeEvent event) {
+		table.addValueChangeListener(event -> {
 				if (table.getValue() instanceof NavigationEntry) {
 					NavigationEntry entry = (NavigationEntry) table.getValue();
 					if (entry != selected) {
@@ -95,14 +79,9 @@ public class TableNavigation extends NavigationBase implements Navigation {
 						table.setValue(selected);
 					}
 				}
-			}
 		});
 		
-		table.setCellStyleGenerator(new CellStyleGenerator() {
-			private static final long serialVersionUID = -6749256680831726555L;
-
-			@Override
-			public String getStyle(Table source, Object itemId, Object propertyId) {
+		table.setCellStyleGenerator( (source, itemId, propertyId) -> {
 				if (itemId instanceof NavigationFolder) {
 					return "folder";
 				}
@@ -113,7 +92,6 @@ public class TableNavigation extends NavigationBase implements Navigation {
 				}
 
 				return null;
-			}
 		});
 
 		layout.addComponent(table);

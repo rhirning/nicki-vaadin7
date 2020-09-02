@@ -37,7 +37,6 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
@@ -69,16 +68,8 @@ public class TableListAttributeField extends BaseDynamicAttributeField implement
 				addItem(value);
 			}
 		}
-		newEntryButton.addClickListener(new Button.ClickListener() {
-			public void buttonClick(ClickEvent event) {
-				addEntry(entries);
-			}
-		});
-		deleteEntryButton.addClickListener(new Button.ClickListener() {
-			public void buttonClick(ClickEvent event) {
-				deleteEntry(entries);
-			}
-		});
+		newEntryButton.addClickListener(event -> addEntry(entries));
+		deleteEntryButton.addClickListener(event -> deleteEntry(entries));
 	}
 	
 	private void addItem(String value) {

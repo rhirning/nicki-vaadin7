@@ -60,7 +60,7 @@ public abstract class BasicNickiSelector implements NickiSelect {
 		return (TreeData) component.getValue();
 	}
 
-	public void addListener(ValueChangeListener listener) {
+	public void addValueChangeListener(ValueChangeListener listener) {
 		component.addValueChangeListener(listener);
 	}
 
@@ -98,7 +98,7 @@ public abstract class BasicNickiSelector implements NickiSelect {
 	}
 
 	@Override
-	public void addListener(ExpandListener listener) {
+	public void addExpandListener(ExpandListener listener) {
 		log.debug("not implemented");
 	}
 

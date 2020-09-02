@@ -34,8 +34,6 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
-import com.vaadin.ui.Button.ClickEvent;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -72,16 +70,12 @@ public class ExportTreeAction extends BaseTreeAction {
 
 	public void execute(TreeData dynamicObject) {
 		
-		close.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 5971264029558549251L;
-
-			public void buttonClick(ClickEvent event) {
+		close.addClickListener(event -> {
 				try {
 					close();
 				} catch (Exception e) {
 					log.error("Error", e);
 				}
-			}
 		});
 
 		exportElement.setCaption(I18n.getText(i18nBase + ".export.exportElement"));

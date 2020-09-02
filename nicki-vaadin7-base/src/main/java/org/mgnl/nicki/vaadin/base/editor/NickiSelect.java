@@ -48,7 +48,7 @@ public interface NickiSelect extends Serializable {
 
 	TreeData getValue();
 
-	void addListener(ValueChangeListener listener);
+	void addValueChangeListener(ValueChangeListener listener);
 
 	void addActionHandler(Handler handler);
 
@@ -58,7 +58,7 @@ public interface NickiSelect extends Serializable {
 
 	void expandItem(TreeData object);
 
-	void addListener(ExpandListener listener);
+	void addExpandListener(ExpandListener listener);
 
 	void setContainerDataSource(Container dataSource);
 

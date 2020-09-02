@@ -34,7 +34,6 @@ import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.ui.AbsoluteLayout;
 import com.vaadin.ui.AbstractSelect.NewItemHandler;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -82,8 +81,7 @@ public class EnterSpecifierDialog extends EnterNameDialog implements NewItemHand
 		specifier.focus();
 		applyI18n(messageBase);
 		
-		createButton.addClickListener(new Button.ClickListener() {
-			public void buttonClick(ClickEvent event) {
+		createButton.addClickListener(event -> {
 				try {
 					getHandler().setName((String) specifier.getValue());
 					close();
@@ -91,14 +89,9 @@ public class EnterSpecifierDialog extends EnterNameDialog implements NewItemHand
 					Notification.show(I18n.getText(i18nBase + ".error"),
 							e.getMessage(), Notification.Type.ERROR_MESSAGE);
 				}
-			}
 		});
 		
-		closeButton.addClickListener(new Button.ClickListener() {
-			public void buttonClick(ClickEvent event) {
-				close();
-			}
-		});
+		closeButton.addClickListener(event -> close());
 		
 		createButton.setClickShortcut(KeyCode.ENTER);
 	}

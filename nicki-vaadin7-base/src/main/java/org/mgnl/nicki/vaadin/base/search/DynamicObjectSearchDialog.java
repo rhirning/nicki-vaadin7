@@ -44,7 +44,6 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Table;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;
 
 import lombok.extern.slf4j.Slf4j;
@@ -87,12 +86,7 @@ public class DynamicObjectSearchDialog<T extends DynamicObject> extends CustomCo
 		factory.addFields(searchLayout, clazz);
 		
 		searchButton = new Button(I18n.getText("nicki.editor.generic.button.search"));
-		searchButton.addClickListener(new Button.ClickListener() {
-			
-			public void buttonClick(ClickEvent event) {
-				search();
-			}
-		});
+		searchButton.addClickListener(event -> search());
 
 		mainLayout.addComponent(searchButton);
 		table = new Table();
@@ -103,12 +97,7 @@ public class DynamicObjectSearchDialog<T extends DynamicObject> extends CustomCo
 		table.setColumnHeaders(getColumnHeaders());
 		mainLayout.addComponent(table);
 		saveButton = new Button(I18n.getText("nicki.editor.generic.button.save"));
-		saveButton.addClickListener(new Button.ClickListener() {
-			
-			public void buttonClick(ClickEvent event) {
-				save();
-			}
-		});
+		saveButton.addClickListener(event -> save());
 
 		mainLayout.addComponent(saveButton);
 		

@@ -47,7 +47,6 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
 
 import bsh.EvalError;
 import bsh.Interpreter;
@@ -111,26 +110,20 @@ public class ScriptViewer extends CustomComponent implements ClassEditor {
 		resultObject.setContentMode(ContentMode.PREFORMATTED);
 		editor.setValue(StringUtils.trimToEmpty(script.getData()));
 
-		executeButton.addClickListener(new Button.ClickListener() {
-
-			public void buttonClick(ClickEvent event) {
+		executeButton.addClickListener(event -> {
 				try {
 					evaluate();
 				} catch (IOException e) {
 					log.error("Error", e);
 				}
-			}
 		});
 
-		saveButton.addClickListener(new Button.ClickListener() {
-
-			public void buttonClick(ClickEvent event) {
+		saveButton.addClickListener(event -> {
 				try {
 					save();
 				} catch (Exception e) {
 					log.error("Error", e);
 				}
-			}
 		});
 
 	}

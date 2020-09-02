@@ -40,7 +40,6 @@ import com.vaadin.ui.VerticalLayout;
 
 import lombok.extern.slf4j.Slf4j;
 
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Notification.Type;
 
 @Slf4j
@@ -103,12 +102,7 @@ public class DbBeanViewer extends CustomComponent implements NewClassEditor, Cla
 		
 		if (!isReadOnly()) {
 			saveButton = new Button(I18n.getText("nicki.editor.generic.button.save"));
-			saveButton.addClickListener(new Button.ClickListener() {
-				
-				public void buttonClick(ClickEvent event) {
-					save();
-				}
-			});
+			saveButton.addClickListener(event -> save());
 	
 			mainLayout.addComponent(saveButton);
 		}

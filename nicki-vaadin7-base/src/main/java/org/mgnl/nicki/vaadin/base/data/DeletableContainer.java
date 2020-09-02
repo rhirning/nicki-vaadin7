@@ -75,22 +75,16 @@ public abstract class DeletableContainer<T extends Deletable> extends IndexedCon
 		public DeleteButton(T1 bean, String title) {
 			setCaption(title);
 			setData(bean);
-			addClickListener(new ClickListener() {
-				private static final long serialVersionUID = -900229029571991404L;
-
-				@Override
-				public void buttonClick(ClickEvent event) {
+			addClickListener(event -> {
 					@SuppressWarnings("unchecked")
-					T1 bean = (T1) event.getButton().getData();
-					if (!bean.isDeleted()) {
-						bean.delete();
+					T1 bean1 = (T1) event.getButton().getData();
+					if (!bean1.isDeleted()) {
+						bean1.delete();
 						event.getButton().setCaption(undeleteCaption);
 					} else {
-						bean.undelete();
+						bean1.undelete();
 						event.getButton().setCaption(deleteCaption);
 					}
-					
-				}
 			});
 		}
 		@Override

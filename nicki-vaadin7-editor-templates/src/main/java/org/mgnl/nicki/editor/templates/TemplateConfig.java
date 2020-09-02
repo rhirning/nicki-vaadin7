@@ -45,7 +45,6 @@ import com.vaadin.server.FileDownloader;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.StreamResource.StreamSource;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
@@ -105,29 +104,21 @@ public class TemplateConfig extends CustomComponent implements ClassEditor {
 		initI18n();
 
 		if (usePreview) {
-			previewButton.addClickListener(new Button.ClickListener() {
-
-				@Override
-				public void buttonClick(ClickEvent event) {
+			previewButton.addClickListener(event -> {
 					try {
 						preview();
 					} catch (Exception e) {
 						log.error("Error", e);
 					}
-				}
 			});
 		}
 
-		htmlPreviewButton.addClickListener(new Button.ClickListener() {
-
-			@Override
-			public void buttonClick(ClickEvent event) {
+		htmlPreviewButton.addClickListener(event -> {
 				try {
 					htmlPreview();
 				} catch (Exception e) {
 					log.error("Error", e);
 				}
-			}
 		});
 
 		/* alte Methode mit Link

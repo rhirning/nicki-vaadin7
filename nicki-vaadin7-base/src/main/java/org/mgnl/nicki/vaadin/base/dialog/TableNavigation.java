@@ -24,8 +24,6 @@ package org.mgnl.nicki.vaadin.base.dialog;
 
 import java.util.List;
 
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.CellStyleGenerator;
@@ -64,11 +62,7 @@ public class TableNavigation extends NavigationBase implements Navigation {
 		table.setHeight("100%");
 		table.setPageLength(0);
 
-		table.addValueChangeListener(new ValueChangeListener() {
-			private static final long serialVersionUID = -3655302097682416518L;
-
-			@Override
-			public void valueChange(ValueChangeEvent event) {
+		table.addValueChangeListener(event -> {
 				if (table.getValue() instanceof NavigationEntry) {
 					NavigationEntry entry = (NavigationEntry) table.getValue();
 					if (entry != selected) {
@@ -83,7 +77,6 @@ public class TableNavigation extends NavigationBase implements Navigation {
 						table.setValue(selected);
 					}
 				}
-			}
 		});
 		
 		table.setCellStyleGenerator(new CellStyleGenerator() {

@@ -32,7 +32,6 @@ import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Window;
-import com.vaadin.ui.Button.ClickEvent;
 
 public class DataView extends CustomComponent {
 
@@ -79,14 +78,7 @@ public class DataView extends CustomComponent {
 		userTable.setPageLength(this.length);
 		userTable.setColumnHeader("name", I18n.getText(getI18nBase() + ".columnName"));
 		userTable.setColumnHeader("value", I18n.getText(getI18nBase() + ".columnValue"));
-		closeButton.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = -7852005230375984676L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				((Window) getParent()).close();
-			}
-		});
+		closeButton.addClickListener(event -> ((Window) getParent()).close());
 		closeButton.setCaption(I18n.getText(getI18nBase() + ".closeButton"));
 	}
 

@@ -23,7 +23,6 @@ package org.mgnl.nicki.vaadin.base.components;
 
 
 import com.vaadin.data.Property;
-import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.TextField;
 
@@ -42,12 +41,7 @@ public class SimplePropertyEditor extends CustomComponent {
 		
 		setCompositionRoot(editor);
 		editor.setValue((String) data.getValue());
-		editor.addValueChangeListener(new Property.ValueChangeListener() {
-			
-			public void valueChange(ValueChangeEvent event) {
-				data.setValue((String) editor.getValue());
-			}
-		});
+		editor.addValueChangeListener(event -> data.setValue((String) editor.getValue()));
 	}
 
 }

@@ -30,7 +30,6 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.Button.ClickEvent;
 
 @SuppressWarnings("serial")
 public class NewDirectory extends CustomComponent {
@@ -66,17 +65,8 @@ public class NewDirectory extends CustomComponent {
 		directory.focus();
 		applyI18n();
 		
-		createButton.addClickListener(new Button.ClickListener() {
-			public void buttonClick(ClickEvent event) {
-				newDirectoryHandler.createNewDirectory((String) directory.getValue());
-			}
-		});
-		
-		closeButton.addClickListener(new Button.ClickListener() {
-			public void buttonClick(ClickEvent event) {
-				newDirectoryHandler.closeNewDirectoryWindow();
-			}
-		});
+		createButton.addClickListener(event -> newDirectoryHandler.createNewDirectory((String) directory.getValue()));		
+		closeButton.addClickListener(event -> newDirectoryHandler.closeNewDirectoryWindow());
 	}
 
 	private void applyI18n() {

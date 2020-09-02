@@ -36,8 +36,6 @@ import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -99,12 +97,7 @@ public class DynamicObjectViewer extends CustomComponent implements NewClassEdit
 		factory.addFields(mainLayout, dynamicObject, create);
 		
 		saveButton = new Button(I18n.getText("nicki.editor.generic.button.save"));
-		saveButton.addClickListener(new Button.ClickListener() {
-			
-			public void buttonClick(ClickEvent event) {
-				save();
-			}
-		});
+		saveButton.addClickListener(event -> save());
 
 		mainLayout.addComponent(saveButton);
 		return mainLayout;

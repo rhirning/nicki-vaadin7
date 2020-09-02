@@ -33,7 +33,6 @@ import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Accordion;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.TabSheet;
-import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
 import com.vaadin.ui.TabSheet.Tab;
 
 import lombok.extern.slf4j.Slf4j;
@@ -70,18 +69,14 @@ public class AccordionRenderer extends BaseShopRenderer implements ShopRenderer 
 			Component component =  renderer.render(page, getInventory());
 			Tab tab = accordion.addTab(component, page.getLabel());
 			((AbstractComponent)tab.getComponent()).setData(renderer);
-			accordion.addSelectedTabChangeListener(new TabSheet.SelectedTabChangeListener() {
-				
-				@Override
-				public void selectedTabChange(SelectedTabChangeEvent event) {
+			accordion.addSelectedTabChangeListener(event -> {
 					TabSheet source = (TabSheet) event.getSource();
-					AbstractComponent component = (AbstractComponent) source.getSelectedTab();
-					log.debug(component.getClass().getName());
-					ShopRenderer renderer = (ShopRenderer) component.getData();
-					if (renderer != null) {
-						renderer.render();
+					AbstractComponent component1 = (AbstractComponent) source.getSelectedTab();
+					log.debug(component1.getClass().getName());
+					ShopRenderer renderer1 = (ShopRenderer) component1.getData();
+					if (renderer1 != null) {
+						renderer1.render();
 					}
-				}
 			});
 		}
 	}

@@ -49,8 +49,6 @@ import com.vaadin.ui.Window;
 
 import lombok.extern.slf4j.Slf4j;
 
-import com.vaadin.ui.Button.ClickEvent;
-
 @Slf4j
 @SuppressWarnings("serial")
 public class NodeViewer extends CustomComponent implements ClassEditor {
@@ -117,15 +115,12 @@ public class NodeViewer extends CustomComponent implements ClassEditor {
 			}
 		});
 
-		saveButton.addClickListener(new Button.ClickListener() {
-
-			public void buttonClick(ClickEvent event) {
+		saveButton.addClickListener(event -> {
 				try {
 					save();
 				} catch (Exception e) {
 					log.error("Error", e);
 				}
-			}
 		});
 
 	}

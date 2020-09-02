@@ -32,8 +32,6 @@ import org.mgnl.nicki.core.helper.NameValue;
 import org.mgnl.nicki.vaadin.base.application.NickiApplication;
 import org.mgnl.nicki.vaadin.base.menu.application.View;
 
-import com.vaadin.event.FieldEvents.BlurEvent;
-import com.vaadin.event.FieldEvents.BlurListener;
 import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.BorderStyle;
 import com.vaadin.ui.Button;
@@ -50,7 +48,6 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
 
 @Slf4j
 @SuppressWarnings("serial")
@@ -109,39 +106,24 @@ public class TailViewer extends CustomComponent implements Serializable, View {
 		inputPanel.addComponent(link);
 		
 		checkBox = new CheckBox("head", false);
-		checkBox.addBlurListener(new BlurListener() {
-			private static final long serialVersionUID = 8760727270499695551L;
-			@Override
-			public void blur(BlurEvent event) {
+		checkBox.addBlurListener(event -> {
 				end = !checkBox.getValue();
-			}
 		});
 		inputPanel.addComponent(checkBox);
 		
 		Button loadButton = new Button("Load");
-		loadButton.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = -6478602760185041606L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				reload();
-			}
-		});
+		loadButton.addClickListener(event -> reload());
 		inputPanel.addComponent(loadButton);
 		
 		numberOfLinesField = new TextField();
 		numberOfLinesField.setValue(Long.toString(numberOfLines));
-		numberOfLinesField.addBlurListener(new BlurListener() {
-			private static final long serialVersionUID = -4722389160871240275L;
-			@Override
-			public void blur(BlurEvent event) {
+		numberOfLinesField.addBlurListener(event -> {
 				try {
 					numberOfLines = Long.valueOf(numberOfLinesField.getValue());
 				} catch (NumberFormatException e) {
 					Notification.show("Invalid numberOfLines", Type.TRAY_NOTIFICATION);
 				}
 				checkContainer();
-			}
 		});
 		inputPanel.addComponent(numberOfLinesField);
 
@@ -152,14 +134,7 @@ public class TailViewer extends CustomComponent implements Serializable, View {
 		inputPanel.addComponent(containerLink);
 		
 		Button refreshButton = new Button("Update");
-		refreshButton.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = -7103010719060704358L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				refresh();
-			}
-		});
+		refreshButton.addClickListener(event -> refresh());
 		inputPanel.addComponent(refreshButton);
 		
 		inputPanel.setExpandRatio(path, 1);

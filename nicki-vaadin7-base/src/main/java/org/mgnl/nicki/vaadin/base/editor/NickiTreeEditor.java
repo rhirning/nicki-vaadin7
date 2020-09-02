@@ -44,8 +44,6 @@ import org.mgnl.nicki.vaadin.base.components.NewClassEditor;
 import org.mgnl.nicki.vaadin.base.components.SimpleNewClassEditor;
 import org.mgnl.nicki.vaadin.base.data.TreeContainer;
 
-import com.vaadin.data.Property;
-import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.event.Action;
 import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.Component;
@@ -53,8 +51,6 @@ import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
-import com.vaadin.ui.Tree;
-import com.vaadin.ui.Tree.ExpandEvent;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
@@ -138,8 +134,7 @@ public class NickiTreeEditor extends CustomComponent {
 
 		selector.setImmediate(true);
 		selector.setSelectable(true);
-		selector.addListener(new Property.ValueChangeListener() {
-			public void valueChange(ValueChangeEvent event) {
+		selector.addValueChangeListener(event -> {
 				TreeData selected = (TreeData) selector.getValue();
 				if (selected == null) {
 					if (viewer != null && selectedObject.isModified()) {
@@ -189,7 +184,6 @@ public class NickiTreeEditor extends CustomComponent {
 					}
 					*/
 				}
-			}
 		});
 
 		selector.addActionHandler(new Action.Handler() {
@@ -246,12 +240,9 @@ public class NickiTreeEditor extends CustomComponent {
 			}
 		});
 
-		selector.addListener(new Tree.ExpandListener() {
-
-			public void nodeExpand(ExpandEvent event) {
+		selector.addExpandListener(event -> {
 				TreeData object = (TreeData) event.getItemId();
 				treeContainer.loadChildren(object);
-			}
 		});
 	}
 	

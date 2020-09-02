@@ -42,7 +42,6 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Table;
-import com.vaadin.ui.Button.ClickEvent;
 
 @SuppressWarnings("serial")
 public class TwoTablesRenderer extends BaseTableRenderer implements ShopRenderer {
@@ -97,10 +96,7 @@ public class TwoTablesRenderer extends BaseTableRenderer implements ShopRenderer
 		centerContainer.addComponent(toLeftButton);
 		
 		// add
-		toRightButton.addClickListener(new Button.ClickListener() {
-			
-			@Override
-			public void buttonClick(ClickEvent event) {
+		toRightButton.addClickListener(event -> {
 				if (leftTable.getValue() != null) {
 					CatalogArticle catalogArticle = (CatalogArticle) leftTable.getValue();
 					if (catalogArticle.isMultiple()) {
@@ -110,20 +106,15 @@ public class TwoTablesRenderer extends BaseTableRenderer implements ShopRenderer
 						render();
 					}
 				}
-			}
 		});
 		
 		// remove		
-		toLeftButton.addClickListener(new Button.ClickListener() {
-			
-			@Override
-			public void buttonClick(ClickEvent event) {
+		toLeftButton.addClickListener(event -> {
 				if (rightTable.getValue() != null) {
 					InventoryArticle iArticle = (InventoryArticle) rightTable.getValue();
 					getInventory().removeArticle(iArticle);
 					render();
 				}
-			}
 		});
 		
 		// right table
