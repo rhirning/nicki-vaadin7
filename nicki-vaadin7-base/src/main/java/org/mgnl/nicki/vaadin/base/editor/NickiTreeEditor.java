@@ -498,9 +498,9 @@ public class NickiTreeEditor extends CustomComponent {
 			//
 			actions.put(classDefinition, map);
 			rootActionsList.put(classDefinition,
-					rootClassActions.toArray(new Action[] {}));
+					rootClassActions.toArray(new Action[0]));
 			actionsList.put(classDefinition,
-					classActions.toArray(new Action[] {}));
+					classActions.toArray(new Action[0]));
 		}
 	}
 

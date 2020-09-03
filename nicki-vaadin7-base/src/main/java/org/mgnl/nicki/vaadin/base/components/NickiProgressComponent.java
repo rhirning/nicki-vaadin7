@@ -137,14 +137,11 @@ public class NickiProgressComponent extends CustomComponent implements NickiProg
 
 	public void finish() {
         // Update the UI thread-safely
-        UI.getCurrent().access(new Runnable() {
-            @Override
-            public void run() {
+        UI.getCurrent().access(() -> {
                 // Stop polling
                 UI.getCurrent().setPollInterval(-1);
                 progress.setEnabled(false);
                 setVisible(false);
-            }
         });
         if (finishedListeners != null) {
         	for (FinishedListener finishedListener : finishedListeners) {

@@ -23,7 +23,6 @@ package org.mgnl.nicki.editor.templates;
 
 
 
-import java.io.InputStream;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -190,10 +189,7 @@ public class TemplateConfig extends CustomComponent implements ClassEditor {
 	}
 
 	protected StreamResource createCSVStream() {
-		return new StreamResource(new StreamSource() {
-
-			@Override
-			public InputStream getStream() {
+		return new StreamResource(() -> {
 				StreamSource csvStreamSource = null;
 				if (isComplete()) {
 					if (template.hasPart("pdf")) {
@@ -207,15 +203,11 @@ public class TemplateConfig extends CustomComponent implements ClassEditor {
 				} else {
 					return null;
 				}
-			}
 		}, template != null ? template.getName() + "_" + DataHelper.getTime(new Date()) + ".csv" : "template.csv");
 	}
 
 	protected StreamResource createXLSStream() {
-		return new StreamResource(new StreamSource() {
-
-			@Override
-			public InputStream getStream() {
+		return new StreamResource(() -> {
 				StreamSource xlsStreamSource = null;
 				if (isComplete() && template.hasPart("xls")) {
 					xlsStreamSource = new XlsStreamSource(template, template.getContext(), params);
@@ -225,15 +217,11 @@ public class TemplateConfig extends CustomComponent implements ClassEditor {
 				} else {
 					return null;
 				}
-			}
 		}, template != null ? template.getName() + "_" + DataHelper.getTime(new Date()) + ".xls" : "template.xls");
 	}
 
 	protected StreamResource createPDFStream() {
-		return new StreamResource(new StreamSource() {
-
-			@Override
-			public InputStream getStream() {
+		return new StreamResource(()-> {
 				StreamSource pdfStreamSource = null;
 				if (isComplete()) {
 					if (template.hasPart("pdf")) {
@@ -245,7 +233,6 @@ public class TemplateConfig extends CustomComponent implements ClassEditor {
 				} else {
 					return null;
 				}
-			}
 		}, template != null ? template.getName() + "_" + DataHelper.getTime(new Date()) + ".pdf" : "template.pdf");
 	}
 

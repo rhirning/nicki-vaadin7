@@ -127,7 +127,7 @@ public class DynamicObjectSearchDialog<T extends DynamicObject> extends CustomCo
 		} catch (Exception e) {
 			log.error("Error reading datamodel", e);
 		}
-		return columnsHeaders.toArray(new String[]{});
+		return columnsHeaders.toArray(new String[0]);
 	}
 
 
@@ -144,7 +144,7 @@ public class DynamicObjectSearchDialog<T extends DynamicObject> extends CustomCo
 		} catch (Exception e) {
 			log.error("Error reading datamodel", e);
 		}
-		return columns.toArray(new Object[]{});
+		return columns.toArray(new Object[0]);
 	}
 
 

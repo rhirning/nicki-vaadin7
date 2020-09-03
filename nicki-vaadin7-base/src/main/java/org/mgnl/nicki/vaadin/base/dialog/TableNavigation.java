@@ -26,7 +26,6 @@ import java.util.List;
 
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Table;
-import com.vaadin.ui.Table.CellStyleGenerator;
 import com.vaadin.ui.Table.ColumnHeaderMode;
 import com.vaadin.ui.VerticalLayout;
 
@@ -79,11 +78,7 @@ public class TableNavigation extends NavigationBase implements Navigation {
 				}
 		});
 		
-		table.setCellStyleGenerator(new CellStyleGenerator() {
-			private static final long serialVersionUID = -6749256680831726555L;
-
-			@Override
-			public String getStyle(Table source, Object itemId, Object propertyId) {
+		table.setCellStyleGenerator((source, itemId, propertyId) -> {
 				if (itemId instanceof NavigationFolder) {
 					return "folder";
 				}
@@ -94,7 +89,6 @@ public class TableNavigation extends NavigationBase implements Navigation {
 				}
 
 				return null;
-			}
 		});
 
 		layout.addComponent(table);

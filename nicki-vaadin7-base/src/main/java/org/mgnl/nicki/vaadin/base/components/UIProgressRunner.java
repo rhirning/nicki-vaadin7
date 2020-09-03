@@ -50,11 +50,6 @@ public abstract class UIProgressRunner extends ProgressRunner implements Runnabl
 		this.setCurrent(newCurrent);
 		this.setDetails(newDetails);
 		
-        UI.getCurrent().access(new Runnable() {
-            @Override
-            public void run() {
-            	getProgress().progressed(getCurrent(), getDetails());
-            }
-        });		
+        UI.getCurrent().access(() -> getProgress().progressed(getCurrent(), getDetails()));
 	}
 }

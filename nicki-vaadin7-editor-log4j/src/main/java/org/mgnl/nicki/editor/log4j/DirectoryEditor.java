@@ -24,7 +24,6 @@ package org.mgnl.nicki.editor.log4j;
 
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -80,12 +79,8 @@ public class DirectoryEditor extends CustomComponent implements ClassEditor {
 		buildMainLayout();
 		setCompositionRoot(mainLayout);
 		if (this.fileEntry != null && this.fileEntry.getFile() != null) {
-			File list[] = this.fileEntry.getFile().listFiles(new FileFilter() {
-				
-				@Override
-				public boolean accept(File pathname) {
+			File list[] = this.fileEntry.getFile().listFiles((pathname) -> {
 					return pathname.isFile();
-				}
 			});
 			if (list != null && list.length > 0) {
 				Collection<File> files = Arrays.asList(list);

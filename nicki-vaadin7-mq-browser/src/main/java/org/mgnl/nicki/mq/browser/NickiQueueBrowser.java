@@ -111,6 +111,7 @@ public class NickiQueueBrowser extends CustomComponent  implements View {
 	private MessagesContainerDataSource messagesContainerDataSource;
 	private BeanItemContainer<ValuePair> valuePairContainer;
 	
+	@SuppressWarnings("unchecked")
 	public NickiQueueBrowser(String configBase, String queue, String selector) {
 		buildMainLayout();
 		setCompositionRoot(mainLayout);
@@ -143,7 +144,6 @@ public class NickiQueueBrowser extends CustomComponent  implements View {
 		});
 		
 		removeButton.addClickListener(event -> {
-				@SuppressWarnings("unchecked")
 				Collection<Message> messages = (Collection<Message>) messageTable.getValue();
 				if (messages != null && messages.size() > 0) {
 					removeMessages(messages);
