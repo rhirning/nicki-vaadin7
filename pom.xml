@@ -188,11 +188,11 @@
 	<distributionManagement>
 		<repository>
 			<id>releases</id>
-			<url>https://nexus.nicki-tools.de/nexus/content/repositories/releases</url>
+			<url>https://nexus.nicki-mgnl.de/nexus/content/repositories/releases</url>
 		</repository>
 		<snapshotRepository>
 			<id>snapshots</id>
-			<url>https://nexus.nicki-tools.de/nexus/content/repositories/snapshots</url>
+			<url>https://nexus.nicki-mgnl.de/nexus/content/repositories/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
 </project>
