@@ -206,6 +206,7 @@ public class TemplateConfig extends CustomComponent implements ClassEditor {
 		}, template != null ? template.getName() + "_" + DataHelper.getTime(new Date()) + ".csv" : "template.csv");
 	}
 
+	@Deprecated
 	protected StreamResource createXLSStream() {
 		return new StreamResource(() -> {
 				StreamSource xlsStreamSource = null;
@@ -218,6 +219,20 @@ public class TemplateConfig extends CustomComponent implements ClassEditor {
 					return null;
 				}
 		}, template != null ? template.getName() + "_" + DataHelper.getTime(new Date()) + ".xls" : "template.xls");
+	}
+
+	protected StreamResource createXLSXStream() {
+		return new StreamResource(() -> {
+				StreamSource xlsStreamSource = null;
+				if (isComplete() && template.hasPart("xls")) {
+					xlsStreamSource = new XlsxStreamSource(template, template.getContext(), params);
+				}
+				if (xlsStreamSource != null) {
+					return xlsStreamSource.getStream();
+				} else {
+					return null;
+				}
+		}, template != null ? template.getName() + "_" + DataHelper.getTime(new Date()) + ".xlsX" : "template.xls");
 	}
 
 	protected StreamResource createPDFStream() {

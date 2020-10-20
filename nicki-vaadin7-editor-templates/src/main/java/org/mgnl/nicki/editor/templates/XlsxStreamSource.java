@@ -31,15 +31,15 @@ import org.mgnl.nicki.template.engine.BasicTemplateStreamSource;
 
 import com.vaadin.server.StreamResource.StreamSource;
 
-@Deprecated
-public class XlsStreamSource extends BasicTemplateStreamSource implements StreamSource {
+
+public class XlsxStreamSource extends BasicTemplateStreamSource implements StreamSource {
 	private static final long serialVersionUID = 4222973194514516918L;
-	public XlsStreamSource(Template template, NickiContext context, Map<String, Object> params) {
+	public XlsxStreamSource(Template template, NickiContext context, Map<String, Object> params) {
 		super(template, context, params, TYPE.XLS);
 	}
 
 	public InputStream getStream() {
-		return getXlsStream();
+		return getXlsxStream();
 	}
 
 }

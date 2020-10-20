@@ -51,18 +51,30 @@ import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 
 public class XlsDocuHelper {
+	enum DOC_TYPE {XLS, XLSX}
 
+	@Deprecated
 	public static InputStream generate(TYPE type, String templatePath, Map<String, Object> dataModel) throws IOException, TemplateException, InvalidPrincipalException, ParserConfigurationException, SAXException, DocumentException {
 		if (type == TYPE.JNDI) {
-			return generateJNDI(templatePath, dataModel);
+			return generateJNDI(DOC_TYPE.XLS, templatePath, dataModel);
 		} else if (type == TYPE.CLASSPATH) {
-			return generateClasspath(templatePath, dataModel);
+			return generateClasspath(DOC_TYPE.XLS, templatePath, dataModel);
 		} else {
 			return null;
 		}
 	}
 
-	private static InputStream generateJNDI(String templatePath, Map<String, Object> dataModel) throws IOException, TemplateException, InvalidPrincipalException, ParserConfigurationException, SAXException, DocumentException {
+	public static InputStream generateXlsx(TYPE type, String templatePath, Map<String, Object> dataModel) throws IOException, TemplateException, InvalidPrincipalException, ParserConfigurationException, SAXException, DocumentException {
+		if (type == TYPE.JNDI) {
+			return generateJNDI(DOC_TYPE.XLSX, templatePath, dataModel);
+		} else if (type == TYPE.CLASSPATH) {
+			return generateClasspath(DOC_TYPE.XLSX, templatePath, dataModel);
+		} else {
+			return null;
+		}
+	}
+
+	private static InputStream generateJNDI(DOC_TYPE docType, String templatePath, Map<String, Object> dataModel) throws IOException, TemplateException, InvalidPrincipalException, ParserConfigurationException, SAXException, DocumentException {
 		StringBuilder sb = new StringBuilder();
 		String parts[] = StringUtils.split(templatePath, "/");
 		for (int i = parts.length -1 ; i >= 0; i--) {
@@ -77,9 +89,13 @@ public class XlsDocuHelper {
 		}
 		Template template = AppContext.getSystemContext().loadObject(Template.class, templateDn);
 		TemplateEngine engine = TemplateEngine.getInstance(TYPE.JNDI);
-		return engine.executeTemplateAsXls(template, templatePath + ".ftl", dataModel);
+		if (docType == DOC_TYPE.XLS) {
+			return engine.executeTemplateAsXls(template, templatePath + ".ftl", dataModel);
+		} else {
+			return engine.executeTemplateAsXlsx(template, templatePath + ".ftl", dataModel);
+		}
 	}
-	private static InputStream generateClasspath(String templatePath, Map<String, Object> dataModel) throws IOException, TemplateException, InvalidPrincipalException, ParserConfigurationException, SAXException, DocumentException {
+	private static InputStream generateClasspath(DOC_TYPE docType, String templatePath, Map<String, Object> dataModel) throws IOException, TemplateException, InvalidPrincipalException, ParserConfigurationException, SAXException, DocumentException {
 
 		String base = "/META-INF/templates";
 		Configuration cfg = ConfigurationFactory.getInstance().getConfiguration(ConfigurationFactory.TYPE.CLASSPATH,
@@ -87,7 +103,11 @@ public class XlsDocuHelper {
 		TemplateEngine engine = new TemplateEngine(cfg);
 				
 		EngineTemplate template = getTemplate(base, templatePath + ".ftl");
-		return engine.executeTemplateAsXls(template, templatePath + ".ftl", dataModel);
+		if (docType == DOC_TYPE.XLS) {
+			return engine.executeTemplateAsXls(template, templatePath + ".ftl", dataModel);
+		} else {
+			return engine.executeTemplateAsXlsx(template, templatePath + ".ftl", dataModel);
+		}
 	}
 	
 

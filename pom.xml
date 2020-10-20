@@ -14,7 +14,7 @@
 		<project.build.sourceEncoding>iso-8859-1</project.build.sourceEncoding>
 		<idm.version>4.7</idm.version>
 		<activemq-version>5.14.5</activemq-version>
-		<nicki.version>8.13</nicki.version>
+		<nicki.version>8.14</nicki.version>
 		<vaadin.version>7.7.16</vaadin.version>
 	</properties>
 	<inceptionYear>2020</inceptionYear>
