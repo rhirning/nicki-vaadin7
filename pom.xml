@@ -16,6 +16,7 @@
 		<activemq-version>5.14.5</activemq-version>
 		<nicki.version>8.17</nicki.version>
 		<vaadin.version>7.7.16</vaadin.version>
+		<vaadin.plugin.version>7.7.16</vaadin.plugin.version>
 	</properties>
 	<inceptionYear>2020</inceptionYear>
 	<modules>
