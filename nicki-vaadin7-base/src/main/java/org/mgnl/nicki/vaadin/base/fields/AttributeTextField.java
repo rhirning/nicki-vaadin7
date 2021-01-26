@@ -32,9 +32,8 @@ import org.mgnl.nicki.vaadin.base.editor.DynamicObjectValueChangeListener;
 import org.mgnl.nicki.vaadin.base.listener.AttributeInputListener;
 
 import com.vaadin.server.Sizeable.Unit;
-import com.vaadin.v7.ui.AbstractField;
-import com.vaadin.v7.ui.Field;
-import com.vaadin.v7.ui.TextField;
+import com.vaadin.ui.AbstractField;
+import com.vaadin.ui.TextField;
 
 @SuppressWarnings("serial")
 public class AttributeTextField  extends BaseDynamicAttributeField implements DynamicAttributeField<String>, Serializable {
@@ -51,7 +50,7 @@ public class AttributeTextField  extends BaseDynamicAttributeField implements Dy
 		field.addValueChangeListener(new AttributeInputListener<String>(property, objectListener));
 	}
 
-	public Field<String> getComponent(boolean readOnly) {
+	public AbstractField<String> getComponent(boolean readOnly) {
 		field.setReadOnly(readOnly);
 		return field;
 	}

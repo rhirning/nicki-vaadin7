@@ -23,6 +23,7 @@ package org.mgnl.nicki.vaadin.base.fields;
 
 
 import java.io.Serializable;
+import java.util.Collection;
 
 import org.mgnl.nicki.core.objects.DynamicObject;
 import org.mgnl.nicki.vaadin.base.data.AttributeDataContainer;
@@ -32,21 +33,20 @@ import org.mgnl.nicki.vaadin.base.helper.UIHelper;
 import org.mgnl.nicki.vaadin.base.listener.AttributeInputListener;
 
 import com.vaadin.v7.data.Container;
-import com.vaadin.v7.ui.AbstractSelect;
-import com.vaadin.v7.ui.ComboBox;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 
 @SuppressWarnings("serial")
 public class AttributeSelectField extends BaseDynamicAttributeField implements DynamicAttributeField<String>, Serializable {
 
-	private ComboBox field;
+	private ComboBox<String> field;
 	private DataContainer<String> property;
 	public void init(String attributeName, DynamicObject dynamicObject, DynamicObjectValueChangeListener<String> objectListener) {
 
-		ComboBox select = new ComboBox(getName(dynamicObject, attributeName));
+		ComboBox<String> select = new ComboBox<String>(getName(dynamicObject, attributeName));
 //		select.setItemCaptionPropertyId("name");
 		UIHelper.setImmediate(select, true);
-		select.select(dynamicObject.getAttribute(attributeName));
+		select.setSelectedItem(dynamicObject.getAttribute(attributeName));
 		property = new AttributeDataContainer<String>(dynamicObject, attributeName);
 		select.setValue(property.getValue());
 		select.addValueChangeListener(new AttributeInputListener<String>(property, objectListener));
@@ -59,7 +59,7 @@ public class AttributeSelectField extends BaseDynamicAttributeField implements D
 	}
 
 	public void setOptions(Container options) {
-		((AbstractSelect) field).setContainerDataSource(options);
+		field.setItems((Collection<String>) options.getItemIds());
 		field.setValue(property.getValue());
 	}
 

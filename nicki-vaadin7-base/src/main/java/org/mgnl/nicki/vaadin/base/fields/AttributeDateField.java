@@ -23,8 +23,7 @@ package org.mgnl.nicki.vaadin.base.fields;
 
 
 import java.io.Serializable;
-import java.util.Date;
-
+import java.time.LocalDate;
 import org.mgnl.nicki.core.objects.DynamicObject;
 import org.mgnl.nicki.vaadin.base.data.AttributeDataContainer;
 import org.mgnl.nicki.vaadin.base.data.DataContainer;
@@ -32,26 +31,25 @@ import org.mgnl.nicki.vaadin.base.editor.DynamicObjectValueChangeListener;
 import org.mgnl.nicki.vaadin.base.listener.AttributeInputListener;
 
 import com.vaadin.server.Sizeable.Unit;
-import com.vaadin.v7.ui.AbstractField;
-import com.vaadin.v7.ui.DateField;
-import com.vaadin.v7.ui.Field;
+import com.vaadin.ui.AbstractField;
+import com.vaadin.ui.DateField;
 
 @SuppressWarnings("serial")
-public class AttributeDateField  extends BaseDynamicAttributeField implements DynamicAttributeField<Date>, Serializable {
+public class AttributeDateField  extends BaseDynamicAttributeField implements DynamicAttributeField<LocalDate>, Serializable {
 
-	private AbstractField<Date> field;
-	private DataContainer<Date> property;
-	public void init(String attributeName, DynamicObject dynamicObject, DynamicObjectValueChangeListener<Date> objectListener) {
+	private AbstractField<LocalDate> field;
+	private DataContainer<LocalDate> property;
+	public void init(String attributeName, DynamicObject dynamicObject, DynamicObjectValueChangeListener<LocalDate> objectListener) {
 
-		property = new AttributeDataContainer<Date>(dynamicObject, attributeName);
+		property = new AttributeDataContainer<LocalDate>(dynamicObject, attributeName);
 		field = new DateField(getName(dynamicObject, attributeName));
 		field.setHeight(2, Unit.EM);
 		field.setWidth("600px");
 		field.setValue(property.getValue());
-		field.addValueChangeListener(new AttributeInputListener<Date>(property, objectListener));
+		field.addValueChangeListener(new AttributeInputListener<LocalDate>(property, objectListener));
 	}
 
-	public Field<Date> getComponent(boolean readOnly) {
+	public AbstractField<LocalDate> getComponent(boolean readOnly) {
 		field.setReadOnly(readOnly);
 		return field;
 	}

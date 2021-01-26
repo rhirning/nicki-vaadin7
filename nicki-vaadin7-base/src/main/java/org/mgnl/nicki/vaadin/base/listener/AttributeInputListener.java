@@ -25,11 +25,12 @@ package org.mgnl.nicki.vaadin.base.listener;
 import org.mgnl.nicki.vaadin.base.data.DataContainer;
 import org.mgnl.nicki.vaadin.base.editor.DynamicObjectValueChangeListener;
 
-import com.vaadin.v7.data.Property.ValueChangeEvent;
-import com.vaadin.v7.data.Property.ValueChangeListener;
+import com.vaadin.data.HasValue.ValueChangeEvent;
+import com.vaadin.data.HasValue.ValueChangeListener;
+import com.vaadin.v7.data.Property;
 
 @SuppressWarnings("serial")
-public class AttributeInputListener<T> implements ValueChangeListener {
+public class AttributeInputListener<T> implements ValueChangeListener<T>, com.vaadin.v7.data.Property.ValueChangeListener {
 
 	private DataContainer<T> property;
 	private DynamicObjectValueChangeListener<T> objectListener;
@@ -39,8 +40,17 @@ public class AttributeInputListener<T> implements ValueChangeListener {
 		this.objectListener = objectListener;
 	}
 
-	public void valueChange(ValueChangeEvent event) {
-		@SuppressWarnings("unchecked")
+	public void valueChange(ValueChangeEvent<T> event) {
+		T value = event.getValue();
+		property.setValue(value);
+		property.getDynamicObject().setModified(true);
+		if (objectListener != null) {
+			objectListener.valueChange(property.getDynamicObject(), property.getAttributeName(), value);
+		}
+	}
+
+	@Override
+	public void valueChange(com.vaadin.v7.data.Property.ValueChangeEvent event) {
 		T value = (T) event.getProperty().getValue();
 		property.setValue(value);
 		property.getDynamicObject().setModified(true);
