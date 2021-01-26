@@ -34,8 +34,8 @@ import org.mgnl.nicki.vaadin.base.helper.UIHelper;
 
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.PopupDateField;
-import com.vaadin.ui.TextField;
+import com.vaadin.v7.ui.PopupDateField;
+import com.vaadin.v7.ui.TextField;
 
 public class ConfiguredTemplateConfigDialog extends CustomComponent implements TemplateConfigDialog {
 

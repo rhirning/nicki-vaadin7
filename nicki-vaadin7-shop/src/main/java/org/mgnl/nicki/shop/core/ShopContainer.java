@@ -29,7 +29,7 @@ import java.util.List;
 import org.mgnl.nicki.core.objects.DynamicObjectException;
 import org.mgnl.nicki.dynamic.objects.objects.Person;
 
-import com.vaadin.data.util.IndexedContainer;
+import com.vaadin.v7.data.util.IndexedContainer;
 
 public interface ShopContainer extends Serializable {
 	String PROPERTY_NAME = "name"; 

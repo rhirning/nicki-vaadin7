@@ -32,8 +32,8 @@ import org.mgnl.nicki.core.objects.DynamicObjectException;
 import org.mgnl.nicki.shop.base.objects.Catalog;
 import org.mgnl.nicki.shop.base.objects.CatalogArticle;
 
-import com.vaadin.data.Item;
-import com.vaadin.data.util.IndexedContainer;
+import com.vaadin.v7.data.Item;
+import com.vaadin.v7.data.util.IndexedContainer;
 
 @SuppressWarnings("serial")
 public class ArticleShopContainer implements ShopContainer{

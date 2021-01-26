@@ -25,7 +25,7 @@ package org.mgnl.nicki.vaadin.db.data;
 import org.mgnl.nicki.db.helper.BeanHelper;
 import org.mgnl.nicki.db.helper.Type;
 
-import com.vaadin.data.Property;
+import com.vaadin.v7.data.Property;
 
 import lombok.extern.slf4j.Slf4j;
 

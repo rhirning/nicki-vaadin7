@@ -25,8 +25,8 @@ package org.mgnl.nicki.vaadin.base.dialog;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.vaadin.data.Container;
-import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.v7.data.Container;
+import com.vaadin.v7.data.util.BeanItemContainer;
 import com.vaadin.ui.CustomComponent;
 
 public abstract class NavigationBase extends CustomComponent implements Navigation {

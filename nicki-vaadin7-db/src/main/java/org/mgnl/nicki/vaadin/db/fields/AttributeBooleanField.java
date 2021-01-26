@@ -30,9 +30,9 @@ import org.mgnl.nicki.vaadin.db.editor.DbBeanValueChangeListener;
 import org.mgnl.nicki.vaadin.db.listener.AttributeInputListener;
 
 import com.vaadin.server.Sizeable.Unit;
-import com.vaadin.ui.AbstractField;
-import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.Field;
+import com.vaadin.v7.ui.AbstractField;
+import com.vaadin.v7.ui.CheckBox;
+import com.vaadin.v7.ui.Field;
 
 @SuppressWarnings("serial")
 public class AttributeBooleanField  extends BaseDbBeanAttributeField implements DbBeanAttributeField, Serializable {

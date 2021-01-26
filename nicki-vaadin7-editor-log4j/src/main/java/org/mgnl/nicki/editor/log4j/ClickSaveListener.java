@@ -27,7 +27,7 @@ import org.apache.log4j.Logger;
 
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.ComboBox;
+import com.vaadin.v7.ui.ComboBox;
 import com.vaadin.ui.Notification;
 
 import lombok.extern.slf4j.Slf4j;

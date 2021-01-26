@@ -22,7 +22,7 @@ package org.mgnl.nicki.vaadin.base.components;
  */
 
 
-import com.vaadin.data.Property;
+import com.vaadin.v7.data.Property;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.TextField;
 

@@ -22,9 +22,9 @@ package org.mgnl.nicki.vaadin.base.fields;
  */
 
 
-import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.v7.data.Property.ValueChangeListener;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.Field;
+import com.vaadin.v7.ui.Field;
 
 public class SimpleField<T> implements NickiField<T> {
 

@@ -27,10 +27,10 @@ import java.util.Collection;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.vaadin.data.Container;
-import com.vaadin.data.Item;
-import com.vaadin.data.Property;
-import com.vaadin.data.util.IndexedContainer;
+import com.vaadin.v7.data.Container;
+import com.vaadin.v7.data.Item;
+import com.vaadin.v7.data.Property;
+import com.vaadin.v7.data.util.IndexedContainer;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 
@@ -82,6 +82,14 @@ public abstract class EditableContainer<T extends Editable> extends IndexedConta
 		@Override
 		public Class<? extends Component> getType() {
 			return this.getType();
+		}
+		@Override
+		public boolean isReadOnly() {
+			return super.isReadOnly();
+		}
+		@Override
+		public void setReadOnly(boolean readOnly) {
+			super.setReadOnly(readOnly);
 		}
 
 

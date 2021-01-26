@@ -25,8 +25,8 @@ package org.mgnl.nicki.vaadin.base.listener;
 import org.mgnl.nicki.vaadin.base.data.DataContainer;
 import org.mgnl.nicki.vaadin.base.editor.DynamicObjectValueChangeListener;
 
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.v7.data.Property.ValueChangeEvent;
+import com.vaadin.v7.data.Property.ValueChangeListener;
 
 @SuppressWarnings("serial")
 public class AttributeInputListener<T> implements ValueChangeListener {

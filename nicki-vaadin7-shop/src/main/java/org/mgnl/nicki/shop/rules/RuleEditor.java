@@ -38,7 +38,7 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import lombok.extern.slf4j.Slf4j;
 
-import com.vaadin.ui.NativeSelect;
+import com.vaadin.v7.ui.NativeSelect;
 
 @Slf4j
 @SuppressWarnings("serial")

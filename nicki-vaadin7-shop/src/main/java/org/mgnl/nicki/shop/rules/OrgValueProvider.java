@@ -37,10 +37,10 @@ import org.mgnl.nicki.vaadin.base.data.TreeContainer;
 import org.mgnl.nicki.vaadin.base.editor.DynamicObjectRoot;
 import org.mgnl.nicki.vaadin.base.editor.TreeSelector;
 
-import com.vaadin.ui.AbstractSelect;
+import com.vaadin.v7.ui.AbstractSelect;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.OptionGroup;
+import com.vaadin.v7.ui.OptionGroup;
 
 @SuppressWarnings("serial")
 public class OrgValueProvider extends BasicValueProvider implements ValueProviderComponent, Serializable {

@@ -25,9 +25,9 @@ package org.mgnl.nicki.vaadin.base.listener;
 import org.apache.commons.lang.StringUtils;
 import org.mgnl.nicki.core.objects.DynamicObject;
 
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.event.FieldEvents.TextChangeEvent;
+import com.vaadin.v7.data.Property.ValueChangeEvent;
+import com.vaadin.v7.data.Property.ValueChangeListener;
+import com.vaadin.v7.event.FieldEvents.TextChangeEvent;
 
 @SuppressWarnings("serial")
 public class ForeignKeyInputListener extends BaseAttributeListener implements ValueChangeListener {

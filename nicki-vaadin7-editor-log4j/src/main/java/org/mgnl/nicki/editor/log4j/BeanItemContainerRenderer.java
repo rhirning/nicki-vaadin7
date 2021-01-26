@@ -26,7 +26,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import org.apache.commons.io.IOUtils;
 import org.mgnl.nicki.core.helper.NameValue;
-import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.v7.data.util.BeanItemContainer;
 
 import lombok.extern.slf4j.Slf4j;
 

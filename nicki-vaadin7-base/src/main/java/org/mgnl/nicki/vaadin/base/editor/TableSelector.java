@@ -23,7 +23,7 @@ package org.mgnl.nicki.vaadin.base.editor;
 
 
 import com.vaadin.event.Action.Handler;
-import com.vaadin.ui.Table;
+import com.vaadin.v7.ui.Table;
 
 @SuppressWarnings("serial")
 public class TableSelector extends BasicNickiSelector {

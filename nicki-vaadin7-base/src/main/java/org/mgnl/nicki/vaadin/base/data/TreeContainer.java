@@ -34,9 +34,9 @@ import org.mgnl.nicki.core.data.EntryFilter;
 import org.mgnl.nicki.core.data.TreeData;
 import org.mgnl.nicki.vaadin.base.editor.Icon;
 
-import com.vaadin.data.Item;
-import com.vaadin.data.Property;
-import com.vaadin.data.util.HierarchicalContainer;
+import com.vaadin.v7.data.Item;
+import com.vaadin.v7.data.Property;
+import com.vaadin.v7.data.util.HierarchicalContainer;
 import com.vaadin.server.ThemeResource;
 
 @SuppressWarnings("serial")

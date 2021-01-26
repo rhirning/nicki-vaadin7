@@ -29,7 +29,7 @@ import org.mgnl.nicki.shop.base.inventory.InventoryArticle.STATUS;
 import org.mgnl.nicki.shop.base.objects.MultipleInstancesCatalogArticle;
 import org.mgnl.nicki.shop.base.objects.CatalogValueProvider.TYPE;
 import com.vaadin.event.Action;
-import com.vaadin.event.ItemClickEvent;
+import com.vaadin.v7.event.ItemClickEvent;
 import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.ui.UI;
 

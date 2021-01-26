@@ -24,7 +24,7 @@ package org.mgnl.nicki.vaadin.base.data;
 
 import org.mgnl.nicki.core.objects.DynamicObject;
 
-import com.vaadin.data.Property;
+import com.vaadin.v7.data.Property;
 
 import lombok.extern.slf4j.Slf4j;
 

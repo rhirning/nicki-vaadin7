@@ -22,8 +22,8 @@ package org.mgnl.nicki.vaadin.base.data;
  */
 
 
-import com.vaadin.shared.ui.datefield.Resolution;
-import com.vaadin.ui.DateField;
+import com.vaadin.v7.shared.ui.datefield.Resolution;
+import com.vaadin.v7.ui.DateField;
 
 public class DateHelper {
 

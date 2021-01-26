@@ -32,8 +32,8 @@ import org.mgnl.nicki.vaadin.base.editor.DynamicObjectValueChangeListener;
 import org.mgnl.nicki.vaadin.base.listener.BooleanAttributeInputListener;
 
 import com.vaadin.server.Sizeable.Unit;
-import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.Field;
+import com.vaadin.v7.ui.CheckBox;
+import com.vaadin.v7.ui.Field;
 
 @SuppressWarnings("serial")
 public class AttributeCheckbox extends BaseDynamicAttributeField implements DynamicAttributeField<String>, Serializable {

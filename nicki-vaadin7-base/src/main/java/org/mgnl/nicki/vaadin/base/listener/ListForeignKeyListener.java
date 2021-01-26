@@ -26,9 +26,9 @@ import java.util.List;
 
 import org.mgnl.nicki.core.objects.DynamicObject;
 
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.event.FieldEvents.TextChangeEvent;
+import com.vaadin.v7.data.Property.ValueChangeEvent;
+import com.vaadin.v7.data.Property.ValueChangeListener;
+import com.vaadin.v7.event.FieldEvents.TextChangeEvent;
 import com.vaadin.ui.AbstractComponentContainer;
 
 @SuppressWarnings("serial")

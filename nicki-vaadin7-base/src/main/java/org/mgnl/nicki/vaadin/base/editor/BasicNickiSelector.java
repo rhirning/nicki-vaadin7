@@ -27,12 +27,12 @@ import java.util.Collection;
 import org.mgnl.nicki.core.data.TreeData;
 import org.mgnl.nicki.vaadin.base.helper.UIHelper;
 
-import com.vaadin.data.Container;
-import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.ui.AbstractSelect;
+import com.vaadin.v7.data.Container;
+import com.vaadin.v7.data.Property.ValueChangeListener;
+import com.vaadin.v7.ui.AbstractSelect;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
-import com.vaadin.ui.Tree.ExpandListener;
+import com.vaadin.v7.ui.AbstractSelect.ItemCaptionMode;
+import com.vaadin.v7.ui.Tree.ExpandListener;
 
 import lombok.extern.slf4j.Slf4j;
 

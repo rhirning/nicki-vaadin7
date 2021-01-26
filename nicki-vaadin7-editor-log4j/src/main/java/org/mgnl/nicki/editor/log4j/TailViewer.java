@@ -46,7 +46,7 @@ import com.vaadin.ui.Notification.Type;
 import lombok.extern.slf4j.Slf4j;
 
 import com.vaadin.ui.Panel;
-import com.vaadin.ui.Table;
+import com.vaadin.v7.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 

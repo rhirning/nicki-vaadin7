@@ -24,8 +24,8 @@ package org.mgnl.nicki.editor.templates;
 
 import java.util.Map;
 
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.v7.data.Property.ValueChangeEvent;
+import com.vaadin.v7.data.Property.ValueChangeListener;
 
 @SuppressWarnings("serial")
 public class ParamInputListener implements ValueChangeListener {

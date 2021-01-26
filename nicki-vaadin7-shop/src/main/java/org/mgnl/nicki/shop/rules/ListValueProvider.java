@@ -30,8 +30,8 @@ import org.mgnl.nicki.ldap.helper.LdapHelper;
 import org.mgnl.nicki.ldap.helper.LdapHelper.LOGIC;
 import org.mgnl.nicki.shop.base.objects.CatalogArticle;
 
-import com.vaadin.ui.AbstractSelect;
-import com.vaadin.ui.ListSelect;
+import com.vaadin.v7.ui.AbstractSelect;
+import com.vaadin.v7.ui.ListSelect;
 
 public class ListValueProvider extends BasicValueProvider implements ValueProviderComponent {
 

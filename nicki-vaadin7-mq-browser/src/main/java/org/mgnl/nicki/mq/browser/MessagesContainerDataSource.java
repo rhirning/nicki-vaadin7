@@ -4,8 +4,8 @@ import java.util.Collection;
 
 import javax.jms.Message;
 
-import com.vaadin.data.Container;
-import com.vaadin.data.util.AbstractBeanContainer;
+import com.vaadin.v7.data.Container;
+import com.vaadin.v7.data.util.AbstractBeanContainer;
 
 
 @SuppressWarnings("serial")

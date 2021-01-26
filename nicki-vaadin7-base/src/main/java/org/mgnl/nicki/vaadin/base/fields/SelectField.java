@@ -22,8 +22,8 @@ package org.mgnl.nicki.vaadin.base.fields;
  */
 
 
-import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.ui.AbstractSelect;
+import com.vaadin.v7.data.Property.ValueChangeListener;
+import com.vaadin.v7.ui.AbstractSelect;
 import com.vaadin.ui.Component;
 
 public class SelectField implements NickiField<String> {

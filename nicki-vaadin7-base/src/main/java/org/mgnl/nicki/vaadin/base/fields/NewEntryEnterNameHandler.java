@@ -27,7 +27,7 @@ import java.io.Serializable;
 import org.apache.commons.lang.StringUtils;
 import org.mgnl.nicki.vaadin.base.components.EnterNameHandler;
 
-import com.vaadin.ui.Table;
+import com.vaadin.v7.ui.Table;
 
 @SuppressWarnings("serial")
 public class NewEntryEnterNameHandler extends EnterNameHandler implements Serializable {

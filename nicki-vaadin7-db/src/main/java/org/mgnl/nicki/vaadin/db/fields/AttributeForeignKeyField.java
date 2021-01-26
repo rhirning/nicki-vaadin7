@@ -30,8 +30,8 @@ import org.mgnl.nicki.vaadin.db.data.DataContainer;
 import org.mgnl.nicki.vaadin.db.editor.DbBeanValueChangeListener;
 import org.mgnl.nicki.vaadin.db.listener.AttributeInputListener;
 
-import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.Field;
+import com.vaadin.v7.ui.ComboBox;
+import com.vaadin.v7.ui.Field;
 
 @SuppressWarnings("serial")
 public class AttributeForeignKeyField  extends BaseDbBeanAttributeField implements DbBeanAttributeField, Serializable {

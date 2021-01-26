@@ -28,7 +28,7 @@ import org.apache.commons.lang.StringUtils;
 import org.mgnl.nicki.core.objects.DynamicObject;
 import org.mgnl.nicki.vaadin.base.editor.ValidationException;
 
-import com.vaadin.ui.Field;
+import com.vaadin.v7.ui.Field;
 
 public class Validation {
 	public static void notNull(Field<?> component, DynamicObject dynamicObject, String error) throws ValidationException {

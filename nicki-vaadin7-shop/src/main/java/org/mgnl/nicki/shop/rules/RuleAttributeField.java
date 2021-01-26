@@ -31,6 +31,7 @@ import org.mgnl.nicki.dynamic.objects.objects.Person;
 import org.mgnl.nicki.core.objects.DynamicObject;
 import org.mgnl.nicki.shop.base.objects.CatalogArticle;
 import org.mgnl.nicki.shop.base.objects.Selector;
+import org.mgnl.nicki.vaadin.base.components.VaadinHorizontalLayout;
 import org.mgnl.nicki.vaadin.base.editor.DynamicObjectValueChangeListener;
 import org.mgnl.nicki.vaadin.base.fields.BaseDynamicAttributeField;
 import org.mgnl.nicki.vaadin.base.fields.DynamicAttributeField;
@@ -39,10 +40,10 @@ import org.mgnl.nicki.vaadin.base.helper.UIHelper;
 import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Table;
+import com.vaadin.v7.ui.HorizontalLayout;
+import com.vaadin.v7.ui.Table;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.v7.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 @SuppressWarnings("serial")
@@ -50,7 +51,7 @@ public class RuleAttributeField extends BaseDynamicAttributeField implements Dyn
 
 	private CatalogArticle article;
 	private String attributeName;
-	private HorizontalLayout mainLayout;
+	private VaadinHorizontalLayout mainLayout;
 	private Table entries;
 	private Button newEntryButton;
 	private Button deleteEntryButton;
@@ -150,7 +151,7 @@ public class RuleAttributeField extends BaseDynamicAttributeField implements Dyn
 	}
 	
 	private HorizontalLayout buildMainLayout() {
-		mainLayout = new HorizontalLayout();
+		mainLayout = new VaadinHorizontalLayout();
 		mainLayout.setHeight("160px");
 		mainLayout.setSpacing(true);
 		

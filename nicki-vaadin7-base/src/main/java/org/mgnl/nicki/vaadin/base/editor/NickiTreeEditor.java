@@ -45,7 +45,7 @@ import org.mgnl.nicki.vaadin.base.components.SimpleNewClassEditor;
 import org.mgnl.nicki.vaadin.base.data.TreeContainer;
 
 import com.vaadin.event.Action;
-import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
+import com.vaadin.v7.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalSplitPanel;

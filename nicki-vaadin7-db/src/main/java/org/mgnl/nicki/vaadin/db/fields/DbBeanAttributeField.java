@@ -25,10 +25,11 @@ package org.mgnl.nicki.vaadin.db.fields;
 import org.mgnl.nicki.vaadin.db.editor.DbBeanValueChangeListener;
 
 import com.vaadin.ui.Component;
+import com.vaadin.v7.ui.Field;
 
 public interface DbBeanAttributeField {
 
-	Component getComponent(boolean readOnly);
+	Field<?> getComponent(boolean readOnly);
 
 	void init(String attributeName, Object bean,
 			DbBeanValueChangeListener objectListener, String dbContextName);

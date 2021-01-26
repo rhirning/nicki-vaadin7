@@ -32,7 +32,7 @@ import org.mgnl.nicki.shop.base.inventory.Inventory;
 import org.mgnl.nicki.shop.base.inventory.InventoryArticle;
 import org.mgnl.nicki.shop.base.inventory.InventoryArticle.STATUS;
 import org.mgnl.nicki.shop.base.objects.MultipleInstancesCatalogArticle;
-import com.vaadin.data.Item;
+import com.vaadin.v7.data.Item;
 import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Button;
@@ -41,7 +41,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Table;
+import com.vaadin.v7.ui.Table;
 
 @SuppressWarnings("serial")
 public class TwoTablesRenderer extends BaseTableRenderer implements ShopRenderer {

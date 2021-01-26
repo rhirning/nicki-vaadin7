@@ -30,11 +30,11 @@ import org.mgnl.nicki.vaadin.db.data.DataContainer;
 import org.mgnl.nicki.vaadin.db.editor.DbBeanValueChangeListener;
 import org.mgnl.nicki.vaadin.db.listener.AttributeInputListener;
 
-import com.vaadin.data.util.converter.StringToFloatConverter;
+import com.vaadin.v7.data.util.converter.StringToFloatConverter;
 import com.vaadin.server.Sizeable.Unit;
-import com.vaadin.ui.AbstractField;
-import com.vaadin.ui.Field;
-import com.vaadin.ui.TextField;
+import com.vaadin.v7.ui.AbstractField;
+import com.vaadin.v7.ui.Field;
+import com.vaadin.v7.ui.TextField;
 
 @SuppressWarnings("serial")
 public class AttributeFloatField  extends BaseDbBeanAttributeField implements DbBeanAttributeField, Serializable {

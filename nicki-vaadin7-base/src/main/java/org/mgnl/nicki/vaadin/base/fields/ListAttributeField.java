@@ -38,7 +38,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.TextField;
+import com.vaadin.v7.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
@@ -73,7 +73,7 @@ public class ListAttributeField extends BaseDynamicAttributeField implements Dyn
 	}
 
 	public ComponentContainer getComponent(boolean readOnly) {
-		container.setReadOnly(readOnly);
+		//container.setReadOnly(readOnly);
 		return container;
 	}
 }

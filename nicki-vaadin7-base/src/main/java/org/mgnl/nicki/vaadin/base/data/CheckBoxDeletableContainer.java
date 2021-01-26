@@ -27,11 +27,11 @@ import java.util.Collection;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.vaadin.data.Container;
-import com.vaadin.data.Item;
-import com.vaadin.data.Property;
-import com.vaadin.data.util.IndexedContainer;
-import com.vaadin.ui.CheckBox;
+import com.vaadin.v7.data.Container;
+import com.vaadin.v7.data.Item;
+import com.vaadin.v7.data.Property;
+import com.vaadin.v7.data.util.IndexedContainer;
+import com.vaadin.v7.ui.CheckBox;
 
 public class CheckBoxDeletableContainer<T extends Deletable> extends IndexedContainer implements Container {
 	private static final long serialVersionUID = -5658914311396563600L;

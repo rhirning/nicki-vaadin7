@@ -26,7 +26,7 @@ import org.mgnl.nicki.core.context.NickiContext;
 import org.mgnl.nicki.core.data.DataProvider;
 import org.mgnl.nicki.vaadin.base.application.NickiApplication;
 
-import com.vaadin.ui.Table;
+import com.vaadin.v7.ui.Table;
 
 @SuppressWarnings("serial")
 public class TableEditor extends NickiTreeEditor {

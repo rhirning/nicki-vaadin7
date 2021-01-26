@@ -26,8 +26,8 @@ package org.mgnl.nicki.shop.renderer;
 import org.mgnl.nicki.core.helper.DataHelper;
 import org.mgnl.nicki.shop.base.objects.CatalogArticle;
 import org.mgnl.nicki.shop.base.inventory.Inventory;
-import com.vaadin.data.Property;
-import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.v7.data.Property;
+import com.vaadin.v7.data.Property.ValueChangeEvent;
 
 
 public class CheckBoxChangeListener implements Property.ValueChangeListener {

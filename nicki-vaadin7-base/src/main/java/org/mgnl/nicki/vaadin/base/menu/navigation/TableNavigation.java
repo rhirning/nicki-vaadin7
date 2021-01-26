@@ -28,8 +28,8 @@ import org.mgnl.nicki.vaadin.base.helper.UIHelper;
 import org.mgnl.nicki.vaadin.base.menu.application.MainView;
 
 import com.vaadin.ui.Panel;
-import com.vaadin.ui.Table;
-import com.vaadin.ui.Table.ColumnHeaderMode;
+import com.vaadin.v7.ui.Table;
+import com.vaadin.v7.ui.Table.ColumnHeaderMode;
 import com.vaadin.ui.VerticalLayout;
 
 public class TableNavigation extends NavigationBase implements Navigation {

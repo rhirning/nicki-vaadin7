@@ -24,13 +24,13 @@ package org.mgnl.nicki.vaadin.base.editor;
 
 import org.mgnl.nicki.core.objects.DynamicObject;
 
-import com.vaadin.event.DataBoundTransferable;
+import com.vaadin.v7.event.DataBoundTransferable;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptAll;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
 import com.vaadin.shared.ui.dd.VerticalDropLocation;
-import com.vaadin.ui.AbstractSelect.AbstractSelectTargetDetails;
+import com.vaadin.v7.ui.AbstractSelect.AbstractSelectTargetDetails;
 import com.vaadin.ui.Notification;
 
 import lombok.extern.slf4j.Slf4j;

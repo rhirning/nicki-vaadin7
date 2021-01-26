@@ -28,7 +28,7 @@ import java.util.Locale;
 
 import org.mgnl.nicki.core.helper.DataHelper;
 
-import com.vaadin.data.util.converter.StringToDateConverter;
+import com.vaadin.v7.data.util.converter.StringToDateConverter;
 
 @SuppressWarnings("serial")
 public class DateToStringConverter extends StringToDateConverter {

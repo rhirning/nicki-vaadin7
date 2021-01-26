@@ -27,12 +27,12 @@ import java.util.Collection;
 
 import org.mgnl.nicki.core.data.TreeData;
 
-import com.vaadin.data.Container;
-import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.v7.data.Container;
+import com.vaadin.v7.data.Property.ValueChangeListener;
 import com.vaadin.event.Action.Handler;
-import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
+import com.vaadin.v7.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.Tree.ExpandListener;
+import com.vaadin.v7.ui.Tree.ExpandListener;
 
 public interface NickiSelect extends Serializable {
 

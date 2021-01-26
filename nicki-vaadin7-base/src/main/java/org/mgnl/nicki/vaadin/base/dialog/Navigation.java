@@ -24,7 +24,7 @@ package org.mgnl.nicki.vaadin.base.dialog;
 
 import java.util.List;
 
-import com.vaadin.data.Container;
+import com.vaadin.v7.data.Container;
 import com.vaadin.ui.Component;
 
 public interface Navigation extends Component {

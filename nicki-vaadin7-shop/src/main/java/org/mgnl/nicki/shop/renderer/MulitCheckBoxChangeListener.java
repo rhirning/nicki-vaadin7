@@ -27,8 +27,8 @@ import org.mgnl.nicki.core.helper.DataHelper;
 import org.mgnl.nicki.shop.base.inventory.Inventory;
 import org.mgnl.nicki.shop.base.inventory.InventoryArticle;
 
-import com.vaadin.data.Property;
-import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.v7.data.Property;
+import com.vaadin.v7.data.Property.ValueChangeEvent;
 
 
 public class MulitCheckBoxChangeListener implements Property.ValueChangeListener {

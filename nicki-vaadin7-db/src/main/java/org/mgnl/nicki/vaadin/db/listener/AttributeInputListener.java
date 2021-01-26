@@ -27,9 +27,9 @@ import org.mgnl.nicki.vaadin.db.editor.DbBeanValueChangeListener;
  */
 
 
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.data.util.converter.AbstractStringToNumberConverter;
+import com.vaadin.v7.data.Property.ValueChangeEvent;
+import com.vaadin.v7.data.Property.ValueChangeListener;
+import com.vaadin.v7.data.util.converter.AbstractStringToNumberConverter;
 
 @SuppressWarnings("serial")
 public class AttributeInputListener<T> implements ValueChangeListener {

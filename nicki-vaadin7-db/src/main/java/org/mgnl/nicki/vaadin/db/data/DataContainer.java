@@ -24,7 +24,7 @@ package org.mgnl.nicki.vaadin.db.data;
 
 import java.io.Serializable;
 
-import com.vaadin.data.Property;
+import com.vaadin.v7.data.Property;
 
 public interface DataContainer<T> extends Property<T>, Serializable{
 
