@@ -145,6 +145,16 @@ public class DbBeanViewer extends CustomComponent implements NewClassEditor, Cla
 		return true;
 	}
 
+	@Override
+	public void setReadOnly(boolean readOnly) {
+		super.setReadOnly(readOnly);
+	}
+
+	@Override
+	public boolean isReadOnly() {
+		return super.isReadOnly();
+	}
+
 	public boolean isCreate() {
 		return create;
 	}
