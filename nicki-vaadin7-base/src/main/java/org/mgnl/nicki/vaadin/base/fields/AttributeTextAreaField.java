@@ -45,7 +45,6 @@ public class AttributeTextAreaField extends BaseDynamicAttributeField implements
 		field.setWidth("600px");
 		field.setHeight("100px");
 		field.setValue((String) property.getValue());
-		field.setImmediate(false);
 		field.addValueChangeListener(new AttributeInputListener<String>(property, objectListener));
 	}
 

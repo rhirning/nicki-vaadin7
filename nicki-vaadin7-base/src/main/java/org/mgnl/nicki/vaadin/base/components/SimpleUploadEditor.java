@@ -29,6 +29,7 @@ import org.mgnl.nicki.core.i18n.I18n;
 import org.mgnl.nicki.core.objects.DynamicObject;
 import org.mgnl.nicki.vaadin.base.editor.LinkResource;
 import org.mgnl.nicki.vaadin.base.editor.PropertyStreamSource;
+import org.mgnl.nicki.vaadin.base.helper.UIHelper;
 
 import com.vaadin.server.StreamResource.StreamSource;
 import com.vaadin.ui.CustomComponent;
@@ -84,7 +85,6 @@ public class SimpleUploadEditor extends CustomComponent implements Receiver, Suc
 	private HorizontalLayout buildFileLayout() {
 		// common part: create layout
 		fileLayout = new HorizontalLayout();
-		fileLayout.setImmediate(false);
 		fileLayout.setWidth("-1px");
 		fileLayout.setHeight("-1px");
 		fileLayout.setMargin(true);
@@ -93,14 +93,13 @@ public class SimpleUploadEditor extends CustomComponent implements Receiver, Suc
 		// link
 		link = new Link();
 		link.setCaption("Link");
-		link.setImmediate(false);
 		link.setWidth("-1px");
 		link.setHeight("-1px");
 		fileLayout.addComponent(link);
 		
 		// upload_1
 		upload = new Upload();
-		upload.setImmediate(true);
+		UIHelper.setImmediate(upload, true);
 		upload.setWidth("-1px");
 		upload.setHeight("-1px");
 		fileLayout.addComponent(upload);

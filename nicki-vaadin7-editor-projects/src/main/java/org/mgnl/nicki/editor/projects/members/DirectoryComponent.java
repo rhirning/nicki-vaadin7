@@ -90,7 +90,6 @@ public class DirectoryComponent extends CustomComponent {
 	private VerticalLayout buildMainLayout() {
 		// common part: create layout
 		mainLayout = new VerticalLayout();
-		mainLayout.setImmediate(false);
 		mainLayout.setWidth("100%");
 		mainLayout.setHeight("-1px");
 		
@@ -110,14 +109,12 @@ public class DirectoryComponent extends CustomComponent {
 	private HorizontalLayout buildHorizontalLayout_1() {
 		// common part: create layout
 		horizontalLayout_1 = new HorizontalLayout();
-		horizontalLayout_1.setImmediate(false);
 		horizontalLayout_1.setWidth("100.0%");
 		horizontalLayout_1.setHeight("100.0%");
 		horizontalLayout_1.setMargin(false);
 		
 		// directoryLabel
 		directoryLabel = new Label();
-		directoryLabel.setImmediate(false);
 		directoryLabel.setWidth("200px");
 		directoryLabel.setHeight("-1px");
 		directoryLabel.setValue("Verzeichnis");
@@ -125,7 +122,6 @@ public class DirectoryComponent extends CustomComponent {
 		
 		// rights
 		rights = new OptionGroup();
-		rights.setImmediate(false);
 		rights.setWidth("-1px");
 		rights.setHeight("-1px");
 		horizontalLayout_1.addComponent(rights);

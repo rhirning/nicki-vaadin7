@@ -25,6 +25,7 @@ package org.mgnl.nicki.vaadin.base.editor;
 import java.util.Collection;
 
 import org.mgnl.nicki.core.data.TreeData;
+import org.mgnl.nicki.vaadin.base.helper.UIHelper;
 
 import com.vaadin.data.Container;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -53,7 +54,7 @@ public abstract class BasicNickiSelector implements NickiSelect {
 	}
 
 	public void setImmediate(boolean immediate) {
-		component.setImmediate(immediate);
+		UIHelper.setImmediate(component, immediate);
 	}
 
 	public TreeData getValue() {

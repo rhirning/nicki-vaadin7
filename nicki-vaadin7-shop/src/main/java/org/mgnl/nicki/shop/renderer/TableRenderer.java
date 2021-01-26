@@ -34,6 +34,7 @@ import org.mgnl.nicki.shop.base.inventory.InventoryArticle;
 import org.mgnl.nicki.shop.base.inventory.InventoryArticle.STATUS;
 import org.mgnl.nicki.shop.base.objects.MultipleInstancesCatalogArticle;
 import org.mgnl.nicki.vaadin.base.editor.Icon;
+import org.mgnl.nicki.vaadin.base.helper.UIHelper;
 
 import com.vaadin.data.Item;
 import com.vaadin.server.Sizeable.Unit;
@@ -90,7 +91,7 @@ public class TableRenderer extends BaseTableRenderer implements ShopRenderer {
 			} else {
 		        Button button = new Button("+");
 		        button.setData(article);
-		        button.setImmediate(true);
+		        UIHelper.setImmediate(button, true);
 		        button.setWidth("-1px");
 				if (article.hasDescription()) {
 					button.setIcon(Icon.HELP.getResource());
@@ -151,7 +152,7 @@ public class TableRenderer extends BaseTableRenderer implements ShopRenderer {
 		CheckBox checkBox = new CheckBox();
 		CatalogArticle article = iArticle.getArticle();
 		checkBox.setData(iArticle);
-		checkBox.setImmediate(true);
+		UIHelper.setImmediate(checkBox, true);
 		checkBox.setWidth("-1px");
 		if (article.hasDescription()) {
 			checkBox.setIcon(Icon.HELP.getResource());
@@ -182,7 +183,7 @@ public class TableRenderer extends BaseTableRenderer implements ShopRenderer {
 		CheckBox checkBox = new CheckBox();
 		checkBox.setData(article);
 
-		checkBox.setImmediate(true);
+		UIHelper.setImmediate(checkBox, true);
 		checkBox.setWidth("-1px");
 		if (article.hasDescription()) {
 			checkBox.setIcon(Icon.HELP.getResource());

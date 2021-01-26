@@ -34,6 +34,7 @@ import org.mgnl.nicki.shop.base.objects.Selector;
 import org.mgnl.nicki.vaadin.base.editor.DynamicObjectValueChangeListener;
 import org.mgnl.nicki.vaadin.base.fields.BaseDynamicAttributeField;
 import org.mgnl.nicki.vaadin.base.fields.DynamicAttributeField;
+import org.mgnl.nicki.vaadin.base.helper.UIHelper;
 
 import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.ui.Button;
@@ -160,7 +161,7 @@ public class RuleAttributeField extends BaseDynamicAttributeField implements Dyn
 		entries = new Table();
 		entries.setWidth("600px");
 		entries.setHeight("100%");
-		entries.setImmediate(true);
+		UIHelper.setImmediate(entries, true);
 		mainLayout.addComponent(entries);
 		
 		VerticalLayout verticalLayout = new VerticalLayout();
@@ -171,7 +172,6 @@ public class RuleAttributeField extends BaseDynamicAttributeField implements Dyn
 		newEntryButton.setWidth("-1px");
 		newEntryButton.setHeight("-1px");
 		newEntryButton.setCaption("Neu");
-		newEntryButton.setImmediate(false);
 		verticalLayout.addComponent(newEntryButton);
 		
 		// deleteEntryButton
@@ -179,7 +179,6 @@ public class RuleAttributeField extends BaseDynamicAttributeField implements Dyn
 		deleteEntryButton.setWidth("-1px");
 		deleteEntryButton.setHeight("-1px");
 		deleteEntryButton.setCaption("Löschen");
-		deleteEntryButton.setImmediate(false);
 		verticalLayout.addComponent(deleteEntryButton);
 		
 		// testButton
@@ -187,7 +186,6 @@ public class RuleAttributeField extends BaseDynamicAttributeField implements Dyn
 		testButton.setWidth("-1px");
 		testButton.setHeight("-1px");
 		testButton.setCaption("Test");
-		testButton.setImmediate(false);
 		verticalLayout.addComponent(testButton);
 		
 		return mainLayout;

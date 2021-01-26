@@ -48,7 +48,6 @@ public class AttributeBooleanField  extends BaseDbBeanAttributeField implements 
 		if (property != null && property.getValue() != null) {
 			field.setValue(property.getValue());
 		}
-		field.setImmediate(false);
 		field.addValueChangeListener(new AttributeInputListener<Boolean>(property, objectListener, null, null));
 	}
 

@@ -24,6 +24,7 @@ package org.mgnl.nicki.vaadin.db.fields;
 
 import java.io.Serializable;
 
+import org.mgnl.nicki.vaadin.base.helper.UIHelper;
 import org.mgnl.nicki.vaadin.db.data.AttributeDataContainer;
 import org.mgnl.nicki.vaadin.db.data.DataContainer;
 import org.mgnl.nicki.vaadin.db.editor.DbBeanValueChangeListener;
@@ -49,7 +50,7 @@ public class AttributeFloatField  extends BaseDbBeanAttributeField implements Db
 		if (property != null && property.getValue() != null) {
 			field.setValue(Float.toString(property.getValue()));
 		}
-		field.setImmediate(true);
+		UIHelper.setImmediate(field, true);
 		field.addValueChangeListener(new AttributeInputListener<Float>(property, objectListener, new StringToFloatConverter(), 1f));
 	}
 

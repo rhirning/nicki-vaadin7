@@ -24,6 +24,7 @@ package org.mgnl.nicki.vaadin.base.menu.navigation;
 
 import java.util.List;
 
+import org.mgnl.nicki.vaadin.base.helper.UIHelper;
 import org.mgnl.nicki.vaadin.base.menu.application.MainView;
 
 import com.vaadin.ui.Panel;
@@ -54,7 +55,7 @@ public class TableNavigation extends NavigationBase implements Navigation {
 		layout.addComponent(panel);
 		panel.addClickListener(event -> restart());
 		table = new Table();
-		table.setImmediate(true);
+		UIHelper.setImmediate(table, true);
 		table.setSelectable(true);
 		table.setNullSelectionAllowed(false);
 		table.addContainerProperty("navigationCaption", String.class, null);

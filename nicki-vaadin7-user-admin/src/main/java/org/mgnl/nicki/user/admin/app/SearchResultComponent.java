@@ -54,7 +54,6 @@ public class SearchResultComponent extends CustomComponent {
 	private VerticalLayout buildMainLayout() {
 		// common part: create layout
 		mainLayout = new VerticalLayout();
-		mainLayout.setImmediate(false);
 		mainLayout.setWidth("100%");
 		mainLayout.setHeight("100%");
 		mainLayout.setMargin(false);
@@ -65,7 +64,6 @@ public class SearchResultComponent extends CustomComponent {
 		
 		// table_1
 		table_1 = new Table();
-		table_1.setImmediate(false);
 		table_1.setWidth("100.0%");
 		table_1.setHeight("100.0%");
 		mainLayout.addComponent(table_1);

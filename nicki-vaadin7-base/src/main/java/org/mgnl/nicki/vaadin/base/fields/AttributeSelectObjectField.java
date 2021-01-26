@@ -29,6 +29,7 @@ import org.mgnl.nicki.core.objects.DynamicObject;
 import org.mgnl.nicki.vaadin.base.data.DataContainer;
 import org.mgnl.nicki.vaadin.base.data.ReferenceAttributeDataContainer;
 import org.mgnl.nicki.vaadin.base.editor.DynamicObjectValueChangeListener;
+import org.mgnl.nicki.vaadin.base.helper.UIHelper;
 import org.mgnl.nicki.vaadin.base.listener.AttributeInputListener;
 
 import com.vaadin.data.Container;
@@ -47,7 +48,7 @@ public class AttributeSelectObjectField extends BaseDynamicAttributeField implem
 		NativeSelect select = new NativeSelect(getName(dynamicObject, attributeName));
 		select.setContainerDataSource(getOptions(dynamicObject, dynamicObject.getModel().getDynamicAttribute(attributeName)));
 		select.setItemCaptionPropertyId("name");
-		select.setImmediate(true);
+		UIHelper.setImmediate(select, true);
 		select.select(dynamicObject.getAttribute(attributeName));
 		property = new ReferenceAttributeDataContainer(dynamicObject, attributeName);
 		select.setValue(property.getValue());

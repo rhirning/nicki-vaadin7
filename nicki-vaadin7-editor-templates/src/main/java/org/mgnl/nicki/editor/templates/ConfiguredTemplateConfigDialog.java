@@ -30,6 +30,7 @@ import org.mgnl.nicki.dynamic.objects.objects.Template;
 import org.mgnl.nicki.template.engine.TemplateHelper;
 import org.mgnl.nicki.template.engine.TemplateParameter;
 import org.mgnl.nicki.vaadin.base.data.DateHelper;
+import org.mgnl.nicki.vaadin.base.helper.UIHelper;
 
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.FormLayout;
@@ -58,7 +59,6 @@ public class ConfiguredTemplateConfigDialog extends CustomComponent implements T
 	private FormLayout buildMainLayout() {
 		// common part: create layout
 		mainLayout = new FormLayout();
-		mainLayout.setImmediate(false);
 		mainLayout.setWidth("100%");
 		mainLayout.setHeight("100%");
 		mainLayout.setMargin(false);
@@ -74,7 +74,7 @@ public class ConfiguredTemplateConfigDialog extends CustomComponent implements T
 					if (StringUtils.equalsIgnoreCase("date", templateParameter.getDataType())) {
 						PopupDateField field = new PopupDateField();
 						field.setCaption(templateParameter.getDisplayName());
-						field.setImmediate(true);
+						UIHelper.setImmediate(field, true);
 						field.setWidth("-1px");
 						field.setHeight("-1px");
 						field.setInvalidAllowed(false);
@@ -84,7 +84,7 @@ public class ConfiguredTemplateConfigDialog extends CustomComponent implements T
 					} else if (StringUtils.equalsIgnoreCase("string", templateParameter.getDataType())) {
 						TextField field = new TextField();
 						field.setCaption(templateParameter.getDisplayName());
-						field.setImmediate(true);
+						UIHelper.setImmediate(field, true);
 						field.setWidth("-1px");
 						field.setHeight("-1px");
 						field.setInvalidAllowed(false);

@@ -55,7 +55,6 @@ public class AttributeIntegerField  extends BaseDbBeanAttributeField implements 
 				field.setCaption(getName(bean, attributeName) + ": " +foreignValue);
 			}
 		}
-		field.setImmediate(false);
 		field.addValueChangeListener(new AttributeInputListener<Integer>(property, objectListener, new StringToIntegerConverter(), 1));
 	}
 

@@ -116,7 +116,6 @@ public class PreviewTemplate extends BaseTreeAction {
 	private VerticalLayout buildMainLayout() {
 		// common part: create layout
 		mainLayout = new VerticalLayout();
-		mainLayout.setImmediate(false);
 		mainLayout.setWidth("100%");
 		mainLayout.setHeight("100%");
 		mainLayout.setMargin(true);
@@ -127,7 +126,6 @@ public class PreviewTemplate extends BaseTreeAction {
 		
 		// result
 		result = new TextArea();
-		result.setImmediate(false);
 		result.setWidth("100.0%");
 		result.setHeight("100.0%");
 		mainLayout.addComponent(result);

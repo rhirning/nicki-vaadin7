@@ -44,7 +44,6 @@ public class ListValueProvider extends BasicValueProvider implements ValueProvid
 		
 		value = new ListSelect();
 		value.setCaption(I18n.getText(getI18nBase() + ".value.title"));
-		value.setImmediate(false);
 		value.setWidth("200px");
 		value.setHeight("200px");
 

@@ -36,7 +36,6 @@ public class ExcelEditor extends CustomComponent {
 	public ExcelEditor(String messageBase, Template template) {
 		// common part: create layout
 		VerticalLayout mainLayout = new VerticalLayout();
-		mainLayout.setImmediate(false);
 		mainLayout.setWidth("100%");
 		mainLayout.setHeight("100%");
 		mainLayout.setMargin(false);

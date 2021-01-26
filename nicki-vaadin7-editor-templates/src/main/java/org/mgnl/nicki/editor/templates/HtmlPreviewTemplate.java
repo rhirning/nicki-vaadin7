@@ -94,7 +94,6 @@ public class HtmlPreviewTemplate extends BaseTreeAction {
 	private VerticalLayout buildMainLayout() {
 		// common part: create layout
 		mainLayout = new VerticalLayout();
-		mainLayout.setImmediate(false);
 		mainLayout.setWidth("100%");
 		mainLayout.setHeight("100%");
 		mainLayout.setMargin(true);
@@ -105,7 +104,6 @@ public class HtmlPreviewTemplate extends BaseTreeAction {
 		
 		// result
 		result = new BrowserFrame();
-		result.setImmediate(false);
 		result.setWidth("100.0%");
 		result.setHeight("100.0%");
 		mainLayout.addComponent(result);

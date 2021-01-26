@@ -66,7 +66,6 @@ public class UserView extends CustomComponent implements View, SearchDialog {
 	private VerticalLayout buildMainLayout() {
 		// common part: create layout
 		mainLayout = new VerticalLayout();
-		mainLayout.setImmediate(false);
 		mainLayout.setWidth("100%");
 		mainLayout.setHeight("100%");
 		mainLayout.setMargin(false);
@@ -91,14 +90,12 @@ public class UserView extends CustomComponent implements View, SearchDialog {
 	private HorizontalLayout buildSearchLayout() {
 		// common part: create layout
 		searchLayout = new HorizontalLayout();
-		searchLayout.setImmediate(false);
 		searchLayout.setWidth("100.0%");
 		searchLayout.setHeight("-1px");
 		searchLayout.setMargin(false);
 		
 		// searchComponent_1
 		searchComponent = new SearchComponent();
-		searchComponent.setImmediate(false);
 		searchComponent.setWidth("100.0%");
 		searchComponent.setHeight("-1px");
 		searchLayout.addComponent(searchComponent);
@@ -110,14 +107,12 @@ public class UserView extends CustomComponent implements View, SearchDialog {
 	private HorizontalLayout buildResultLayout() {
 		// common part: create layout
 		resultLayout = new HorizontalLayout();
-		resultLayout.setImmediate(false);
 		resultLayout.setWidth("100.0%");
 		resultLayout.setHeight("100.0%");
 		resultLayout.setMargin(false);
 		
 		// searchResultComponent_1
 		searchResultComponent = new SearchResultComponent();
-		searchResultComponent.setImmediate(false);
 		searchResultComponent.setWidth("100.0%");
 		searchResultComponent.setHeight("100.0%");
 		resultLayout.addComponent(searchResultComponent);

@@ -120,7 +120,6 @@ public class CartViewer extends CustomComponent {
 	private VerticalLayout buildMainLayout() {
 		// common part: create layout
 		mainLayout = new VerticalLayout();
-		mainLayout.setImmediate(false);
 		mainLayout.setWidth("100%");
 		mainLayout.setHeight("100%");
 		mainLayout.setMargin(true);
@@ -133,7 +132,6 @@ public class CartViewer extends CustomComponent {
 		// recipient
 		recipient = new Label();
 		recipient.setCaption("Empfänger");
-		recipient.setImmediate(false);
 		recipient.setWidth("-1px");
 		recipient.setHeight("-1px");
 		recipient.setValue("recipient");
@@ -141,7 +139,6 @@ public class CartViewer extends CustomComponent {
 		
 		// cartEntries
 		cartEntries = new Table();
-		cartEntries.setImmediate(false);
 		cartEntries.setWidth("100.0%");
 		cartEntries.setHeight("100.0%");
 		mainLayout.addComponent(cartEntries);

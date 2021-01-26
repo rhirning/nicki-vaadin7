@@ -87,7 +87,6 @@ public class NickiProgressComponent extends CustomComponent implements NickiProg
 	private VerticalLayout buildMainLayout() {
 		// common part: create layout
 		mainLayout = new VerticalLayout();
-		mainLayout.setImmediate(false);
 		mainLayout.setWidth("100%");
 		mainLayout.setHeight("-1px");
 		mainLayout.setMargin(true);
@@ -99,7 +98,6 @@ public class NickiProgressComponent extends CustomComponent implements NickiProg
 
 		// title
 		title = new Label();
-		title.setImmediate(false);
 		title.setWidth("-1px");
 		title.setHeight("-1px");
 		title.setValue("title");
@@ -108,7 +106,6 @@ public class NickiProgressComponent extends CustomComponent implements NickiProg
 
 		// progress
 		progress = new ProgressBar();
-		progress.setImmediate(false);
 		progress.setWidth("-1px");
 		progress.setHeight("-1px");
 		mainLayout.addComponent(progress);
@@ -116,7 +113,6 @@ public class NickiProgressComponent extends CustomComponent implements NickiProg
 
 		// progressLabel
 		progressLabel = new Label();
-		progressLabel.setImmediate(false);
 		progressLabel.setWidth("-1px");
 		progressLabel.setHeight("-1px");
 		progressLabel.setValue("Label");
@@ -125,7 +121,6 @@ public class NickiProgressComponent extends CustomComponent implements NickiProg
 
 		// details
 		details = new Label();
-		details.setImmediate(false);
 		details.setWidth("-1px");
 		details.setHeight("-1px");
 		details.setValue("Details");

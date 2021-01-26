@@ -60,7 +60,6 @@ public abstract class BaseShopRenderer implements ShopRenderer {
 		TextArea xml = new TextArea();
 		xml.setWidth("100%");
 		xml.setHeight("100%");
-		xml.setImmediate(false);
 		xml.setValue(shopViewerComponent.toString());
 		layout.addComponent(xml);
 

@@ -75,7 +75,6 @@ public class SearchComponent extends CustomComponent {
 	private VerticalLayout buildMainLayout() {
 		// common part: create layout
 		mainLayout = new VerticalLayout();
-		mainLayout.setImmediate(false);
 		mainLayout.setWidth("100%");
 		mainLayout.setHeight("-1px");
 		mainLayout.setMargin(false);
@@ -87,7 +86,6 @@ public class SearchComponent extends CustomComponent {
 		// nameField
 		nameField = new TextField();
 		nameField.setCaption("Name");
-		nameField.setImmediate(false);
 		nameField.setWidth("100.0%");
 		nameField.setHeight("-1px");
 		mainLayout.addComponent(nameField);
@@ -95,7 +93,6 @@ public class SearchComponent extends CustomComponent {
 		// seachButton
 		searchButton = new Button();
 		searchButton.setCaption("Suche");
-		searchButton.setImmediate(false);
 		searchButton.setWidth("-1px");
 		searchButton.setHeight("-1px");
 		mainLayout.addComponent(searchButton);

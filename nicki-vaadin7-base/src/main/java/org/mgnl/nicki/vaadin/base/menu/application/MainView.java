@@ -96,7 +96,6 @@ public class MainView extends CustomComponent {
 	private VerticalLayout buildMainLayout() {
 		// common part: create layout
 		mainLayout = new VerticalLayout();
-		mainLayout.setImmediate(false);
 		mainLayout.setWidth("100%");
 		mainLayout.setHeight("100%");
 		mainLayout.setMargin(false);
@@ -116,7 +115,6 @@ public class MainView extends CustomComponent {
 	private HorizontalSplitPanel buildHsplit() {
 		// common part: create layout
 		hsplit = new HorizontalSplitPanel();
-		hsplit.setImmediate(false);
 		hsplit.setWidth("100.0%");
 		hsplit.setHeight("100.0%");
 
@@ -127,7 +125,6 @@ public class MainView extends CustomComponent {
 	private VerticalLayout buildContentLayout() {
 		// common part: create layout
 		contentLayout = new VerticalLayout();
-		contentLayout.setImmediate(false);
 		contentLayout.setWidth("100.0%");
 		contentLayout.setHeight("100.0%");
 

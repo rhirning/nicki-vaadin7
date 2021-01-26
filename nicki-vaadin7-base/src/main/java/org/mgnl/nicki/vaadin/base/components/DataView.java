@@ -86,7 +86,6 @@ public class DataView extends CustomComponent {
 	private AbsoluteLayout buildMainLayout() {
 		// common part: create layout
 		mainLayout = new AbsoluteLayout();
-		mainLayout.setImmediate(false);
 		mainLayout.setWidth("100%");
 		mainLayout.setHeight("100%");
 		
@@ -96,7 +95,6 @@ public class DataView extends CustomComponent {
 		
 		// title
 		title = new Label();
-		title.setImmediate(false);
 		title.setWidth("-1px");
 		title.setHeight("-1px");
 		title.setValue("Verantwortlichkeit aendern");
@@ -104,7 +102,6 @@ public class DataView extends CustomComponent {
 		
 		// userTable
 		userTable = new Table();
-		userTable.setImmediate(false);
 		userTable.setWidth("-1px");
 		userTable.setHeight("-1px");
 		mainLayout.addComponent(userTable,
@@ -113,7 +110,6 @@ public class DataView extends CustomComponent {
 		// closeButton
 		closeButton = new Button();
 		closeButton.setCaption("Close");
-		closeButton.setImmediate(false);
 		closeButton.setWidth("-1px");
 		closeButton.setHeight("-1px");
 		mainLayout.addComponent(closeButton, "bottom:20.0px;left:20.0px;");

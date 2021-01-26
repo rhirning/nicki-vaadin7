@@ -46,7 +46,6 @@ public class AttributeCheckbox extends BaseDynamicAttributeField implements Dyna
 		field = new CheckBox(getName(dynamicObject, attributeName));
 		field.setHeight(1.5f, Unit.EM);
 		field.setValue(DataHelper.booleanOf(property.getValue()));
-		field.setImmediate(false);
 		field.addValueChangeListener(new BooleanAttributeInputListener(property, objectListener));
 	}
 

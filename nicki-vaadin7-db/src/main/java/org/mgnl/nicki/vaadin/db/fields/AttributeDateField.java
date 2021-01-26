@@ -47,7 +47,6 @@ public class AttributeDateField  extends BaseDbBeanAttributeField implements DbB
 		field.setHeight(2, Unit.EM);
 		field.setWidth("600px");
 		field.setValue(property.getValue());
-		field.setImmediate(false);
 		field.addValueChangeListener(new AttributeInputListener<Date>(property, objectListener, null, null));
 	}
 

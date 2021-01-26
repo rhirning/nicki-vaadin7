@@ -56,7 +56,6 @@ public class AttributeLongField  extends BaseDbBeanAttributeField implements DbB
 //				field.setCaption(getName(bean, attributeName) + ": " +foreignValue);
 			}
 		}
-		field.setImmediate(false);
 		field.addValueChangeListener(new AttributeInputListener<Long>(property, objectListener, new StringToLongConverter(), 1L));
 	}
 

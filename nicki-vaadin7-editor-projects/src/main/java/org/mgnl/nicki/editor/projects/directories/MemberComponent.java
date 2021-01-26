@@ -105,7 +105,6 @@ public class MemberComponent extends CustomComponent {
 		horizontalLayout_1 = new HorizontalLayout();
 		horizontalLayout_1.setWidth("100.0%");
 		horizontalLayout_1.setHeight("-1px");
-		horizontalLayout_1.setImmediate(false);
 		horizontalLayout_1.setMargin(false);
 		
 		// memberLabel
@@ -113,14 +112,12 @@ public class MemberComponent extends CustomComponent {
 		memberLabel.setWidth("200px");
 		memberLabel.setHeight("-1px");
 		memberLabel.setValue("Mitglied");
-		memberLabel.setImmediate(false);
 		horizontalLayout_1.addComponent(memberLabel);
 		
 		// rights
 		rights = new OptionGroup();
 		rights.setWidth("-1px");
 		rights.setHeight("-1px");
-		rights.setImmediate(false);
 		horizontalLayout_1.addComponent(rights);
 
 		return horizontalLayout_1;

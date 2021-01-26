@@ -47,7 +47,6 @@ public class AttributeTextField  extends BaseDbBeanAttributeField implements DbB
 		field.setHeight(2, Unit.EM);
 		field.setWidth("600px");
 		field.setValue(StringUtils.stripToEmpty(property.getValue()));
-		field.setImmediate(false);
 		field.addValueChangeListener(new AttributeInputListener<String>(property, objectListener, null, null));
 	}
 

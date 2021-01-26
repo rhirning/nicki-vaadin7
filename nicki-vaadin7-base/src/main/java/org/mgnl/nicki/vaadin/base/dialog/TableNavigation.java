@@ -24,6 +24,8 @@ package org.mgnl.nicki.vaadin.base.dialog;
 
 import java.util.List;
 
+import org.mgnl.nicki.vaadin.base.helper.UIHelper;
+
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnHeaderMode;
@@ -51,7 +53,7 @@ public class TableNavigation extends NavigationBase implements Navigation {
 		panel.setStyleName("logo");
 		layout.addComponent(panel);
 		table = new Table();
-		table.setImmediate(true);
+		UIHelper.setImmediate(table, true);
 		table.setSelectable(true);
 		table.setNullSelectionAllowed(false);
 		table.addContainerProperty("navigationCaption", String.class, null);

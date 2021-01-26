@@ -30,6 +30,7 @@ import org.mgnl.nicki.core.objects.DynamicObject;
 import org.mgnl.nicki.vaadin.base.components.EnterNameDialog;
 import org.mgnl.nicki.vaadin.base.components.EnterNameHandler;
 import org.mgnl.nicki.vaadin.base.editor.DynamicObjectValueChangeListener;
+import org.mgnl.nicki.vaadin.base.helper.UIHelper;
 
 import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.ui.Button;
@@ -135,7 +136,7 @@ public class TableListAttributeField extends BaseDynamicAttributeField implement
 		entries = new Table();
 		entries.setWidth("600px");
 		entries.setHeight("100%");
-		entries.setImmediate(true);
+		UIHelper.setImmediate(entries, true);
 		mainLayout.addComponent(entries);
 		
 		VerticalLayout verticalLayout = new VerticalLayout();
@@ -145,7 +146,6 @@ public class TableListAttributeField extends BaseDynamicAttributeField implement
 		newEntryButton.setWidth("-1px");
 		newEntryButton.setHeight("-1px");
 		newEntryButton.setCaption("Neu");
-		newEntryButton.setImmediate(false);
 		verticalLayout.addComponent(newEntryButton);
 		
 		// deleteEntryButton
@@ -153,7 +153,6 @@ public class TableListAttributeField extends BaseDynamicAttributeField implement
 		deleteEntryButton.setWidth("-1px");
 		deleteEntryButton.setHeight("-1px");
 		deleteEntryButton.setCaption("Löschen");
-		deleteEntryButton.setImmediate(false);
 		verticalLayout.addComponent(deleteEntryButton);
 		return mainLayout;
 	}

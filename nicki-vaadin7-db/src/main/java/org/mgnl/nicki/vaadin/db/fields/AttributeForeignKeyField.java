@@ -47,7 +47,6 @@ public class AttributeForeignKeyField  extends BaseDbBeanAttributeField implemen
 		if (property != null && property.getValue() != null) {
 			field.setValue(property.getValue());
 		}
-		field.setImmediate(false);
 		field.addValueChangeListener(new AttributeInputListener<Long>(property, objectListener, null, 1L));
 	}
 

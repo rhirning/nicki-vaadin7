@@ -79,7 +79,6 @@ public class ProjectViewer extends CustomComponent implements ClassEditor {
 	private VerticalLayout buildMainLayout() {
 		// common part: create layout
 		mainLayout = new VerticalLayout();
-		mainLayout.setImmediate(false);
 		mainLayout.setWidth("100%");
 		mainLayout.setHeight("100%");
 		mainLayout.setMargin(true);
@@ -91,7 +90,6 @@ public class ProjectViewer extends CustomComponent implements ClassEditor {
 		
 		// tabSheet
 		tabSheet = new TabSheet();
-		tabSheet.setImmediate(false);
 		tabSheet.setWidth("100.0%");
 		tabSheet.setHeight("100.0%");
 		mainLayout.addComponent(tabSheet);

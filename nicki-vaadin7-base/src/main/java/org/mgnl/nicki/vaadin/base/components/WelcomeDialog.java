@@ -68,7 +68,6 @@ public class WelcomeDialog extends CustomComponent {
 		mainLayout = new HorizontalLayout();
 		//horizontalLayout_1.setWidth("1000px");
 		//horizontalLayout_1.setHeight("100px");
-		mainLayout.setImmediate(false);
 		mainLayout.setMargin(false);
 		
 		// hello
@@ -76,7 +75,6 @@ public class WelcomeDialog extends CustomComponent {
 		hello.setWidth("-1px");
 		hello.setHeight("-1px");
 		hello.setValue("Hello");
-		hello.setImmediate(false);
 		mainLayout.addComponent(hello);
 		mainLayout.setComponentAlignment(hello, new Alignment(33));
 		
@@ -84,14 +82,12 @@ public class WelcomeDialog extends CustomComponent {
 		space = new Label();
 		space.setWidth("10px");
 		space.setHeight("-1px");
-		space.setImmediate(false);
 		mainLayout.addComponent(space);
 		
 		// logout
 		logout = new Button();
 		logout.setWidth("-1px");
 		logout.setHeight("-1px");
-		logout.setImmediate(false);
 		mainLayout.addComponent(logout);
 		
 		return mainLayout;

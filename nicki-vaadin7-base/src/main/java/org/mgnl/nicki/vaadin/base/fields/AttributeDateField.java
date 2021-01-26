@@ -48,7 +48,6 @@ public class AttributeDateField  extends BaseDynamicAttributeField implements Dy
 		field.setHeight(2, Unit.EM);
 		field.setWidth("600px");
 		field.setValue(property.getValue());
-		field.setImmediate(false);
 		field.addValueChangeListener(new AttributeInputListener<Date>(property, objectListener));
 	}
 

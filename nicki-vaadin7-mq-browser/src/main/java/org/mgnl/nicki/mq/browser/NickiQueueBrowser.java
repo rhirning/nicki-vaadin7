@@ -25,6 +25,7 @@ import org.apache.commons.lang.StringUtils;
 import org.mgnl.nicki.core.config.Config;
 import org.mgnl.nicki.core.helper.JsonHelper;
 import org.mgnl.nicki.vaadin.base.application.NickiApplication;
+import org.mgnl.nicki.vaadin.base.helper.UIHelper;
 import org.mgnl.nicki.vaadin.base.helper.ValuePair;
 import org.mgnl.nicki.vaadin.base.menu.application.View;
 
@@ -425,7 +426,6 @@ public class NickiQueueBrowser extends CustomComponent  implements View {
 	private VerticalLayout buildMainLayout() {
 		// common part: create layout
 		mainLayout = new VerticalLayout();
-		mainLayout.setImmediate(false);
 		mainLayout.setWidth("100%");
 		mainLayout.setHeight("100%");
 		mainLayout.setMargin(false);
@@ -450,7 +450,6 @@ public class NickiQueueBrowser extends CustomComponent  implements View {
 	private HorizontalLayout buildConfigLayout() {
 		// common part: create layout
 		configLayout = new HorizontalLayout();
-		configLayout.setImmediate(false);
 		configLayout.setWidth("-1px");
 		configLayout.setHeight("-1px");
 		configLayout.setMargin(true);
@@ -459,7 +458,6 @@ public class NickiQueueBrowser extends CustomComponent  implements View {
 		// configBaseTextField
 		configBaseTextField = new TextField();
 		configBaseTextField.setCaption("Config base");
-		configBaseTextField.setImmediate(false);
 		configBaseTextField.setWidth("-1px");
 		configBaseTextField.setHeight("-1px");
 		configLayout.addComponent(configBaseTextField);
@@ -467,7 +465,6 @@ public class NickiQueueBrowser extends CustomComponent  implements View {
 		// queueField
 		queueField = new TextField();
 		queueField.setCaption("Queue");
-		queueField.setImmediate(false);
 		queueField.setWidth("-1px");
 		queueField.setHeight("-1px");
 		configLayout.addComponent(queueField);
@@ -475,7 +472,6 @@ public class NickiQueueBrowser extends CustomComponent  implements View {
 		// selectorTextField
 		selectorTextField = new TextField();
 		selectorTextField.setCaption("Selector");
-		selectorTextField.setImmediate(false);
 		selectorTextField.setWidth("-1px");
 		selectorTextField.setHeight("-1px");
 		configLayout.addComponent(selectorTextField);
@@ -483,7 +479,6 @@ public class NickiQueueBrowser extends CustomComponent  implements View {
 		// countComboBox
 		countComboBox = new ComboBox();
 		countComboBox.setCaption("Anzahl");
-		countComboBox.setImmediate(false);
 		countComboBox.setWidth("-1px");
 		countComboBox.setHeight("-1px");
 		configLayout.addComponent(countComboBox);
@@ -495,7 +490,7 @@ public class NickiQueueBrowser extends CustomComponent  implements View {
 	private TabSheet buildTabSheet() {
 		// common part: create layout
 		tabSheet = new TabSheet();
-		tabSheet.setImmediate(true);
+		UIHelper.setImmediate(tabSheet, true);
 		tabSheet.setWidth("100.0%");
 		tabSheet.setHeight("100.0%");
 		
@@ -514,7 +509,6 @@ public class NickiQueueBrowser extends CustomComponent  implements View {
 	private VerticalLayout buildInspectLayout() {
 		// common part: create layout
 		inspectLayout = new VerticalLayout();
-		inspectLayout.setImmediate(false);
 		inspectLayout.setWidth("100.0%");
 		inspectLayout.setHeight("100.0%");
 		inspectLayout.setMargin(false);
@@ -535,7 +529,6 @@ public class NickiQueueBrowser extends CustomComponent  implements View {
 	private HorizontalLayout buildHorizontalLayout_1() {
 		// common part: create layout
 		horizontalLayout_1 = new HorizontalLayout();
-		horizontalLayout_1.setImmediate(false);
 		horizontalLayout_1.setWidth("-1px");
 		horizontalLayout_1.setHeight("-1px");
 		horizontalLayout_1.setMargin(false);
@@ -544,7 +537,7 @@ public class NickiQueueBrowser extends CustomComponent  implements View {
 		// loadButton
 		loadButton = new Button();
 		loadButton.setCaption("Laden");
-		loadButton.setImmediate(true);
+		UIHelper.setImmediate(loadButton, true);
 		loadButton.setWidth("-1px");
 		loadButton.setHeight("-1px");
 		horizontalLayout_1.addComponent(loadButton);
@@ -552,7 +545,7 @@ public class NickiQueueBrowser extends CustomComponent  implements View {
 		// removeButton
 		removeButton = new Button();
 		removeButton.setCaption("Löschen");
-		removeButton.setImmediate(true);
+		UIHelper.setImmediate(removeButton, true);
 		removeButton.setWidth("-1px");
 		removeButton.setHeight("-1px");
 		horizontalLayout_1.addComponent(removeButton);
@@ -564,14 +557,12 @@ public class NickiQueueBrowser extends CustomComponent  implements View {
 	private HorizontalSplitPanel buildMessageSplitPanel() {
 		// common part: create layout
 		messageSplitPanel = new HorizontalSplitPanel();
-		messageSplitPanel.setImmediate(false);
 		messageSplitPanel.setWidth("100.0%");
 		messageSplitPanel.setHeight("100.0%");
 		
 		// messageTable
 		messageTable = new Table();
 		messageTable.setCaption("Messages");
-		messageTable.setImmediate(false);
 		messageTable.setWidth("100.0%");
 		messageTable.setHeight("100.0%");
 		messageSplitPanel.addComponent(messageTable);
@@ -579,7 +570,6 @@ public class NickiQueueBrowser extends CustomComponent  implements View {
 		// propertiesTable
 		propertiesTable = new Table();
 		propertiesTable.setCaption("Properties");
-		propertiesTable.setImmediate(false);
 		propertiesTable.setWidth("100.0%");
 		propertiesTable.setHeight("100.0%");
 		messageSplitPanel.addComponent(propertiesTable);
@@ -591,7 +581,6 @@ public class NickiQueueBrowser extends CustomComponent  implements View {
 	private VerticalLayout buildSendLayout() {
 		// common part: create layout
 		sendLayout = new VerticalLayout();
-		sendLayout.setImmediate(false);
 		sendLayout.setWidth("100.0%");
 		sendLayout.setHeight("100.0%");
 		sendLayout.setMargin(false);
@@ -603,7 +592,6 @@ public class NickiQueueBrowser extends CustomComponent  implements View {
 		// messageTextArea
 		messageTextArea = new TextArea();
 		messageTextArea.setCaption("Message");
-		messageTextArea.setImmediate(false);
 		messageTextArea.setWidth("100.0%");
 		messageTextArea.setHeight("100.0%");
 		sendLayout.addComponent(messageTextArea);
@@ -616,7 +604,6 @@ public class NickiQueueBrowser extends CustomComponent  implements View {
 	private HorizontalLayout buildHorizontalLayout_2() {
 		// common part: create layout
 		horizontalLayout_2 = new HorizontalLayout();
-		horizontalLayout_2.setImmediate(false);
 		horizontalLayout_2.setWidth("-1px");
 		horizontalLayout_2.setHeight("-1px");
 		horizontalLayout_2.setMargin(false);
@@ -624,7 +611,7 @@ public class NickiQueueBrowser extends CustomComponent  implements View {
 		// sendButton
 		sendButton = new Button();
 		sendButton.setCaption("Send");
-		sendButton.setImmediate(true);
+		UIHelper.setImmediate(sendButton, true);
 		sendButton.setWidth("-1px");
 		sendButton.setHeight("-1px");
 		horizontalLayout_2.addComponent(sendButton);

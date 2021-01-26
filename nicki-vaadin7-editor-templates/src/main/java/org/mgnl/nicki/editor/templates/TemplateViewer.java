@@ -36,6 +36,7 @@ import org.mgnl.nicki.vaadin.base.data.ListPartDataContainer;
 import org.mgnl.nicki.vaadin.base.data.PartDataContainer;
 import org.mgnl.nicki.vaadin.base.editor.ClassEditor;
 import org.mgnl.nicki.vaadin.base.editor.NickiTreeEditor;
+import org.mgnl.nicki.vaadin.base.helper.UIHelper;
 
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CustomComponent;
@@ -137,7 +138,6 @@ public class TemplateViewer extends CustomComponent implements ClassEditor {
 		
 		tab = new TabSheet();
 		tab.setSizeFull();
-		tab.setImmediate(false);
 		mainLayout.addComponent(tab);
 		mainLayout.setExpandRatio(tab, 1);
 
@@ -149,14 +149,14 @@ public class TemplateViewer extends CustomComponent implements ClassEditor {
 		saveButton.setWidth("-1px");
 		saveButton.setHeight("-1px");
 		saveButton.setCaption("Speichern");
-		saveButton.setImmediate(true);
+		UIHelper.setImmediate(saveButton, true);
 		horizontalLayout.addComponent(saveButton);
 		
 		executeButton = new Button();
 		executeButton.setWidth("-1px");
 		executeButton.setHeight("-1px");
 		executeButton.setCaption("Execute");
-		executeButton.setImmediate(true);
+		UIHelper.setImmediate(executeButton, true);
 		horizontalLayout.addComponent(executeButton);
 				
 		return mainLayout;

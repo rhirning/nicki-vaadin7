@@ -124,7 +124,6 @@ public class InventoryViewer extends CustomComponent {
 	private VerticalLayout buildMainLayout() {
 		// common part: create layout
 		mainLayout = new VerticalLayout();
-		mainLayout.setImmediate(false);
 		mainLayout.setWidth("100%");
 		mainLayout.setHeight("100%");
 		mainLayout.setMargin(true);
@@ -137,7 +136,6 @@ public class InventoryViewer extends CustomComponent {
 		// recipient
 		recipient = new Label();
 		recipient.setCaption("Empfänger");
-		recipient.setImmediate(false);
 		recipient.setWidth("-1px");
 		recipient.setHeight("-1px");
 		recipient.setValue("recipient");
@@ -145,7 +143,6 @@ public class InventoryViewer extends CustomComponent {
 		
 		// inventoryEntries
 		inventoryEntries = new Table();
-		inventoryEntries.setImmediate(false);
 		inventoryEntries.setWidth("100.0%");
 		inventoryEntries.setHeight("100.0%");
 		mainLayout.addComponent(inventoryEntries);

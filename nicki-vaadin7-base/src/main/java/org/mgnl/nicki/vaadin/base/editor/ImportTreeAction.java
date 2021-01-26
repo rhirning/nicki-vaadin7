@@ -93,7 +93,6 @@ public class ImportTreeAction extends BaseTreeAction implements  Upload.Succeede
 	private AbsoluteLayout buildMainLayout() {
 		// common part: create layout
 		mainLayout = new AbsoluteLayout();
-		mainLayout.setImmediate(false);
 		mainLayout.setWidth("100%");
 		mainLayout.setHeight("100%");
 		
@@ -112,7 +111,6 @@ public class ImportTreeAction extends BaseTreeAction implements  Upload.Succeede
 	private HorizontalLayout buildHorizontalLayout_1() {
 		// common part: create layout
 		horizontalLayout_1 = new HorizontalLayout();
-		horizontalLayout_1.setImmediate(false);
 		horizontalLayout_1.setWidth("-1px");
 		horizontalLayout_1.setHeight("-1px");
 		horizontalLayout_1.setMargin(true);
@@ -121,7 +119,6 @@ public class ImportTreeAction extends BaseTreeAction implements  Upload.Succeede
 		// exportElement
 		importComponent = new Upload("Importieren", this);
 		importComponent.setCaption("Importieren");
-		importComponent.setImmediate(false);
 		importComponent.setWidth("-1px");
 		importComponent.setHeight("-1px");
 		horizontalLayout_1.addComponent(importComponent);
