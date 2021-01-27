@@ -38,6 +38,8 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import com.vaadin.ui.Notification.Type;
@@ -53,6 +55,7 @@ public class DbBeanViewer extends CustomComponent implements NewClassEditor, Cla
 	private DbBeanValueChangeListener listener;
 	private String dbContextName;
 	private String[] hiddenAttributes;
+	private @Getter @Setter boolean readOnly;
 
 	public void setDbBean(Object bean, String...hiddenAttributes) {
 		log.debug("Bean: " + bean);
@@ -143,16 +146,6 @@ public class DbBeanViewer extends CustomComponent implements NewClassEditor, Cla
 			}
 		}
 		return true;
-	}
-
-	@Override
-	public void setReadOnly(boolean readOnly) {
-		super.setReadOnly(readOnly);
-	}
-
-	@Override
-	public boolean isReadOnly() {
-		return super.isReadOnly();
 	}
 
 	public boolean isCreate() {
