@@ -21,8 +21,8 @@ package org.mgnl.nicki.vaadin.base.components;
  * #L%
  */
 
+import org.mgnl.nicki.vaadin.base.data.DataContainer;
 
-import com.vaadin.v7.data.Property;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.TextField;
 
@@ -30,9 +30,9 @@ import com.vaadin.ui.TextField;
 public class SimplePropertyEditor extends CustomComponent {
 
 	private TextField editor;
-	private Property<String> data;
+	private DataContainer<String> data;
 
-	public SimplePropertyEditor(Property<String> dataContainer) {
+	public SimplePropertyEditor(DataContainer<String> dataContainer) {
 		this.data = dataContainer;
 		// editor
 		editor = new TextField();
@@ -40,7 +40,7 @@ public class SimplePropertyEditor extends CustomComponent {
 		setWidth("100%");
 		
 		setCompositionRoot(editor);
-		editor.setValue((String) data.getValue());
+		editor.setValue(data.getValue());
 		editor.addValueChangeListener(event -> data.setValue((String) editor.getValue()));
 	}
 

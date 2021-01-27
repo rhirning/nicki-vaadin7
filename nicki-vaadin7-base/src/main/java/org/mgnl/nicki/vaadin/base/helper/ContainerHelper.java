@@ -23,6 +23,7 @@ package org.mgnl.nicki.vaadin.base.helper;
 
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -59,12 +60,30 @@ public class ContainerHelper {
 		return new TableContainer(data, namedProperties);
 	}
 	
-	public static <T extends Object> Container getDataContainer(T data, String[] properties, String i18nBase) {
-		Container container = new BeanItemContainer<ValuePair>(ValuePair.class);
+	public static Collection<ValuePair> getDataContainer(Object data, String[] properties, String i18nBase) {
+		Collection<ValuePair> container = new ArrayList<ValuePair>();
 		for (String property : properties) {
 			addItem(container, data, property, i18nBase);
 		}
 		return container;
+	}
+	
+	private static <T extends Object> void addItem(Collection<ValuePair> container, Object data, String attributeName, String i18nBase) {
+		String translatedName = attributeName;
+		if (i18nBase != null) {
+			translatedName = I18n.getText(i18nBase + "." + attributeName);
+		}
+		try {
+			
+			if (data != null) {
+				container.add(new ValuePair(translatedName, BeanUtils.getProperty(data, attributeName)));
+				
+			} else {
+				container.add(new ValuePair(translatedName, ""));
+			}
+		} catch (Exception e) {
+			log.error("Error", e);
+		}
 	}
 	
 	private static <T extends Object> void addItem(Container container, T data, String name, String i18nBase) {

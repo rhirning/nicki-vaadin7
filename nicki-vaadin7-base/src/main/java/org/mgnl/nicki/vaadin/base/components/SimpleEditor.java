@@ -21,8 +21,8 @@ package org.mgnl.nicki.vaadin.base.components;
  * #L%
  */
 
+import org.mgnl.nicki.vaadin.base.data.DataContainer;
 
-import com.vaadin.v7.data.Property;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.TextArea;
 
@@ -30,9 +30,9 @@ import com.vaadin.ui.TextArea;
 public class SimpleEditor extends CustomComponent {
 
 	private TextArea editor;
-	private Property<String> data;
+	private DataContainer<String> data;
 
-	public SimpleEditor(Property<String> dataContainer) {
+	public SimpleEditor(DataContainer<String> dataContainer) {
 		this.data = dataContainer;
 		// editor
 		editor = new TextArea();
