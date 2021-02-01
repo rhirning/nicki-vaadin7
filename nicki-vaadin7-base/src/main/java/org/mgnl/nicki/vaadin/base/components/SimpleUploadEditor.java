@@ -33,16 +33,16 @@ import org.mgnl.nicki.vaadin.base.helper.UIHelper;
 
 import com.vaadin.server.StreamResource.StreamSource;
 import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.v7.ui.HorizontalLayout;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.Upload;
+import com.vaadin.v7.ui.Upload;
 import com.vaadin.ui.Notification.Type;
-import com.vaadin.ui.Upload.FailedEvent;
-import com.vaadin.ui.Upload.FailedListener;
-import com.vaadin.ui.Upload.Receiver;
-import com.vaadin.ui.Upload.SucceededEvent;
-import com.vaadin.ui.Upload.SucceededListener;
+import com.vaadin.v7.ui.Upload.FailedEvent;
+import com.vaadin.v7.ui.Upload.FailedListener;
+import com.vaadin.v7.ui.Upload.Receiver;
+import com.vaadin.v7.ui.Upload.SucceededEvent;
+import com.vaadin.v7.ui.Upload.SucceededListener;
 
 @SuppressWarnings("serial")
 public class SimpleUploadEditor extends CustomComponent implements Receiver, SucceededListener, FailedListener {

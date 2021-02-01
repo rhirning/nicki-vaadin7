@@ -31,7 +31,7 @@ import org.mgnl.nicki.core.objects.DynamicObject;
 import com.vaadin.v7.data.Property.ValueChangeListener;
 import com.vaadin.v7.event.FieldEvents.TextChangeEvent;
 import com.vaadin.ui.AbstractComponentContainer;
-import com.vaadin.ui.AbstractField;
+import com.vaadin.v7.ui.AbstractField;
 import com.vaadin.ui.Component;
 
 @SuppressWarnings("serial")

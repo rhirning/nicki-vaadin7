@@ -39,7 +39,7 @@ import org.mgnl.nicki.vaadin.base.editor.TreeSelector;
 
 import com.vaadin.v7.ui.AbstractSelect;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.v7.ui.HorizontalLayout;
 import com.vaadin.v7.ui.OptionGroup;
 
 @SuppressWarnings("serial")

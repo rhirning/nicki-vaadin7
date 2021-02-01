@@ -31,7 +31,7 @@ import org.mgnl.nicki.shop.base.inventory.Inventory;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Panel;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.v7.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 public class PanelRenderer extends BaseShopRenderer implements ShopRenderer {

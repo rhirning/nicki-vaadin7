@@ -36,9 +36,9 @@ import org.mgnl.nicki.vaadin.base.menu.application.View;
 import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.BorderStyle;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.CheckBox;
+import com.vaadin.v7.ui.CheckBox;
 import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.v7.ui.HorizontalLayout;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
@@ -47,8 +47,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import com.vaadin.ui.Panel;
 import com.vaadin.v7.ui.Table;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.v7.ui.TextField;
+import com.vaadin.v7.ui.VerticalLayout;
 
 @Slf4j
 @SuppressWarnings("serial")

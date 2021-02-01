@@ -29,7 +29,7 @@ import org.mgnl.nicki.vaadin.base.helper.UIHelper;
 import com.vaadin.ui.Panel;
 import com.vaadin.v7.ui.Table;
 import com.vaadin.v7.ui.Table.ColumnHeaderMode;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.v7.ui.VerticalLayout;
 
 public class TableNavigation extends NavigationBase implements Navigation {
 	private static final long serialVersionUID = -4231539383235849692L;
