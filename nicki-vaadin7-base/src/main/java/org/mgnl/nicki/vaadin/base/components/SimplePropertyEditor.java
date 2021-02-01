@@ -40,7 +40,7 @@ public class SimplePropertyEditor extends CustomComponent {
 		setWidth("100%");
 		
 		setCompositionRoot(editor);
-		editor.setValue(data.getValue());
+		editor.setValue(data.getValue()!= null ? data.getValue() : "");
 		editor.addValueChangeListener(event -> data.setValue((String) editor.getValue()));
 	}
 

@@ -49,6 +49,8 @@ public class TableNavigation extends NavigationBase implements Navigation {
 	private VerticalLayout buildMainLayout() {
 		layout = new VerticalLayout();
 		layout.setHeight("100%");
+		layout.setSpacing(false);
+		layout.setMargin(false);
 		Panel panel = new Panel();
 		panel.setHeight("100px");
 		panel.setStyleName("logo");

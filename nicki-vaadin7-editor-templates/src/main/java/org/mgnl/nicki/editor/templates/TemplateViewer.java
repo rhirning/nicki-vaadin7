@@ -140,6 +140,8 @@ public class TemplateViewer extends CustomComponent implements ClassEditor {
 		tab.setSizeFull();
 		mainLayout.addComponent(tab);
 		mainLayout.setExpandRatio(tab, 1);
+		mainLayout.setSpacing(false);
+		mainLayout.setMargin(false);
 
 		HorizontalLayout horizontalLayout = new HorizontalLayout();
 		horizontalLayout.setSpacing(true);

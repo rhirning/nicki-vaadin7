@@ -99,6 +99,7 @@ public class MainView extends CustomComponent {
 		mainLayout.setWidth("100%");
 		mainLayout.setHeight("100%");
 		mainLayout.setMargin(false);
+		mainLayout.setSpacing(false);
 
 		// top-level component properties
 		setWidth("100.0%");
@@ -127,6 +128,8 @@ public class MainView extends CustomComponent {
 		contentLayout = new VerticalLayout();
 		contentLayout.setWidth("100.0%");
 		contentLayout.setHeight("100.0%");
+		contentLayout.setSpacing(false);
+		contentLayout.setMargin(false);
 
 		return contentLayout;
 	}
