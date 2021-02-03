@@ -14,7 +14,7 @@
 		<project.build.sourceEncoding>iso-8859-1</project.build.sourceEncoding>
 		<idm.version>4.7</idm.version>
 		<activemq-version>5.14.5</activemq-version>
-		<nicki.version>8.22</nicki.version>
+		<nicki.version>8.23</nicki.version>
 		<!-- <vaadin.version>7.7.16</vaadin.version> -->
 		<vaadin.version>8.12.1</vaadin.version>
 		<project.scm.id>github</project.scm.id>
@@ -25,15 +25,12 @@
 		<module>nicki-vaadin7-base</module>
 		<module>nicki-vaadin7-db</module>
 		<module>nicki-vaadin7-editor-catalogs</module>
-		<module>nicki-vaadin7-editor-jcr</module>
 		<module>nicki-vaadin7-editor-log4j</module>
 		<module>nicki-vaadin7-editor-projects</module>
 		<module>nicki-vaadin7-editor-scripts</module>
 		<module>nicki-vaadin7-editor-templates</module>
-		<module>nicki-vaadin7-jcr-apps</module>
 		<module>nicki-vaadin7-mq-browser</module>
 		<module>nicki-vaadin7-reports</module>
-		<module>nicki-vaadin7-shop</module>
 		<module>nicki-vaadin7-user-admin</module>
 	</modules>
 	<dependencyManagement>
