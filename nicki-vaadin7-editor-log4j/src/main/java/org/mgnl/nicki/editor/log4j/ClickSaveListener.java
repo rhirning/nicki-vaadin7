@@ -1,6 +1,13 @@
 
 package org.mgnl.nicki.editor.log4j;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.LoggerContext;
+import org.apache.logging.log4j.core.config.Configuration;
+import org.apache.logging.log4j.core.config.LoggerConfig;
+
 /*-
  * #%L
  * nicki-editor-log4j
@@ -22,17 +29,11 @@ package org.mgnl.nicki.editor.log4j;
  */
 
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.v7.ui.ComboBox;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Notification;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 public class ClickSaveListener implements ClickListener {
 	private static final long serialVersionUID = 8056214403424949582L;
 
@@ -40,9 +41,9 @@ public class ClickSaveListener implements ClickListener {
     
     Log4jViewer viewer;
 	String loggerName;
-	ComboBox comboBox;
+	ComboBox<String> comboBox;
 
-	public ClickSaveListener(Log4jViewer viewer, String loggerName, ComboBox comboBox) {
+	public ClickSaveListener(Log4jViewer viewer, String loggerName, ComboBox<String> comboBox) {
 		super();
 		this.viewer = viewer;
 		this.loggerName = loggerName;
@@ -56,19 +57,13 @@ public class ClickSaveListener implements ClickListener {
 	}
 
 	private synchronized void changeLogLevel(String loggerName, String level) {
-        Logger logger = null;
+		LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
+		Configuration config = ctx.getConfiguration();
+		LoggerConfig loggerConfig = config.getLoggerConfig(LogManager.ROOT_LOGGER_NAME); 
+		loggerConfig.setLevel(Level.toLevel(level));
+		ctx.updateLoggers();  // This causes all Loggers to refetch information from their LoggerConfig.
 
-        try
-        {
-            logger = (ROOT.equalsIgnoreCase(loggerName) ? Logger.getRootLogger() : Logger.getLogger(loggerName));
-            logger.setLevel(Level.toLevel(level));
-        }
-        catch (Throwable e)
-        {
-            log.debug("ERROR Setting LOG4J Logger:" + e);
-        }
-
-        Notification.show("LogLevel set for " + (logger.getName().equals("") ? ROOT : logger.getName()));
+        Notification.show("LogLevel set for " + (loggerName.equals("") ? ROOT : loggerName));
     }
 
 }

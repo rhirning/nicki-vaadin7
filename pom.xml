@@ -14,7 +14,7 @@
 		<project.build.sourceEncoding>iso-8859-1</project.build.sourceEncoding>
 		<idm.version>4.7</idm.version>
 		<activemq-version>5.14.5</activemq-version>
-		<nicki.version>8.20</nicki.version>
+		<nicki.version>8.22-SNAPSHOT</nicki.version>
 		<!-- <vaadin.version>7.7.16</vaadin.version> -->
 		<vaadin.version>8.12.1</vaadin.version>
 		<project.scm.id>github</project.scm.id>
@@ -89,9 +89,19 @@
 				<version>2.4</version>
 			</dependency>
 			<dependency>
-				<groupId>log4j</groupId>
-				<artifactId>log4j</artifactId>
-				<version>1.2.17</version>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-core</artifactId>
+				<version>2.14.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-api</artifactId>
+				<version>2.14.0</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.apache.logging.log4j</groupId>
+			    <artifactId>log4j-slf4j-impl</artifactId>
+			    <version>2.14.0</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.jackrabbit</groupId>
@@ -113,11 +123,6 @@
 				<artifactId>lombok</artifactId>
 				<version>1.18.0</version>
 				<scope>provided</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-log4j12</artifactId>
-				<version>1.7.6</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

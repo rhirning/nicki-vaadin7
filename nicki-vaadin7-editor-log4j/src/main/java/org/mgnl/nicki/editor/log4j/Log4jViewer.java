@@ -22,26 +22,20 @@ package org.mgnl.nicki.editor.log4j;
  */
 
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Enumeration;
-import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-import org.mgnl.nicki.core.i18n.I18n;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Logger;
+import org.apache.logging.log4j.core.LoggerContext;
 import org.mgnl.nicki.vaadin.base.application.NickiApplication;
 import org.mgnl.nicki.vaadin.base.menu.application.View;
 
 
-import com.vaadin.v7.data.Item;
-import com.vaadin.ui.Button;
-import com.vaadin.v7.ui.ComboBox;
 import com.vaadin.ui.CustomComponent;
+import com.vaadin.ui.Grid;
 import com.vaadin.ui.Panel;
-import com.vaadin.v7.ui.Table;
+import com.vaadin.ui.renderers.ComponentRenderer;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -49,25 +43,14 @@ import lombok.extern.slf4j.Slf4j;
 public class Log4jViewer extends CustomComponent implements View {
 	private static final long serialVersionUID = 6677098857979852467L;
 	private Panel canvas;
-	private Table table;
+	private Grid<LogLevel> table;
 	private NickiApplication application;
 	private boolean isInit;
 
     /**
      * The root appender.
      */
-    private static final String ROOT = "Root";
-    /**
-     * All the log levels.
-     */
-    private static final String[] LEVELS = new String[]{
-        Level.OFF.toString(),
-        Level.FATAL.toString(),
-        Level.ERROR.toString(),
-        Level.WARN.toString(),
-        Level.INFO.toString(),
-        Level.DEBUG.toString(),
-        Level.ALL.toString() };
+    public static final String ROOT = "Root";
 
     
 	public Log4jViewer() {
@@ -85,13 +68,14 @@ public class Log4jViewer extends CustomComponent implements View {
 
     private void refreshTable() {
     	log.debug("fill Table()");
-    	table.removeAllItems();
-    	addLoggerItem(Logger.getRootLogger());
+    	SortedSet<LogLevel> list = new TreeSet<LogLevel>();
+    	LoggerContext logContext = (LoggerContext) LogManager.getContext(false);
+    	list.add(new LogLevel(this, ""));
+    	for (Logger logger : logContext.getLoggers()) {
+    		list.add(new LogLevel(this, logger.getName()));
+    	}
     	
-        for (Logger logger : getLoggers()) {
-        	log.debug("Logger added: " + logger.getName());
-        	addLoggerItem(logger);
-		}
+        table.setItems(list);
 	}
 	
 
@@ -99,72 +83,16 @@ public class Log4jViewer extends CustomComponent implements View {
     	refreshTable();
 	}
 
-
-	@SuppressWarnings("unchecked")
-	private Item addLoggerItem(Logger logger) {
-		String loggerName = (logger.getName().equals("") ? ROOT : logger.getName());
-		String inherited = logger.getLevel() == null?"*":"";
-		String currentLevel = logger.getEffectiveLevel().toString();
-		
-		Item item = table.addItem(loggerName);
-		item.getItemProperty("title").setValue(loggerName);
-		item.getItemProperty("inherited").setValue(inherited);
-		
-		ComboBox comboBox = new ComboBox();
-		for (String level : LEVELS) {
-			comboBox.addItem(level);
-		}
-		comboBox.select(currentLevel);
-		item.getItemProperty("comboBox").setValue(comboBox);
-		
-		Button saveButton = new Button("Save");
-		saveButton.addClickListener(new ClickSaveListener(this,loggerName, comboBox));
-		item.getItemProperty("saveButton").setValue(saveButton);
-		
-		return item;
-	}
-
-
-    private List<Logger> getLoggers()
-    {
-        @SuppressWarnings("unchecked")
-		Enumeration<Logger> enm = LogManager.getCurrentLoggers();
-
-        List<Logger> list = new ArrayList<Logger>();
-
-        // Add all current loggers to the list
-        while (enm.hasMoreElements())
-        {
-            list.add(enm.nextElement());
-        }
-        
-        Collections.sort(list, new Comparator<Logger>() {
-
-			@Override
-			public int compare(Logger o1, Logger o2) {
-				return o1.getName().compareTo(o2.getName());
-			}
-		});
-
-        return list;
-    }
-
 	@Override
 	public void init() {
 		if (!isInit) {
 			canvas = new Panel();
 			canvas.setSizeFull();
-			table = new Table();
+			table = new Grid<>();
 			table.setSizeFull();
 			canvas.setContent(table);
-			table.addContainerProperty("title", String.class, "");
-			table.setColumnHeader("title", I18n.getText(getI18nBase() + ".column.title"));
-			table.addContainerProperty("inherited", String.class, "");
-			table.setColumnHeader("inherited", I18n.getText(getI18nBase() + ".column.inherited"));
-			table.addContainerProperty("comboBox", ComboBox.class, null);
-			table.setColumnHeader("comboBox", I18n.getText(getI18nBase() + ".column.level"));
-			table.addContainerProperty("saveButton", Button.class, null);
-			table.setColumnHeader("saveButton", "");
+			table.addColumn(LogLevel::getName).setCaption("Name");
+			table.addColumn(LogLevel::getComboBox, new ComponentRenderer()).setCaption("Loglevel");
 			setCompositionRoot(canvas);
 			setSizeFull();
 			isInit = true;
