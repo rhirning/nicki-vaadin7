@@ -24,7 +24,6 @@
 		<module>nicki-vaadin7-apps</module>
 		<module>nicki-vaadin7-base</module>
 		<module>nicki-vaadin7-db</module>
-		<module>nicki-vaadin7-editor-catalogs</module>
 		<module>nicki-vaadin7-editor-log4j</module>
 		<module>nicki-vaadin7-editor-projects</module>
 		<module>nicki-vaadin7-editor-scripts</module>
