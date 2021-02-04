@@ -27,24 +27,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.vaadin.v7.data.Property;
-import com.vaadin.v7.data.Property.ValueChangeEvent;
-import com.vaadin.v7.data.Property.ValueChangeListener;
+import org.mgnl.nicki.vaadin.base.data.DataContainer;
+
+import com.vaadin.data.HasValue.ValueChangeEvent;
+import com.vaadin.data.HasValue.ValueChangeListener;
+import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.v7.ui.Field;
 
 @SuppressWarnings("serial")
-public class TestDataValueChangeListener implements ValueChangeListener {
+public class TestDataValueChangeListener implements ValueChangeListener<String> {
 
-	private Property<Map<String, String>> dataContainer;
+	private DataContainer<Map<String, String>> dataContainer;
 	private ComponentContainer testData;
-	public TestDataValueChangeListener(Property<Map<String, String>> dataContainer, ComponentContainer testData) {
+	public TestDataValueChangeListener(DataContainer<Map<String, String>> dataContainer, ComponentContainer testData) {
 		this.dataContainer = dataContainer;
 		this.testData = testData;
 	}
 
-	public void valueChange(ValueChangeEvent event) {
+	public void valueChange(ValueChangeEvent<String> event) {
 		dataContainer.setValue(collectMapValues(testData));
 	}
 
@@ -52,9 +53,9 @@ public class TestDataValueChangeListener implements ValueChangeListener {
 		Map<String, String> map = new HashMap<String, String>();
 		for (Component component : cont) {
 			String caption = component.getCaption();
-			if (component instanceof Field) {
+			if (component instanceof AbstractField) {
 				@SuppressWarnings("unchecked")
-				String value = ((Field<String>) component).getValue();
+				String value = ((AbstractField<String>) component).getValue();
 				map.put(caption, value);
 			}
 		}
@@ -64,9 +65,9 @@ public class TestDataValueChangeListener implements ValueChangeListener {
 	public List<String> collectValues(ComponentContainer cont) {
 		List<String> list = new ArrayList<String>();
 		for (Component component : cont) {
-			if (component instanceof Field) {
+			if (component instanceof AbstractField) {
 				@SuppressWarnings("unchecked")
-				String value = ((Field<String>) component).getValue();
+				String value = ((AbstractField<String>) component).getValue();
 				list.add(value);
 			}
 		}

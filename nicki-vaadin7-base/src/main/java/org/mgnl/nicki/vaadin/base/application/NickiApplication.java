@@ -62,11 +62,11 @@ import org.mgnl.nicki.vaadin.base.components.WelcomeDialog;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Component;
-import com.vaadin.v7.ui.Label;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.UI;
-import com.vaadin.v7.ui.VerticalLayout;
+import com.vaadin.ui.VerticalLayout;
 
 import lombok.extern.slf4j.Slf4j;
 

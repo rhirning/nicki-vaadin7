@@ -30,10 +30,9 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.mgnl.nicki.core.objects.DynamicObject;
 
-import com.vaadin.v7.data.Property;
 
 @SuppressWarnings("serial")
-public class ListPartDataContainer extends AttributeDataContainer<Map<String, String>> implements DataContainer<Map<String, String>>, Property<Map<String, String>> {
+public class ListPartDataContainer extends AttributeDataContainer<Map<String, String>> implements DataContainer<Map<String, String>> {
 	private String separator;
 
 	public ListPartDataContainer(DynamicObject dynamicObject, String attributeName, String separator) {

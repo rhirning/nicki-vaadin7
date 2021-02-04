@@ -1,7 +1,8 @@
 package org.mgnl.nicki.vaadin.base.components;
 
-import com.vaadin.v7.ui.HorizontalLayout;
+import com.vaadin.ui.HorizontalLayout;
 
+@SuppressWarnings("serial")
 public class VaadinHorizontalLayout extends HorizontalLayout {
 
 	@Override
