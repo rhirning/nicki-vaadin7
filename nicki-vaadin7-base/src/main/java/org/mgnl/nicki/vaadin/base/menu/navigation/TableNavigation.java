@@ -27,16 +27,15 @@ import java.util.List;
 import org.mgnl.nicki.vaadin.base.helper.UIHelper;
 import org.mgnl.nicki.vaadin.base.menu.application.MainView;
 
+import com.vaadin.ui.Grid;
+import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.Panel;
-import com.vaadin.v7.ui.Table;
-import com.vaadin.v7.ui.Table.ColumnHeaderMode;
-import com.vaadin.v7.ui.VerticalLayout;
+import com.vaadin.ui.VerticalLayout;
 
 public class TableNavigation extends NavigationBase implements Navigation {
 	private static final long serialVersionUID = -4231539383235849692L;
-	private static final Object VISIBLE_COLUMNS[] = {"navigationCaption"};
 	private VerticalLayout layout;
-	private Table table;
+	private Grid<NavigationElement> table;
 	private NavigationEntry selected;
 	
 	public TableNavigation(MainView mainView) {
@@ -56,47 +55,47 @@ public class TableNavigation extends NavigationBase implements Navigation {
 		panel.setStyleName("logo");
 		layout.addComponent(panel);
 		panel.addClickListener(event -> restart());
-		table = new Table();
+		table = new Grid<>();
 		UIHelper.setImmediate(table, true);
-		table.setSelectable(true);
-		table.setNullSelectionAllowed(false);
-		table.addContainerProperty("navigationCaption", String.class, null);
-		table.setVisibleColumns(VISIBLE_COLUMNS);
-		table.setColumnHeaderMode(ColumnHeaderMode.HIDDEN);
+		table.setSelectionMode(SelectionMode.SINGLE);
+		table.addColumn(NavigationElement::getNavigationCaption);
 		table.setWidth("100%");
 		table.setHeight("100%");
-		table.setPageLength(0);
+		while (table.getHeaderRowCount() > 0) {
+			table.removeHeaderRow(0);
+		}
 
-		table.addValueChangeListener(event -> {
-				if (table.getValue() instanceof NavigationEntry) {
-					NavigationEntry entry = (NavigationEntry) table.getValue();
+		table.addSelectionListener(event -> {
+				if (table.asSingleSelect().getValue() instanceof NavigationEntry) {
+					NavigationEntry entry = (NavigationEntry) table.asSingleSelect().getValue();
 					if (entry != selected) {
 						if (select(entry)) {
 							selected = entry;
 						} else {
-							table.setValue(selected);
+							table.select(selected);
 						}
 					}
 				} else {
 					if (selected != null) {
-						table.setValue(selected);
+						table.select(selected);
 					}
 				}
 		});
 		
-		table.setCellStyleGenerator( (source, itemId, propertyId) -> {
-				if (itemId instanceof NavigationFolder) {
+		table.setStyleGenerator(item -> {
+				if (item instanceof NavigationFolder) {
 					return "folder";
 				}
-				else if (itemId instanceof NavigationEntry) {
+				else if (item instanceof NavigationEntry) {
 					return "entry";
-				} else if (itemId instanceof NavigationSeparator) {
+				} else if (item instanceof NavigationSeparator) {
 					return "separator";
 				}
-
 				return null;
 		});
-
+		
+		
+		
 		layout.addComponent(table);
 		layout.setExpandRatio(table, 1.0f);
 		//layout.setExpandRatio(panel, 0.0f);
@@ -105,7 +104,7 @@ public class TableNavigation extends NavigationBase implements Navigation {
 	
 
 	public void restart() {
-		this.table.select(null);
+		this.table.deselectAll();
 		super.restart();
 	}
 
@@ -122,7 +121,7 @@ public class TableNavigation extends NavigationBase implements Navigation {
 				}
 			}
 		}
-		table.setContainerDataSource(getContainer());
+		table.setItems(getContainer());
 	}
 	
 	@Override

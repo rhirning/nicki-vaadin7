@@ -1,6 +1,8 @@
 
 package org.mgnl.nicki.vaadin.base.fields;
 
+import com.vaadin.data.HasValue.ValueChangeListener;
+
 /*-
  * #%L
  * nicki-vaadin-base
@@ -22,7 +24,6 @@ package org.mgnl.nicki.vaadin.base.fields;
  */
 
 
-import com.vaadin.v7.data.Property.ValueChangeListener;
 import com.vaadin.ui.Component;
 
 public interface NickiField<F> {
@@ -34,7 +35,7 @@ public interface NickiField<F> {
 
 	Component getComponent();
 
-	void addValueChangeListener(ValueChangeListener listener);
+	void addValueChangeListener(ValueChangeListener<F> listener);
 	void setEnabled(boolean enabled);
 	void focus();
 	void setReadOnly(boolean readOnly);

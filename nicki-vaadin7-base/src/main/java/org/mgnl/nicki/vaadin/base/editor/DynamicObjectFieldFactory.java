@@ -44,19 +44,19 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SuppressWarnings("serial")
 public class DynamicObjectFieldFactory implements Serializable {
-	private DynamicObjectValueChangeListener<String> objectListener;
+	private DynamicObjectValueChangeListener objectListener;
 	
-	public DynamicObjectFieldFactory(DynamicObjectValueChangeListener<String> objectListener) {
+	public DynamicObjectFieldFactory(DynamicObjectValueChangeListener objectListener) {
 		this.objectListener = objectListener;
 	}
 
 	@SuppressWarnings("unchecked")
 	public Component createField(Component parent, DynamicObject dynamicObject, String attributeName, boolean create) {
 		DynamicAttribute dynAttribute = dynamicObject.getDynamicAttribute(attributeName);
-		DynamicAttributeField<String> field = null;
+		DynamicAttributeField field = null;
 		if (StringUtils.isNotEmpty(dynAttribute.getEditorClass())) {
 			try {
-				field = (DynamicAttributeField<String>) Classes.newInstance(dynAttribute.getEditorClass());
+				field = (DynamicAttributeField) Classes.newInstance(dynAttribute.getEditorClass());
 				field.init(attributeName, dynamicObject, objectListener);
 			} catch (Exception e) {
 				field = null;

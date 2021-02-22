@@ -1,6 +1,8 @@
 
 package org.mgnl.nicki.vaadin.base.listener;
 
+import java.util.ArrayList;
+
 /*-
  * #%L
  * nicki-vaadin-base
@@ -26,13 +28,12 @@ import java.util.List;
 
 import org.mgnl.nicki.core.objects.DynamicObject;
 
-import com.vaadin.v7.data.Property.ValueChangeEvent;
-import com.vaadin.v7.data.Property.ValueChangeListener;
-import com.vaadin.v7.event.FieldEvents.TextChangeEvent;
+import com.vaadin.data.HasValue.ValueChangeEvent;
+import com.vaadin.data.HasValue.ValueChangeListener;
 import com.vaadin.ui.AbstractComponentContainer;
 
 @SuppressWarnings("serial")
-public class ListForeignKeyListener extends BaseAttributeListener implements ValueChangeListener {
+public class ListForeignKeyListener extends BaseAttributeListener<DynamicObject> implements ValueChangeListener<DynamicObject> {
 
 	private AbstractComponentContainer container;
 	public ListForeignKeyListener(AbstractComponentContainer container,
@@ -40,12 +41,14 @@ public class ListForeignKeyListener extends BaseAttributeListener implements Val
 		super(dynamicObject, name);
 		this.container = container;
 	}
-	public void textChange(TextChangeEvent event) {
-	}
-	public void valueChange(ValueChangeEvent event) {
-		List<String> values = collectValues(this.container);
+	public void valueChange(ValueChangeEvent<DynamicObject> event) {
+		List<DynamicObject> values = collectValues(this.container);
 		if (values.size() > 0) {
-			getDynamicObject().put(getName(), values);
+			List<String> dns = new ArrayList<String>();
+			for (DynamicObject dynamicObject : values) {
+				dns.add(dynamicObject.getPath());
+			}
+			getDynamicObject().put(getName(), dns);
 		} else {
 			getDynamicObject().remove(getName());
 		}

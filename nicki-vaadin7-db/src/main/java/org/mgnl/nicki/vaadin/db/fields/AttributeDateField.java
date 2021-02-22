@@ -23,22 +23,24 @@ package org.mgnl.nicki.vaadin.db.fields;
 
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
+import org.mgnl.nicki.core.helper.DataHelper;
+import org.mgnl.nicki.vaadin.db.converter.LocalDateToDateConverter;
 import org.mgnl.nicki.vaadin.db.data.AttributeDataContainer;
 import org.mgnl.nicki.vaadin.db.data.DataContainer;
 import org.mgnl.nicki.vaadin.db.editor.DbBeanValueChangeListener;
 import org.mgnl.nicki.vaadin.db.listener.AttributeInputListener;
 
 import com.vaadin.server.Sizeable.Unit;
-import com.vaadin.v7.ui.AbstractField;
-import com.vaadin.v7.ui.DateField;
-import com.vaadin.v7.ui.Field;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.DateField;
 
 @SuppressWarnings("serial")
 public class AttributeDateField  extends BaseDbBeanAttributeField implements DbBeanAttributeField, Serializable {
 
-	private AbstractField<Date> field;
+	private DateField field;
 	private DataContainer<Date> property;
 	public void init(String attributeName, Object bean, DbBeanValueChangeListener objectListener, String dbContextName) {
 
@@ -46,11 +48,13 @@ public class AttributeDateField  extends BaseDbBeanAttributeField implements DbB
 		field = new DateField(getName(bean, attributeName));
 		field.setHeight(2, Unit.EM);
 		field.setWidth("600px");
-		field.setValue(property.getValue());
-		field.addValueChangeListener(new AttributeInputListener<Date>(property, objectListener, null, null));
+		if (property != null && property.getValue() != null) {
+			field.setValue(DataHelper.getLocalDate(property.getValue()));
+		}
+		field.addValueChangeListener(new AttributeInputListener<LocalDate, Date>(property, objectListener,  new LocalDateToDateConverter()));
 	}
 
-	public Field<Date> getComponent(boolean readOnly) {
+	public Component getComponent(boolean readOnly) {
 		field.setReadOnly(readOnly);
 		return field;
 	}

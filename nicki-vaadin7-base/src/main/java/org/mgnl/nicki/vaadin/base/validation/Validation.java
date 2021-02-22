@@ -1,6 +1,8 @@
 
 package org.mgnl.nicki.vaadin.base.validation;
 
+import java.time.LocalDate;
+
 /*-
  * #%L
  * nicki-vaadin-base
@@ -28,10 +30,11 @@ import org.apache.commons.lang.StringUtils;
 import org.mgnl.nicki.core.objects.DynamicObject;
 import org.mgnl.nicki.vaadin.base.editor.ValidationException;
 
-import com.vaadin.v7.ui.Field;
+import com.vaadin.ui.AbstractField;
+import com.vaadin.ui.NativeSelect;
 
 public class Validation {
-	public static void notNull(Field<?> component, DynamicObject dynamicObject, String error) throws ValidationException {
+	public static void notNull(AbstractField<?> component, DynamicObject dynamicObject, String error) throws ValidationException {
 		if (dynamicObject == null) {
 			if (component != null) {
 				component.focus();
@@ -45,7 +48,16 @@ public class Validation {
 		}
 	}
 
-	public static void notNull(Field<?> component, Date date, String error) throws ValidationException {
+	public static void notNull(AbstractField<?> component, Date date, String error) throws ValidationException {
+		if (date == null) {
+			if (component != null) {
+				component.focus();
+			}
+			throw new ValidationException(error);
+		}
+	}
+
+	public static void notNull(AbstractField<?> component, LocalDate date, String error) throws ValidationException {
 		if (date == null) {
 			if (component != null) {
 				component.focus();
@@ -60,7 +72,7 @@ public class Validation {
 		}
 	}
 
-	public static void dateInFuture(Field<?> component, Date date, String error) throws ValidationException {
+	public static void dateInFuture(AbstractField<?> component, Date date, String error) throws ValidationException {
 		if ((date == null) || (date.compareTo(new Date()) < 0)) {
 			if (component != null) {
 				component.focus();
@@ -69,7 +81,7 @@ public class Validation {
 		}
 	}
 
-	public static void dateInPast(Field<?> component, Date date, String error) throws ValidationException {
+	public static void dateInPast(AbstractField<?> component, Date date, String error) throws ValidationException {
 		if ((date == null) || (date.compareTo(new Date()) > 0)) {
 			if (component != null) {
 				component.focus();
@@ -78,7 +90,7 @@ public class Validation {
 		}
 	}
 
-	public static void notEmpty(Field<?> component, String error) throws ValidationException {
+	public static void notEmpty(AbstractField<?> component, String error) throws ValidationException {
 		if (!StringUtils.isNotBlank((String) component.getValue())) {
 			if (component != null) {
 				component.focus();
@@ -87,7 +99,16 @@ public class Validation {
 		}
 	}
 
-	public static void isTrue(Field<?> component, boolean check, String error) throws ValidationException {
+	public static void notEmpty(NativeSelect<?> component, String error) throws ValidationException {
+		if (!StringUtils.isNotBlank((String) component.getValue())) {
+			if (component != null) {
+				component.focus();
+			}
+			throw new ValidationException(error);
+		}
+	}
+
+	public static void isTrue(AbstractField<?> component, boolean check, String error) throws ValidationException {
 		if (!check) {
 			if (component != null) {
 				component.focus();
@@ -96,7 +117,7 @@ public class Validation {
 		}
 	}
 
-	public static void isNumeric(Field<?> component, String error) throws ValidationException {
+	public static void isNumeric(AbstractField<?> component, String error) throws ValidationException {
 		if (!StringUtils.isNumeric((String) component.getValue())) {
 			if (component != null) {
 				component.focus();

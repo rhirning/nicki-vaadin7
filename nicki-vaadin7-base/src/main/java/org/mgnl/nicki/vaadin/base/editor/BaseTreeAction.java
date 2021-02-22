@@ -47,5 +47,9 @@ import com.vaadin.ui.CustomComponent;
 		public Class<? extends TreeData> getTargetClass() {
 			return targetClass;
 		}
+		
+		@Override
+		public void close() {
+		}
 
 	}

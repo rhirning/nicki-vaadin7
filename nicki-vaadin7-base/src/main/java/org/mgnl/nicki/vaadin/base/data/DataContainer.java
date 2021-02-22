@@ -32,5 +32,6 @@ public interface DataContainer<T> extends Serializable{
 	String getAttributeName();
 	T getValue();
 	void setValue(T value);
+	String getDisplay();
 
 }

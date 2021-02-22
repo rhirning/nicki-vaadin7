@@ -23,52 +23,52 @@ package org.mgnl.nicki.vaadin.base.editor;
 
 
 import java.util.Collection;
+import java.util.List;
 
 import org.mgnl.nicki.core.data.TreeData;
+
+import com.vaadin.contextmenu.GridContextMenu;
 import com.vaadin.event.Action.Handler;
-import com.vaadin.v7.ui.Tree;
-import com.vaadin.v7.ui.Tree.ExpandListener;
+import com.vaadin.event.ExpandEvent.ExpandListener;
+import com.vaadin.icons.VaadinIcons;
+import com.vaadin.ui.Grid.SelectionMode;
+import com.vaadin.ui.TreeGrid;
 
 @SuppressWarnings("serial")
-public class TreeSelector extends BasicNickiSelector implements NickiSelect {
-	private Tree component = new Tree();
+public class TreeSelector<T> extends BasicNickiSelector<T> implements NickiSelect<T> {
+	private TreeGrid<T> component = new TreeGrid<>();
 
 	public TreeSelector() {
 		super();
 		super.setComponent(component);
 	}
 	public void setSelectable(boolean selectable) {
-		component.setSelectable(selectable);
-	}
-
-	public void addActionHandler(Handler handler) {
-		component.addActionHandler(handler);
-	}
-
-
-	@Override
-	public void expandItem(TreeData object) {
-		component.expandItem(object);
+		component.setSelectionMode(SelectionMode.SINGLE);
 	}
 
 	@Override
-	public void addExpandListener(ExpandListener listener) {
+	public void expandItems(T... object) {
+		component.expand(object);
+	}
+
+	@Override
+	public void addExpandListener(ExpandListener<T> listener) {
 		component.addExpandListener(listener);
 	}
 
 	@Override
-	public Collection<?> rootItemIds() {
-		return component.rootItemIds();
+	public Collection<T> rootItemIds() {
+		return component.getTreeData().getRootItems();
 	}
 
-	@Override
-	public void collapseItemsRecursively(TreeData startItemId) {
-		component.collapseItemsRecursively(startItemId);
-	}
-
-	@Override
-	public void expandItemsRecursively(Object object) {
-		component.expandItem(object);
-	}
+//	@Override
+//	public void collapseItemsRecursively(TreeData startItemId) {
+//		component.collapse(startItemId);
+//	}
+//
+//	@Override
+//	public void expandItemsRecursively(TreeData object) {
+//		component.expand(object);
+//	}
 
 }

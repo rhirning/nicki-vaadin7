@@ -32,8 +32,8 @@ import org.mgnl.nicki.vaadin.base.editor.DynamicObjectValueChangeListener;
 import org.mgnl.nicki.vaadin.base.listener.BooleanAttributeInputListener;
 
 import com.vaadin.server.Sizeable.Unit;
-import com.vaadin.v7.ui.CheckBox;
-import com.vaadin.v7.ui.Field;
+import com.vaadin.ui.AbstractField;
+import com.vaadin.ui.CheckBox;
 
 @SuppressWarnings("serial")
 public class AttributeCheckbox extends BaseDynamicAttributeField implements DynamicAttributeField<String>, Serializable {
@@ -49,7 +49,7 @@ public class AttributeCheckbox extends BaseDynamicAttributeField implements Dyna
 		field.addValueChangeListener(new BooleanAttributeInputListener(property, objectListener));
 	}
 
-	public Field<Boolean> getComponent(boolean readOnly) {
+	public AbstractField<Boolean> getComponent(boolean readOnly) {
 		field.setReadOnly(readOnly);
 		return field;
 	}

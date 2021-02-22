@@ -28,7 +28,7 @@ import com.vaadin.ui.Button.ClickListener;
 import org.mgnl.nicki.vaadin.base.helper.UIHelper;
 
 import com.vaadin.ui.AbstractComponentContainer;
-import com.vaadin.v7.ui.TextField;
+import com.vaadin.ui.TextField;
 
 @SuppressWarnings("serial")
 public class AddAttributeListener implements ClickListener {

@@ -26,130 +26,92 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-
+import java.util.TreeSet;
 import org.mgnl.nicki.core.context.NickiContext;
 import org.mgnl.nicki.core.objects.DynamicObjectException;
 import org.mgnl.nicki.core.data.DataProvider;
 import org.mgnl.nicki.core.data.EntryFilter;
 import org.mgnl.nicki.core.data.TreeData;
 import org.mgnl.nicki.vaadin.base.editor.Icon;
-
-import com.vaadin.v7.data.Item;
-import com.vaadin.v7.data.Property;
-import com.vaadin.v7.data.util.HierarchicalContainer;
-import com.vaadin.server.ThemeResource;
+import org.mgnl.nicki.vaadin.base.editor.NickiTreeDataProvider;
+import com.vaadin.ui.TreeGrid;
 
 @SuppressWarnings("serial")
 public class TreeContainer implements Serializable {
-	public static final String PROPERTY_NAME = "name"; 
-	public static final String PROPERTY_LOADED = "loaded"; 
-	public static final String PROPERTY_ICON = "icon"; 
 	
-	private HierarchicalContainer container = new HierarchicalContainer();
-	private String name;
 	private TreeData root;
-	private DataProvider treeDataProvider;
+	private DataProvider<TreeData> treeDataProvider;
 	private Map<Class<? extends TreeData>, Icon> classIcons= new HashMap<>();
 	private EntryFilter entryFilter;
 	private NickiContext context;
+	private NickiTreeDataProvider dataProvider;
 	
-	public TreeContainer(NickiContext context, DataProvider treeDataProvider, String name) {
+	public TreeContainer(NickiContext context, DataProvider<TreeData> treeDataProvider) {
 		this.context = context;
 		this.treeDataProvider = treeDataProvider;
 		this.root = treeDataProvider.getRoot(context);
-		this.name = name;
 		this.entryFilter = treeDataProvider.getEntryFilter();
 	}
-	@SuppressWarnings("unchecked")
-	public HierarchicalContainer getTree() {
-		container = new HierarchicalContainer();
-		container.addContainerProperty(PROPERTY_NAME, String.class, null);
-		container.addContainerProperty(PROPERTY_LOADED, Boolean.class, null);
-        container.addContainerProperty(PROPERTY_ICON, ThemeResource.class, null);
-        
+	
+	public void initTree(TreeGrid<TreeData> treeGrid) {
+		treeGrid.addColumn(TreeData::getDisplayName);
+		dataProvider = (NickiTreeDataProvider) treeGrid.getDataProvider();
+		
         // add Root
-//	    root = ObjectBuilder.loadObject(this.parentPath);
-	    Item item = container.addItem(root);
-		item.getItemProperty(PROPERTY_NAME).setValue(name);
-		item.getItemProperty(PROPERTY_LOADED).setValue(false);
-		item.getItemProperty(PROPERTY_ICON).setValue(null);
-	    
-	    return container;
+		//addRootItems(root);
+		dataProvider.refreshAll();
 	}
 	
+	private void addRootItems(TreeData ... rootItems) {
+		com.vaadin.data.TreeData<TreeData> data = dataProvider.getTreeData();
+        // add Root
+		data.addRootItems(rootItems);
+	}
+	
+	public boolean contains(TreeData item) {
+		com.vaadin.data.TreeData<TreeData> data = dataProvider.getTreeData();
+		return data.contains(item);
+	}
+	
+	public void addItem(TreeData parent, TreeData item) {
+		com.vaadin.data.TreeData<TreeData> data = dataProvider.getTreeData();
+        // add Root
+		data.addItem(parent, item);
+	}
 	public void setClassIcon(Class<? extends TreeData> classDefinition, Icon icon) {
 		this.classIcons.put(classDefinition, icon);
 	}
 
-	@SuppressWarnings("unchecked")
-	public Item addItem(TreeData object) {
+	// TODO: LOADED, icons
+	public void addItem(TreeData object) {
 		if (this.entryFilter.accepts(object)) {
-			Item item = container.addItem(object);
-			item.getItemProperty(PROPERTY_NAME).setValue(object.getDisplayName());
-			item.getItemProperty(PROPERTY_LOADED).setValue(false);
+			addRootItems(object);
+			
+/*			item.getItemProperty(PROPERTY_LOADED).setValue(false);
 			if (this.classIcons.keySet().contains(object.getClass())) {
 	            item.getItemProperty(PROPERTY_ICON).setValue(
 	                    new ThemeResource(this.classIcons.get(object.getClass()).getResourcePath()));
 			}
-			return item;
+			*/
 		}
-		return null;
-	}
-
-	public void loadChildren(TreeData parent) {
-		@SuppressWarnings("unchecked")
-		Property<Boolean> loaded = container.getItem(parent).getItemProperty(PROPERTY_LOADED);
-		if (!loaded.getValue()) {
-			if (parent == this.root) {
-			    Collection<? extends TreeData> objects = this.treeDataProvider.getChildren(context);
-			    if (objects != null) {
-				    for (TreeData p : objects) {
-						if (this.entryFilter.accepts(p)) {
-							addItem(p, root, true);
-							boolean childrenAllowed = p.childrenAllowed();
-							container.setChildrenAllowed(p, childrenAllowed);
-						}
-					}
-			    }
-
-			} else {
-				addChildren(parent, parent.getAllChildren());
-			}
-		}
-		loaded.setValue(true);
 	}
 	
-	public void addChildren(Object parent,
+	public static <T extends TreeData> TreeData cast(T treeData) {
+		return (TreeData) treeData;
+	}
+	
+	public void addChildren(TreeData parent,
 			Collection<? extends TreeData> children) {
 		for (TreeData p : children) {
-			if (this.entryFilter.accepts(p)) {
+			if (this.entryFilter.accepts(p) && !contains(p)) {
 				addChild(parent, p);
 			}
 		}
 	}
 
-	public void addChild(Object parent, TreeData child) {
+	public void addChild(TreeData parent, TreeData child) {
 		if (this.entryFilter.accepts(child)) {
-			boolean childrenAllowed = child.childrenAllowed();
-			addItem(child, parent, childrenAllowed);
-		}
-	}
-
-	@SuppressWarnings("unchecked")
-	public void addItem(TreeData object, Object parent, boolean childrenAllowed) {
-		if (this.entryFilter.accepts(object)) {
-			Item item = container.addItem(object);
-			if (item != null) {
-				item.getItemProperty(PROPERTY_NAME).setValue(object.getDisplayName());
-				item.getItemProperty(PROPERTY_LOADED).setValue(false);
-				if (this.classIcons.keySet().contains(object.getClass())) {
-		            item.getItemProperty(PROPERTY_ICON).setValue(
-		                    new ThemeResource(this.classIcons.get(object.getClass()).getResourcePath()));
-				}
-
-				container.setParent(object, parent);
-				container.setChildrenAllowed(object, childrenAllowed);
-			}
+			addItem(parent, child);
 		}
 	}
 
@@ -158,26 +120,25 @@ public class TreeContainer implements Serializable {
 	}
 
 	public void setParent(TreeData object, TreeData parent) throws DynamicObjectException {
-		container.setParent(object, parent);
+		com.vaadin.data.TreeData<TreeData> data = dataProvider.getTreeData();
+		data.setParent(object, parent);
+		dataProvider.refreshAll();
 		String newPath = object.getChildPath(parent, object);
 		object.moveTo(newPath);
 	}
 
 	public TreeData getParent(TreeData child) {
-		return (TreeData) container.getParent(child);
+		com.vaadin.data.TreeData<TreeData> data = dataProvider.getTreeData();
+		return data.getParent(child);
 	}
 	
-	@SuppressWarnings("unchecked")
 	public void removeChildren(TreeData parent) {
 		if (parent != null) {
-			Item item = container.getItem(parent);
-			if (item != null) {
-				while (container.getChildren(parent)!= null && container.getChildren(parent).size() > 0) {
-					TreeData child = (TreeData) container.getChildren(parent).iterator().next();
-					container.removeItemRecursively(child);
-				}
-				item.getItemProperty(PROPERTY_LOADED).setValue(false);
+			com.vaadin.data.TreeData<TreeData> data = dataProvider.getTreeData();
+			for (TreeData child : data.getChildren(parent)) {
+				data.removeItem(child);
 			}
+			dataProvider.refreshAll();
 		}
 	}
 	

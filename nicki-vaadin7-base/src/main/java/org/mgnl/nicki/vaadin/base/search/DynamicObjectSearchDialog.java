@@ -37,14 +37,16 @@ import org.mgnl.nicki.core.objects.DataModel;
 import org.mgnl.nicki.core.objects.DynamicAttribute;
 import org.mgnl.nicki.core.objects.DynamicObject;
 import org.mgnl.nicki.core.objects.SearchResultEntry;
+import org.mgnl.nicki.vaadin.base.data.DynamicObjectGridColumn;
+import org.mgnl.nicki.vaadin.base.helper.GridHelper;
 
-import com.vaadin.v7.data.util.BeanItemContainer;
 import com.vaadin.ui.AbstractLayout;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CustomComponent;
+import com.vaadin.ui.Grid;
+import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.GridLayout;
-import com.vaadin.v7.ui.Table;
-import com.vaadin.v7.ui.VerticalLayout;
+import com.vaadin.ui.VerticalLayout;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -53,8 +55,8 @@ import lombok.extern.slf4j.Slf4j;
 public class DynamicObjectSearchDialog<T extends DynamicObject> extends CustomComponent {
 	private VerticalLayout mainLayout;
 	private Button searchButton;
-	private Table table;
-	private BeanItemContainer<T> container;
+	private Grid<T> table;
+	private List<T> container = new ArrayList<>();
 	private Button saveButton;
 	private boolean create;
 	private NickiContext context;
@@ -89,12 +91,12 @@ public class DynamicObjectSearchDialog<T extends DynamicObject> extends CustomCo
 		searchButton.addClickListener(event -> search());
 
 		mainLayout.addComponent(searchButton);
-		table = new Table();
-		table.setSelectable(true);
-		container = new BeanItemContainer<T>(clazz);
-		table.setContainerDataSource(container);
-		table.setVisibleColumns(getVisibleColumns());
-		table.setColumnHeaders(getColumnHeaders());
+		table = new Grid<>();
+		table.setSelectionMode(SelectionMode.SINGLE);
+		container = new ArrayList<>();
+		for (DynamicObjectGridColumn<T> column : GridHelper.getColumns(context, clazz)) {
+			table.addColumn(column).setCaption(column.getCaption());
+		}
 		mainLayout.addComponent(table);
 		saveButton = new Button(I18n.getText("nicki.editor.generic.button.save"));
 		saveButton.addClickListener(event -> save());
@@ -113,50 +115,15 @@ public class DynamicObjectSearchDialog<T extends DynamicObject> extends CustomCo
 		return layout;
 	}
 
-
-	private String[] getColumnHeaders() {
-
-		List<String> columnsHeaders = new ArrayList<String>();
-		try {
-			DataModel model = context.getDataModel(clazz);
-			for (DynamicAttribute dynAttribute : model.getAttributes().values()) {
-				if (dynAttribute.isSearchable()) {
-					columnsHeaders.add(I18n.getText(dynAttribute.getCaption(), dynAttribute.getName()));
-				}
-			}
-		} catch (Exception e) {
-			log.error("Error reading datamodel", e);
-		}
-		return columnsHeaders.toArray(new String[0]);
-	}
-
-
-	private Object[] getVisibleColumns() {
-
-		List<String> columns = new ArrayList<String>();
-		try {
-			DataModel model = context.getDataModel(clazz);
-			for (DynamicAttribute dynAttribute : model.getAttributes().values()) {
-				if (dynAttribute.isSearchable()) {
-					columns.add(dynAttribute.getName());
-				}
-			}
-		} catch (Exception e) {
-			log.error("Error reading datamodel", e);
-		}
-		return columns.toArray(new Object[0]);
-	}
-
-
 	protected void search() {
-		container.removeAllItems();
+		container.clear();
 		for (SearchResultEntry entry : searchObjects()) {
 			T resultEntry = context.loadObject(clazz, entry.getDn());
-			container.addItem(resultEntry);
+			container.add(resultEntry);
 		}
+		table.setItems(container);
 	}
 	
-
 
 	public List<SearchResultEntry> searchObjects() {
 		DataModel model;
@@ -193,9 +160,8 @@ public class DynamicObjectSearchDialog<T extends DynamicObject> extends CustomCo
 		searcher.setDynamicObject(clazz, getSelected());
 	}
 
-	@SuppressWarnings("unchecked")
 	private T getSelected() {
-		return (T) table.getValue();
+		return table.asSingleSelect().getValue();
 	}
 
 

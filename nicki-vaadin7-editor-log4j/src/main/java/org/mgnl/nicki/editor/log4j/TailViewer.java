@@ -24,7 +24,9 @@ package org.mgnl.nicki.editor.log4j;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.io.input.Tailer;
 import org.apache.commons.io.input.TailerListenerAdapter;
@@ -36,9 +38,10 @@ import org.mgnl.nicki.vaadin.base.menu.application.View;
 import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.BorderStyle;
 import com.vaadin.ui.Button;
-import com.vaadin.v7.ui.CheckBox;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.CustomComponent;
-import com.vaadin.v7.ui.HorizontalLayout;
+import com.vaadin.ui.Grid;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
@@ -46,9 +49,8 @@ import com.vaadin.ui.Notification.Type;
 import lombok.extern.slf4j.Slf4j;
 
 import com.vaadin.ui.Panel;
-import com.vaadin.v7.ui.Table;
-import com.vaadin.v7.ui.TextField;
-import com.vaadin.v7.ui.VerticalLayout;
+import com.vaadin.ui.TextField;
+import com.vaadin.ui.VerticalLayout;
 
 @Slf4j
 @SuppressWarnings("serial")
@@ -60,10 +62,10 @@ public class TailViewer extends CustomComponent implements Serializable, View {
 	private Panel panel;
 	private TextField path;
 	private HorizontalLayout inputPanel;
-	private Table table;
+	private Grid<NameValue> table;
 	private Tailer tailer;
 	private TailerListener listener = new TailerListener();
-	private LinesContainer container = new LinesContainer();
+	private List<NameValue> container = new ArrayList<NameValue>();
 	private TextField numberOfLinesField;
 	private long numberOfLines = 1000;
 	private CheckBox checkBox;
@@ -78,7 +80,7 @@ public class TailViewer extends CustomComponent implements Serializable, View {
 	
 	public TailViewer(NickiApplication application) {
 	}
-	public LinesContainer getContainer() {
+	public List<NameValue> getContainer() {
 		return container;
 	}
 
@@ -143,11 +145,9 @@ public class TailViewer extends CustomComponent implements Serializable, View {
 		panel = new Panel();
 		UIHelper.setImmediate(panel, true);
 		panel.setSizeFull();
-		table = new Table();
+		table = new Grid<NameValue>();
 		table.setHeight("100%");
-		table.setContainerDataSource(container);
-		table.setVisibleColumns(VISIBLE_COLUMNS);
-		table.setColumnHeader("value", "lines");
+		table.setItems(container);
 		panel.setContent(table);
 		table.setWidth("100%");
 		mainLayout.addComponent(table);
@@ -159,7 +159,7 @@ public class TailViewer extends CustomComponent implements Serializable, View {
 	protected synchronized void checkContainer() {
 		if (container.size() > numberOfLines) {
 			for (int i = 0; i < container.size() - numberOfLines; i++) {
-				container.removeItem(container.firstItemId());
+				container.remove(container.get(0));
 			}
 		}
 	}
@@ -172,7 +172,7 @@ public class TailViewer extends CustomComponent implements Serializable, View {
 	}
 
 	protected void reload() {
-		container.removeAllItems();
+		container.clear();
 		if (tailer != null) {
 			tailer.stop();
 			tailer = null;
@@ -197,7 +197,7 @@ public class TailViewer extends CustomComponent implements Serializable, View {
 				tailer = null;
 				log.debug("Timeout Tailer for File '" + activePath + "'");
 			}
-			container.addBean(new NameValue("line", line));
+			container.add(new NameValue("line", line));
 			checkContainer();
 		}
 	}

@@ -39,9 +39,9 @@ import org.mgnl.nicki.vaadin.db.fields.AttributeLongField;
 import org.mgnl.nicki.vaadin.db.fields.AttributeTextField;
 import org.mgnl.nicki.vaadin.db.fields.DbBeanAttributeField;
 
+import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.AbstractOrderedLayout;
 import com.vaadin.ui.Component;
-import com.vaadin.v7.ui.Field;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -56,7 +56,7 @@ public class DbBeanFieldFactory implements Serializable {
 		this.dbContextName = dbContextName;
 	}
 	
-	public Field<?> createField(Object bean, String attributeName, boolean create) {
+	public Component createField(Object bean, String attributeName, boolean create) {
 		java.lang.reflect.Field field;
 		try {
 			field = bean.getClass().getDeclaredField(attributeName);
@@ -117,11 +117,12 @@ public class DbBeanFieldFactory implements Serializable {
 				boolean all = true;
 				if (all || !attribute.primaryKey()
 						&& (objectListener == null || objectListener.acceptAttribute(field.getName()))) {
-					Field<?> component = createField(bean, field.getName(), create);
+					Component component = createField(bean, field.getName(), create);
 					if (component != null) {
 						component.setWidth("100%");
 						if (attribute.primaryKey() || readonly) {
-							component.setReadOnly(true);
+							if (component instanceof AbstractField<?>)
+								((AbstractField<?>)component).setReadOnly(true);
 						}
 						layout.addComponent(component);
 					} else {

@@ -22,12 +22,12 @@ package org.mgnl.nicki.vaadin.base.editor;
  */
 
 
-import com.vaadin.event.Action.Handler;
-import com.vaadin.v7.ui.Table;
+import com.vaadin.ui.Grid;
+import com.vaadin.ui.Grid.SelectionMode;
 
 @SuppressWarnings("serial")
-public class TableSelector extends BasicNickiSelector {
-	private Table component = new Table();
+public class TableSelector<T> extends BasicNickiSelector<T> {
+	private Grid<T> component = new Grid<>();
 
 	public TableSelector() {
 		super();
@@ -35,11 +35,7 @@ public class TableSelector extends BasicNickiSelector {
 	}
 
 	public void setSelectable(boolean selectable) {
-		component.setSelectable(selectable);
-	}
-
-	public void addActionHandler(Handler handler) {
-		component.addActionHandler(handler);
+		component.setSelectionMode(SelectionMode.SINGLE);
 	}
 
 }

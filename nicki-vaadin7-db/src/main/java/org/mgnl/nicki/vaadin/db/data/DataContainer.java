@@ -24,12 +24,13 @@ package org.mgnl.nicki.vaadin.db.data;
 
 import java.io.Serializable;
 
-import com.vaadin.v7.data.Property;
 
-public interface DataContainer<T> extends Property<T>, Serializable{
+public interface DataContainer<T> extends Serializable{
 
 	Object getBean();
 	String getAttributeName();
 	boolean isModified();
+	T getValue();
+	void setValue(T value);
 
 }

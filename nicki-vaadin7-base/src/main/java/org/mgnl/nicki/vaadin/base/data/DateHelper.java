@@ -1,6 +1,8 @@
 
 package org.mgnl.nicki.vaadin.base.data;
 
+import com.vaadin.shared.ui.datefield.DateResolution;
+
 /*-
  * #%L
  * nicki-vaadin-base
@@ -22,13 +24,12 @@ package org.mgnl.nicki.vaadin.base.data;
  */
 
 
-import com.vaadin.v7.shared.ui.datefield.Resolution;
-import com.vaadin.v7.ui.DateField;
+import com.vaadin.ui.DateField;
 
 public class DateHelper {
 
 	public static void init(DateField field) {
-		field.setResolution(Resolution.DAY);
+		field.setResolution(DateResolution.DAY);
 		field.setDateFormat("dd.MM.yyyy");
 	}
 

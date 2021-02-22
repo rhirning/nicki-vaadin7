@@ -24,17 +24,20 @@ package org.mgnl.nicki.vaadin.base.editor;
 
 import org.mgnl.nicki.core.context.NickiContext;
 import org.mgnl.nicki.core.data.DataProvider;
+import org.mgnl.nicki.core.data.TreeData;
 import org.mgnl.nicki.vaadin.base.application.NickiApplication;
 
-import com.vaadin.v7.ui.Table;
+import com.vaadin.ui.Grid;
+
 
 @SuppressWarnings("serial")
 public class TableEditor extends NickiTreeEditor {
-	private TableSelector tableSelector = new TableSelector();
+	private TableSelector<TreeData> tableSelector = new TableSelector<>();
 
-	Table component = new Table();
-	public TableEditor(NickiApplication application, NickiContext ctx, DataProvider treeDataProvider, String messageKeyBase) {
+	Grid<TreeData> component = new Grid<>();
+	public TableEditor(NickiApplication application, NickiContext ctx, DataProvider<TreeData> treeDataProvider, String messageKeyBase) {
 		super(application, ctx);
-		init(tableSelector, treeDataProvider, messageKeyBase);
+		NickiTreeDataProvider nickiTreeDataProvider = new NickiTreeDataProvider(ctx, treeDataProvider);
+		init(tableSelector, nickiTreeDataProvider, messageKeyBase);
 	}
 }

@@ -24,55 +24,51 @@ package org.mgnl.nicki.vaadin.base.editor;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 
 import org.mgnl.nicki.core.data.TreeData;
 
-import com.vaadin.v7.data.Container;
-import com.vaadin.v7.data.Property.ValueChangeListener;
-import com.vaadin.event.Action.Handler;
-import com.vaadin.v7.ui.AbstractSelect.ItemCaptionMode;
-import com.vaadin.ui.Component;
-import com.vaadin.v7.ui.Tree.ExpandListener;
+import com.vaadin.data.ValueProvider;
+import com.vaadin.event.ExpandEvent.ExpandListener;
+import com.vaadin.event.selection.SelectionListener;
+import com.vaadin.server.ThemeResource;
+import com.vaadin.ui.Grid;
 
-public interface NickiSelect extends Serializable {
+public interface NickiSelect<T> extends Serializable {
 
 	void setHeight(String height);
 
 	void setWidth(String width);
 
-	Component getComponent();
-
-	void setImmediate(boolean b);
+	Grid<T> getComponent();
 
 	void setSelectable(boolean b);
 
-	TreeData getValue();
+	T getValue();
 
-	void addValueChangeListener(ValueChangeListener listener);
+	void addSelectionListener(SelectionListener<T> listener);
 
-	void addActionHandler(Handler handler);
+	void removeItem(T target);
 
-	void removeItem(Object target);
+	void unselect(T object);
 
-	void unselect(TreeData objectbject);
+	void expandItems(T... object);
 
-	void expandItem(TreeData object);
+	void addExpandListener(ExpandListener<T> listener);
 
-	void addExpandListener(ExpandListener listener);
+	void setItems(Collection<T>items);
 
-	void setContainerDataSource(Container dataSource);
+	void setCaption(ValueProvider<T, String> valueProvider);
 
-	void setItemCaptionPropertyId(String propertyName);
+	void setIcon(ValueProvider<T, ThemeResource> valueProvider);
 
-	void setItemCaptionMode(ItemCaptionMode property);
+	Collection<T> rootItemIds();
 
-	void setItemIconPropertyId(String propertyIcon);
-
-	Collection<?> rootItemIds();
-
-	void expandItemsRecursively(Object id);
+	void expandItemsRecursively(T id);
 
 	void collapseItemsRecursively(TreeData startItemId);
+
+	void setComponent(Grid<T> component);
 
 
 }

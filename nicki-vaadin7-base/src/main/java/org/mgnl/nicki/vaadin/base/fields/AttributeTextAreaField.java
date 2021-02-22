@@ -31,7 +31,7 @@ import org.mgnl.nicki.vaadin.base.editor.DynamicObjectValueChangeListener;
 import org.mgnl.nicki.vaadin.base.listener.AttributeInputListener;
 
 import com.vaadin.ui.Component;
-import com.vaadin.v7.ui.TextArea;
+import com.vaadin.ui.TextArea;
 
 @SuppressWarnings("serial")
 public class AttributeTextAreaField extends BaseDynamicAttributeField implements DynamicAttributeField<String>, Serializable {

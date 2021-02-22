@@ -1,6 +1,9 @@
 
 package org.mgnl.nicki.vaadin.base.fields;
 
+import com.vaadin.data.HasValue.ValueChangeListener;
+import com.vaadin.ui.AbstractField;
+
 /*-
  * #%L
  * nicki-vaadin-base
@@ -22,14 +25,12 @@ package org.mgnl.nicki.vaadin.base.fields;
  */
 
 
-import com.vaadin.v7.data.Property.ValueChangeListener;
 import com.vaadin.ui.Component;
-import com.vaadin.v7.ui.Field;
 
 public class SimpleField<T> implements NickiField<T> {
 
-	private Field<T> field;
-	public SimpleField(Field<T> field) {
+	private AbstractField<T> field;
+	public SimpleField(AbstractField<T> field) {
 		this.field = field;
 	}
 

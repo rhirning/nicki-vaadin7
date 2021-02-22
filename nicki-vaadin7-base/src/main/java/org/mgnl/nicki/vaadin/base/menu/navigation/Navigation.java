@@ -24,7 +24,6 @@ package org.mgnl.nicki.vaadin.base.menu.navigation;
 
 import java.util.List;
 
-import com.vaadin.v7.data.Container;
 import com.vaadin.ui.Component;
 
 public interface Navigation extends Component {
@@ -33,7 +32,7 @@ public interface Navigation extends Component {
 	
 	void init(List<NavigationFolder> navigationFolders);
 	
-	Container getContainer();
+	List<NavigationElement> getContainer();
 
 	void selectInNavigation(NavigationEntry entry);
 

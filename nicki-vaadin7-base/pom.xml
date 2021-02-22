@@ -43,6 +43,10 @@
 			<artifactId>vaadin-themes</artifactId>
 		</dependency>
 		<dependency>
+		    <groupId>com.vaadin</groupId>
+		    <artifactId>vaadin-context-menu</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.mgnl.nicki</groupId>
 			<artifactId>nicki-core</artifactId>
 			<version>${nicki.version}</version>

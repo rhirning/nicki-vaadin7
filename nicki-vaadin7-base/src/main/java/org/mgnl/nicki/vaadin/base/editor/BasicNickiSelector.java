@@ -25,86 +25,67 @@ package org.mgnl.nicki.vaadin.base.editor;
 import java.util.Collection;
 
 import org.mgnl.nicki.core.data.TreeData;
-import org.mgnl.nicki.vaadin.base.helper.UIHelper;
 
-import com.vaadin.v7.data.Container;
-import com.vaadin.v7.data.Property.ValueChangeListener;
-import com.vaadin.v7.ui.AbstractSelect;
+import com.vaadin.data.HasValue.ValueChangeListener;
+import com.vaadin.data.ValueProvider;
+import com.vaadin.event.Action.Handler;
+import com.vaadin.event.ExpandEvent.ExpandListener;
+import com.vaadin.event.selection.SelectionListener;
+import com.vaadin.server.ThemeResource;
+import com.vaadin.ui.AbstractSingleSelect;
 import com.vaadin.ui.Component;
-import com.vaadin.v7.ui.AbstractSelect.ItemCaptionMode;
-import com.vaadin.v7.ui.Tree.ExpandListener;
+import com.vaadin.ui.Grid;
+import com.vaadin.ui.Grid.SelectionMode;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @SuppressWarnings("serial")
-public abstract class BasicNickiSelector implements NickiSelect {
-	private AbstractSelect component;
+public abstract class BasicNickiSelector<T> implements NickiSelect<T> {
+	private Grid<T> component;
 
+	@Override
 	public void setHeight(String height) {
 		component.setHeight(height);
 	}
 
+	@Override
 	public void setWidth(String width) {
 		component.setWidth(width);
 	}
 
-	public Component getComponent() {
+	@Override
+	public Grid<T> getComponent() {
 		return component;
 	}
 
-	public void setImmediate(boolean immediate) {
-		UIHelper.setImmediate(component, immediate);
+	@Override
+	public T getValue() {
+		return component.asSingleSelect().getValue();
 	}
 
-	public TreeData getValue() {
-		return (TreeData) component.getValue();
+	@Override
+	public void addSelectionListener(SelectionListener<T> listener) {
+		component.addSelectionListener(listener);
 	}
 
-	public void addValueChangeListener(ValueChangeListener listener) {
-		component.addValueChangeListener(listener);
-	}
-
-	public void unselect(TreeData object) {
-		component.unselect(object);
-	}
-
-	public void setItemCaptionPropertyId(String propertyName) {
-		component.setItemCaptionPropertyId(propertyName);
-	}
-
-	public void setItemCaptionMode(ItemCaptionMode itemCaptionMode) {
-		component.setItemCaptionMode(itemCaptionMode);
-	}
-
-	public void setItemIconPropertyId(String propertyIcon) {
-		component.setItemIconPropertyId(propertyIcon);
-	}
-
-	public void removeItem(Object object) {
-		component.removeItem(object);
-	}
-
-	public void setContainerDataSource(Container dataSource) {
-		component.setContainerDataSource(dataSource);
-	}
-
-	protected void setComponent(AbstractSelect component) {
-		this.component = component;
+	@Override
+	public void unselect(T object) {
+		component.select(null);
 	}
 	
 	@Override
-	public void expandItem(TreeData object) {
+	public void expandItems(T... object) {
 		log.debug("not implemented");
 	}
 
 	@Override
-	public void addExpandListener(ExpandListener listener) {
+	public void addExpandListener(ExpandListener<T> listener) {
 		log.debug("not implemented");
 	}
 
 	@Override
-	public Collection<?> rootItemIds() {
+	public Collection<T> rootItemIds() {
 		log.debug("not implemented");
 		return null;
 	}
@@ -117,6 +98,42 @@ public abstract class BasicNickiSelector implements NickiSelect {
 	@Override
 	public void collapseItemsRecursively(TreeData startItemId) {
 		log.debug("not implemented");
+	}
+
+	@Override
+	public void setSelectable(boolean b) {
+		if (b) {
+			component.setSelectionMode(SelectionMode.SINGLE);
+		} else {
+			component.setSelectionMode(SelectionMode.NONE);
+		}
+	}
+
+	@Override
+	public void removeItem(T target) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setItems(Collection<T> items) {
+		component.setItems(items);
+	}
+
+	@Override
+	public void setCaption(ValueProvider<T, String> valueProvider) {
+		component.addColumn(valueProvider);
+	}
+
+	@Override
+	public void setIcon(ValueProvider<T, ThemeResource> valueProvider) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setComponent(Grid<T> component) {
+		this.component = component;
 	}
 
 

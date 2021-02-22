@@ -25,17 +25,15 @@ package org.mgnl.nicki.vaadin.base.listener;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.mgnl.nicki.core.objects.DynamicObject;
 
-import com.vaadin.v7.data.Property.ValueChangeListener;
-import com.vaadin.v7.event.FieldEvents.TextChangeEvent;
+import com.vaadin.data.HasValue.ValueChangeListener;
 import com.vaadin.ui.AbstractComponentContainer;
-import com.vaadin.v7.ui.AbstractField;
+import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.Component;
 
 @SuppressWarnings("serial")
-public abstract class BaseAttributeListener implements ValueChangeListener {
+public abstract class BaseAttributeListener<T> implements ValueChangeListener<T> {
 
 	private DynamicObject dynamicObject;
 	private String name;
@@ -43,15 +41,14 @@ public abstract class BaseAttributeListener implements ValueChangeListener {
 		this.setDynamicObject(dynamicObject);
 		this.setName(name);
 	}
-	public abstract void textChange(TextChangeEvent event);
 
-	public List<String> collectValues(AbstractComponentContainer cont) {
-		List<String> list = new ArrayList<String>();
+	public List<T> collectValues(AbstractComponentContainer cont) {
+		List<T> list = new ArrayList<T>();
 		for (Component component : cont) {
 			if (component instanceof AbstractField) {
 				@SuppressWarnings("unchecked")
-				String value = ((AbstractField<String>) component).getValue();
-				if (StringUtils.isNotEmpty(value)) {
+				T value = ((AbstractField<T>) component).getValue();
+				if (value != null) {
 					list.add(value);
 				}
 			}

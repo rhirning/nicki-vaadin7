@@ -42,15 +42,13 @@ import org.mgnl.nicki.vaadin.base.components.EnterNameDialog;
 import org.mgnl.nicki.vaadin.base.components.EnterNameHandler;
 import org.mgnl.nicki.vaadin.base.components.NewClassEditor;
 import org.mgnl.nicki.vaadin.base.components.SimpleNewClassEditor;
-import org.mgnl.nicki.vaadin.base.data.TreeContainer;
 
-import com.vaadin.event.Action;
-import com.vaadin.v7.ui.AbstractSelect.ItemCaptionMode;
-import com.vaadin.ui.Component;
+import com.vaadin.contextmenu.GridContextMenu;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
+import com.vaadin.ui.TreeGrid;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
@@ -73,30 +71,19 @@ public class NickiTreeEditor extends CustomComponent {
 		ALLOW, DENY
 	};
 
-	private NickiSelect selector;
+	private NickiSelect<TreeData> selector;
 	private TreeData selectedObject;
 	private ClassEditor viewer;
-	private TreeContainer treeContainer;
 	private String messageKeyBase;
-	private DataProvider treeDataProvider;
-	private String treeTitle;
+	private DataProvider<TreeData> treeDataProvider;
 
 	private Map<Class<? extends TreeData>, List<Class<? extends TreeData>>> children
 		= new HashMap<>();
-
-	private Map<Class<? extends TreeData>, Map<Action, Class<? extends TreeData>>> actions = new HashMap<>();
-	private Map<Class<? extends TreeData>, Action[]> actionsList = new HashMap<>();
-	private Map<Class<? extends TreeData>, Action[]> rootActionsList = new HashMap<>();
-	private Map<Action, Class<? extends TreeData>> deleteActions = new HashMap<>();
-	private Map<Action, Class<? extends TreeData>> renameActions = new HashMap<>();
-	private Action refreshAction;
 
 	private List<Class<? extends TreeData>> allowCreate = new ArrayList<>();
 	private List<Class<? extends TreeData>> allowDelete = new ArrayList<>();
 	private List<Class<? extends TreeData>> allowRename = new ArrayList<>();
 	private Map<Class<? extends TreeData>, List<TreeAction>> treeActions = new HashMap<>();
-
-	private Map<Action, TreeAction> treeActionMap = new HashMap<Action, TreeAction>();
 
 	private Map<Class<? extends TreeData>, ClassEditor> classEditors = new HashMap<>();
 	private Map<Class<? extends TreeData>, NewClassEditor> newClassEditors = new HashMap<>();
@@ -104,6 +91,7 @@ public class NickiTreeEditor extends CustomComponent {
 	private NickiApplication application;
 	private HorizontalSplitPanel hsplit;
 	private NickiTreeEditor nickiEditor;
+	private NickiTreeDataProvider nickiTreeDataProvider;
 
 	public NickiTreeEditor(NickiApplication application, NickiContext ctx) {
 		this.nickiEditor = this;
@@ -114,27 +102,27 @@ public class NickiTreeEditor extends CustomComponent {
 		setCompositionRoot(hsplit);
 	}
 
-	public void init(NickiSelect select, DataProvider treeDataProvider,
+	public void init(NickiSelect<TreeData> select, NickiTreeDataProvider nickiTreeDataProvider,
 			String messageKeyBase) {
-
-		this.treeDataProvider = treeDataProvider;
+		this.nickiTreeDataProvider = nickiTreeDataProvider;
+		this.treeDataProvider = nickiTreeDataProvider.getTreeDataProvider();
 		this.messageKeyBase = messageKeyBase;
-		this.treeTitle = I18n.getText(this.messageKeyBase + ".tree.title");
-		this.treeContainer = new TreeContainer(this.context,
-				this.treeDataProvider, this.treeTitle);
 		selector = select;
-		loadTree();
+		TreeGrid<TreeData> selectorComponent = (TreeGrid<TreeData>) selector.getComponent();
+
+		while (selectorComponent.getHeaderRowCount() > 0) {
+			selectorComponent.removeHeaderRow(0);
+		}
+		initTree(selectorComponent);
 		
 		
-		Component selectorComponent = selector.getComponent();
-		//selectorComponent.setSizeFull();
+		selectorComponent.setSizeFull();
 
 		hsplit.setFirstComponent(selectorComponent);
 		hsplit.addStyleName(ValoTheme.SPLITPANEL_LARGE);
 
-		selector.setImmediate(true);
 		selector.setSelectable(true);
-		selector.addValueChangeListener(event -> {
+		selector.addSelectionListener(event -> {
 				TreeData selected = (TreeData) selector.getValue();
 				if (selected == null) {
 					if (viewer != null && selectedObject.isModified()) {
@@ -185,65 +173,39 @@ public class NickiTreeEditor extends CustomComponent {
 					*/
 				}
 		});
+		
+		
 
-		selector.addActionHandler(new Action.Handler() {
-
-			public void handleAction(Action action, Object sender, Object target) {
-				if (action == refreshAction) {
-					refresh((TreeData) target);
-				}
-				if (deleteActions.containsKey(action)) {
-					if (target.getClass() == deleteActions.get(action)) {
-						getNickiApplication().confirm(
-								new DeleteCommand(nickiEditor,
-										(TreeData) target));
-					}
-				} else if (renameActions.containsKey(action)) {
-					if (target.getClass() == renameActions.get(action)) {
-						try {
-							if (!isRoot((TreeData) target)) {
-								renameItem((TreeData) target);
-							}
-						} catch (Exception e) {
-							log.error("Error", e);
-						}
-					}
-				} else if (treeActionMap.containsKey(action)) {
-					treeActionMap.get(action).execute((TreeData) target);
-				} else if (actions.containsKey(target.getClass())) {
-					Map<Action, Class<? extends TreeData>> map = actions
-							.get(target.getClass());
-					if (map.containsKey(action)) {
-						create((TreeData) target, map.get(action));
-					}
-				}
-			}
-
-			public Action[] getActions(Object target, Object sender) {
-				if (target != null) {
-					if (isRoot((TreeData) target)) {
-						for (Class<? extends TreeData> clazz : rootActionsList.keySet()) {
-							if (clazz.isAssignableFrom(target.getClass())) {
-								return rootActionsList.get(clazz);
-							}
-						}
-
-					} else {
-						for (Class<? extends TreeData> clazz : actionsList.keySet()) {
-							if (clazz.isAssignableFrom(target.getClass())) {
-								return actionsList.get(clazz);
-							}
+        GridContextMenu<TreeData> contextMenu = new GridContextMenu<>(selectorComponent);
+        // handle item right-click
+        contextMenu.addGridBodyContextMenuListener(event -> {
+            event.getContextMenu().removeItems();
+            if (event.getItem() != null) {
+            	TreeData target = (TreeData) event.getItem();
+            	selectorComponent.select(target);
+            	
+				for (Class<? extends TreeData> clazz : treeActions.keySet()) {
+					if (clazz.isAssignableFrom(target.getClass())) {
+						for (TreeAction nickiCommand : treeActions.get(clazz)) {
+							event.getContextMenu().addItem(nickiCommand.getName(), selectedItem -> nickiCommand.execute(target));
 						}
 					}
 				}
-				return null;
-			}
-		});
+            }
+        });
 
 		selector.addExpandListener(event -> {
-				TreeData object = (TreeData) event.getItemId();
-				treeContainer.loadChildren(object);
+				TreeData object = event.getExpandedItem();
+				nickiTreeDataProvider.loadChildren(object, true);
 		});
+	}
+	
+	public void initTree(TreeGrid<TreeData> treeGrid) {
+		treeGrid.addColumn(TreeData::getDisplayName);
+		
+        // add Root
+		//addRootItems(root);
+		nickiTreeDataProvider.refreshAll();
 	}
 	
 	public void showClassEditor(ClassEditor classEditor, TreeData selected) {
@@ -276,16 +238,17 @@ public class NickiTreeEditor extends CustomComponent {
 
 		collapse(object);
 		reloadChildren(object);
-		selector.expandItem(object);
+		selector.expandItems(object);
 	}
 
 	protected boolean isRoot(TreeData dynamicObject) {
-		return dynamicObject == this.treeContainer.getRoot();
+		return dynamicObject == this.treeDataProvider.getRoot(context);
 	}
 
+	// TODO
 	public void setClassIcon(Class<? extends TreeData> classDefinition,
 			Icon icon) {
-		this.treeContainer.setClassIcon(classDefinition, icon);
+		//this.treeContainer.setClassIcon(classDefinition, icon);
 	}
 
 	public void configureClass(Class<? extends TreeData> parentClass,
@@ -383,20 +346,13 @@ public class NickiTreeEditor extends CustomComponent {
 
 	protected void create(TreeData parent,
 			Class<? extends TreeData> classDefinition) {
-		treeContainer.loadChildren(parent);
+		nickiTreeDataProvider.loadChildren(parent, true);
 		try {
 			addDynamicObject(parent, classDefinition);
 		} catch (Exception e) {
 			Notification.show(I18n.getText("nicki.editor.create.error", parent.getName(),
 							classDefinition.getSimpleName()), e.getMessage(), Type.ERROR_MESSAGE);
 		}
-	}
-
-	public void loadTree() {
-		selector.setContainerDataSource(treeContainer.getTree());
-		selector.setItemCaptionPropertyId(TreeContainer.PROPERTY_NAME);
-		selector.setItemCaptionMode(ItemCaptionMode.PROPERTY);
-		selector.setItemIconPropertyId(TreeContainer.PROPERTY_ICON);
 	}
 
 	private void addDynamicObject(TreeData parent,
@@ -437,70 +393,92 @@ public class NickiTreeEditor extends CustomComponent {
 		T dynamicObject = null;
 		dynamicObject = parent.createChild(classDefinition, name);
 		if (dynamicObject != null) {
-			treeContainer.addItem(dynamicObject, parent, dynamicObject.childrenAllowed());
+			addChild(parent, dynamicObject);
 			return true;
 		}
 		return false;
 	}
 
 	public void initActions() {
-		refresh(treeContainer.getRoot());
+		if (!nickiTreeDataProvider.contains(nickiTreeDataProvider.getRoot())) {
+			this.nickiTreeDataProvider.addItem(null, nickiTreeDataProvider.getRoot());
+		}
 
-		refreshAction = new Action(I18n.getText(this.messageKeyBase
-				+ ".action.refresh"));
+		refresh(nickiTreeDataProvider.getRoot());
+
+		TreeAction refreshAction = new BaseTreeAction(TreeData.class, I18n.getText(this.messageKeyBase
+				+ ".action.refresh")) {			
+			@Override
+			public void execute(TreeData target) {
+				refresh(target);
+			}
+		};
+		addAction(refreshAction);
+		
 
 		for (Class<? extends TreeData> classDefinition : this.children
 				.keySet()) {
-			List<Action> classActions = new ArrayList<Action>();
-			List<Action> rootClassActions = new ArrayList<Action>();
-			Map<Action, Class<? extends TreeData>> map = new HashMap<>();
+			List<TreeAction> classActions = new ArrayList<>();
+			List<TreeAction> rootClassActions = new ArrayList<>();
 			// treeActions
 			List<TreeAction> a = getTreeActions(classDefinition);
 			if(a != null && !a.isEmpty()) {
 				for (TreeAction treeAction : a) {
-					Action action = new Action(treeAction.getName());
-					classActions.add(action);
-					rootClassActions.add(action);
-					treeActionMap.put(action, treeAction);
+					addAction(treeAction);
 				}
 			}
 			if (this.children.get(classDefinition) != null) {
 				for (Class<? extends TreeData> childClassPattern : this.children
 						.get(classDefinition)) {
 					if (this.allowCreate.contains(childClassPattern)) {
-						Action childAction = new Action(
-								I18n.getText(this.messageKeyBase
+						TreeAction childAction = new BaseTreeAction(
+								classDefinition, I18n.getText(this.messageKeyBase
 										+ ".action."
-										+ getClassName(childClassPattern) + ".new"));
+										+ getClassName(childClassPattern) + ".new")) {
+
+											@Override
+											public void execute(TreeData target) {
+												create(target, childClassPattern);
+											}
+						};
+						addAction(childAction);
 						classActions.add(childAction);
 						rootClassActions.add(childAction);
-						map.put(childAction, childClassPattern);
 					}
 				}
 			}
 			// delete
 			if (this.allowDelete.contains(classDefinition)) {
-				Action deleteAction = new Action(
-						I18n.getText(this.messageKeyBase + ".action.delete"));
-				classActions.add(deleteAction);
-				this.deleteActions.put(deleteAction, classDefinition);
+				TreeAction deleteAction = new BaseTreeAction(
+						classDefinition, I18n.getText(this.messageKeyBase + ".action.delete")) {
+
+									@Override
+									public void execute(TreeData target) {
+										getNickiApplication().confirm(
+												new DeleteCommand(nickiEditor, target));
+									}
+				};
+				addAction(deleteAction);
 			}
 			// rename
 			if (this.allowRename.contains(classDefinition)) {
-				Action renameAction = new Action(
-						I18n.getText(this.messageKeyBase + ".action.rename"));
-				classActions.add(renameAction);
-				this.renameActions.put(renameAction, classDefinition);
+				TreeAction renameAction = new BaseTreeAction(
+						classDefinition, I18n.getText(this.messageKeyBase + ".action.rename")) {
+
+									@Override
+									public void execute(TreeData target) {
+										try {
+											if (!isRoot(target)) {
+												renameItem(target);
+											}
+										} catch (Exception e) {
+											log.error("Error", e);
+										}
+
+									}
+				};
+				addAction(renameAction);
 			}
-			// refresh
-			rootClassActions.add(refreshAction);
-			classActions.add(refreshAction);
-			//
-			actions.put(classDefinition, map);
-			rootActionsList.put(classDefinition,
-					rootClassActions.toArray(new Action[0]));
-			actionsList.put(classDefinition,
-					classActions.toArray(new Action[0]));
 		}
 	}
 
@@ -513,11 +491,6 @@ public class NickiTreeEditor extends CustomComponent {
 		}
 		return list;
 	}
-
-	public Action[] getActions(Object object) {
-		return actionsList.get(object.getClass());
-	}
-
 	public TreeData getSelectedObject() {
 		return selectedObject;
 	}
@@ -527,18 +500,18 @@ public class NickiTreeEditor extends CustomComponent {
 	}
 
 	public void addChild(TreeData parent, TreeData child) {
-		this.treeContainer.addChild(parent, child);
+		this.nickiTreeDataProvider.addChild(parent, child);
 	}
 
 	public TreeData getParent(TreeData child) {
-		return this.treeContainer.getParent(child);
+		return nickiTreeDataProvider.getParent(child);
 	}
 
 	public void reloadChildren(TreeData parent) {
 		hideClassEditor();
 		parent.unLoadChildren();
-		this.treeContainer.removeChildren(parent);
-		this.treeContainer.loadChildren(parent);
+		this.nickiTreeDataProvider.removeChildren(parent);
+		nickiTreeDataProvider.loadChildren(parent, true);
 	}
 
 	public List<Class<? extends TreeData>> getAllowedChildren(
@@ -547,12 +520,12 @@ public class NickiTreeEditor extends CustomComponent {
 	}
 
 	public boolean isParent(TreeData parent, TreeData object) {
-		return this.treeContainer.isParent(parent, object);
+		return this.nickiTreeDataProvider.isParent(parent, object);
 	}
 
 	public void moveObject(TreeData object, TreeData target)
 			throws DynamicObjectException {
-		this.treeContainer.setParent(object, target);
+		this.nickiTreeDataProvider.setParent(object, target);
 	}
 
 	public String getClassName(Class<? extends TreeData> classDefinition) {
@@ -560,7 +533,7 @@ public class NickiTreeEditor extends CustomComponent {
 	}
 
 	public void expandAll() {
-		for (Object id : selector.rootItemIds()) {
+		for (TreeData id : selector.rootItemIds()) {
 			selector.expandItemsRecursively(id);
 		}
 	}
@@ -581,7 +554,7 @@ public class NickiTreeEditor extends CustomComponent {
 		return context;
 	}
 
-	public NickiSelect getSelector() {
+	public NickiSelect<TreeData> getSelector() {
 		return selector;
 	}
 }

@@ -23,57 +23,55 @@ package org.mgnl.nicki.vaadin.base.fields;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.mgnl.nicki.core.objects.DynamicAttribute;
 import org.mgnl.nicki.core.objects.DynamicObject;
 import org.mgnl.nicki.vaadin.base.data.DataContainer;
 import org.mgnl.nicki.vaadin.base.data.ReferenceAttributeDataContainer;
 import org.mgnl.nicki.vaadin.base.editor.DynamicObjectValueChangeListener;
-import org.mgnl.nicki.vaadin.base.helper.UIHelper;
 import org.mgnl.nicki.vaadin.base.listener.AttributeInputListener;
 
-import com.vaadin.v7.data.Container;
-import com.vaadin.v7.data.Item;
-import com.vaadin.v7.data.util.IndexedContainer;
 import com.vaadin.ui.Component;
-import com.vaadin.v7.ui.NativeSelect;
+import com.vaadin.ui.NativeSelect;
 
 @SuppressWarnings("serial")
-public class AttributeSelectObjectField extends BaseDynamicAttributeField implements DynamicAttributeField<String>, Serializable {
+public class AttributeSelectObjectField extends BaseDynamicAttributeField implements DynamicAttributeField<DynamicObject>, Serializable {
 
-	private NickiField<String> field;
-	private DataContainer<String> property;
-	public void init(String attributeName, DynamicObject dynamicObject, DynamicObjectValueChangeListener<String> objectListener) {
+	private NativeSelect<DynamicObject> field;
+	private DataContainer<DynamicObject> property;
+	private List<DynamicObject> options;
+	
+	public void init(String attributeName, DynamicObject dynamicObject, DynamicObjectValueChangeListener<DynamicObject> objectListener) {
 
-		NativeSelect select = new NativeSelect(getName(dynamicObject, attributeName));
-		select.setContainerDataSource(getOptions(dynamicObject, dynamicObject.getModel().getDynamicAttribute(attributeName)));
-		select.setItemCaptionPropertyId("name");
-		UIHelper.setImmediate(select, true);
-		select.select(dynamicObject.getAttribute(attributeName));
+		NativeSelect<DynamicObject> select = new NativeSelect<>(getName(dynamicObject, attributeName));
+		select.setItemCaptionGenerator(DynamicObject::getName);
+		getOptions(dynamicObject, dynamicObject.getModel().getDynamicAttribute(attributeName));
 		property = new ReferenceAttributeDataContainer(dynamicObject, attributeName);
-		select.setValue(property.getValue());
-		select.addValueChangeListener(new AttributeInputListener<String>(property, objectListener));
-		field = new SelectField(select);
-
-		field.getComponent().setWidth("600px");
+		select(dynamicObject.getAttribute(attributeName));
+		select.addValueChangeListener(new AttributeInputListener<DynamicObject>(property, objectListener));
 	}
 	
-	@SuppressWarnings("unchecked")
-	private Container getOptions(DynamicObject dynamicObject, DynamicAttribute dynamicAttribute) {
-		
-		Container container = new IndexedContainer();
-		container.addContainerProperty("name", String.class, null);
-		container.addContainerProperty("dynamicObject", DynamicObject.class, null);
-		for (DynamicObject option : dynamicAttribute.getOptions(dynamicObject)) {
-			Item item = container.addItem(option.getPath());
-			item.getItemProperty("dynamicObject").setValue(option);
-			item.getItemProperty("name").setValue(option.getDisplayName());
+	private void select(String attribute) {
+		for (DynamicObject dynamicObject : options) {
+			if (StringUtils.equals(attribute, ((DynamicObject)dynamicObject).getName())) {
+				field.setSelectedItem(dynamicObject);
+			}
 		}
-		return container;
+	}
+
+	private List<DynamicObject> getOptions(DynamicObject dynamicObject, DynamicAttribute dynamicAttribute) {
+		options = new ArrayList<DynamicObject>();
+		for (DynamicObject option : dynamicAttribute.getOptions(dynamicObject)) {
+			options.add( option);
+		}
+		return options;
 	}
 
 	public Component getComponent(boolean readOnly) {
 		field.setReadOnly(readOnly);
-		return field.getComponent();
+		return field;
 	}
 }

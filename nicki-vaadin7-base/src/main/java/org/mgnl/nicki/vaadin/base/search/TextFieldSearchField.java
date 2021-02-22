@@ -29,7 +29,7 @@ import org.mgnl.nicki.core.i18n.I18n;
 import org.mgnl.nicki.core.objects.DynamicAttribute;
 
 import com.vaadin.ui.Component;
-import com.vaadin.v7.ui.TextField;
+import com.vaadin.ui.TextField;
 
 public class TextFieldSearchField<T> implements DynamicAttributeSearchField<T> {
 	private TextField textField = new TextField();
@@ -48,7 +48,7 @@ public class TextFieldSearchField<T> implements DynamicAttributeSearchField<T> {
 		this.map = searchMap;
 		textField.setCaption(I18n.getText(dynAttribute.getCaption(), dynAttribute.getName()));
 		textField.addValueChangeListener(event -> {
-				String value = (String) event.getProperty().getValue();
+				String value = event.getValue();
 				if (StringUtils.isNotBlank(value)) {
 					map.put(dynAttribute, value);
 				} else if (map.containsKey(dynAttribute)) {

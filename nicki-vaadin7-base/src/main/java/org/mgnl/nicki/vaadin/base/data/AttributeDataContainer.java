@@ -80,4 +80,9 @@ public class AttributeDataContainer<T> implements DataContainer<T> {
 		this.readOnly = newStatus;
 	}
 
+	@Override
+	public String getDisplay() {
+		return (String) getValue();
+	}
+
 }

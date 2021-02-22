@@ -24,25 +24,26 @@ package org.mgnl.nicki.editor.log4j;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
+
 import org.apache.commons.io.IOUtils;
 import org.mgnl.nicki.core.helper.NameValue;
-import com.vaadin.v7.data.util.BeanItemContainer;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class BeanItemContainerRenderer extends Thread implements Runnable {
-	BeanItemContainer<NameValue> container;
+	List<NameValue> container;
 	OutputStream out;
 
-	public BeanItemContainerRenderer(BeanItemContainer<NameValue> container, OutputStream out) {
+	public BeanItemContainerRenderer(List<NameValue> container, OutputStream out) {
 		super();
 		this.container = container;
 		this.out = out;
 	}
 	public void run() {
 		try {
-			for (NameValue entry : container.getItemIds()) {
+			for (NameValue entry : container) {
 				IOUtils.write(entry.getValue(), out);
 				IOUtils.write("\n", out);
 			}

@@ -31,6 +31,7 @@ import org.mgnl.nicki.core.config.Config;
 import org.mgnl.nicki.core.context.Target;
 import org.mgnl.nicki.core.context.TargetFactory;
 import org.mgnl.nicki.core.data.DataProvider;
+import org.mgnl.nicki.core.data.TreeData;
 import org.mgnl.nicki.core.objects.DynamicObject;
 import org.mgnl.nicki.core.objects.DynamicObjectException;
 import org.mgnl.nicki.dynamic.objects.objects.Org;
@@ -65,7 +66,7 @@ public class ProjectEditor extends NickiApplication {
 	@Override
 	public Component getEditor() throws DynamicObjectException {
 		ProjectFilter projectFilter = new ProjectFilter(getNickiContext().getUser());
-		DataProvider treeDataProvider = new DynamicObjectRoot(Config.getString("nicki.projects.basedn"), projectFilter);
+		DataProvider<TreeData> treeDataProvider = new DynamicObjectRoot(Config.getString("nicki.projects.basedn"), projectFilter);
 		TreeEditor editor = new TreeEditor(this, getNickiContext(), treeDataProvider, getI18nBase());
 		editor.configureClass(Org.class, null, TreeEditor.CREATE.DENY, TreeEditor.DELETE.DENY, TreeEditor.RENAME.DENY, Project.class);
 		editor.configureClass(Project.class, Icon.DOCUMENT, TreeEditor.CREATE.DENY, TreeEditor.DELETE.DENY, TreeEditor.RENAME.DENY, Member.class, Directory.class);
@@ -79,7 +80,7 @@ public class ProjectEditor extends NickiApplication {
 		return editor;
 	}
 	
-	private class SyncListener implements DynamicObjectValueChangeListener<String>, Serializable {
+	private class SyncListener implements DynamicObjectValueChangeListener<DynamicObject>, Serializable {
 		private TreeEditor editor;
 		public SyncListener(TreeEditor editor) {
 			this.editor = editor;
@@ -87,12 +88,12 @@ public class ProjectEditor extends NickiApplication {
 
 		@Override
 		public void valueChange(DynamicObject dynamicObject, String name,
-				List<String> values) {
+				List<DynamicObject> values) {
 		}
 
 		@Override
 		public void valueChange(DynamicObject dynamicObject,
-				String attributeName, String value) {
+				String attributeName, DynamicObject value) {
 			/* TODO
 			if (StringUtils.equals(attributeName, "member")) {
 				String namingValue = "";

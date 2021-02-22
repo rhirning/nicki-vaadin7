@@ -28,7 +28,7 @@ import org.mgnl.nicki.vaadin.base.components.SimpleUploadEditor;
 import org.mgnl.nicki.vaadin.base.data.PartDataContainer;
 
 import com.vaadin.ui.CustomComponent;
-import com.vaadin.v7.ui.VerticalLayout;
+import com.vaadin.ui.VerticalLayout;
 
 public class ExcelEditor extends CustomComponent {
 	private static final long serialVersionUID = -4999034916650372313L;

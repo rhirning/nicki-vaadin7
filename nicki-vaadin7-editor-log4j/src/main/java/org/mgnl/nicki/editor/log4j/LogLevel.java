@@ -1,5 +1,7 @@
 package org.mgnl.nicki.editor.log4j;
 
+import java.io.Serializable;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -12,8 +14,9 @@ import com.vaadin.ui.Notification;
 
 import lombok.Data;
 
+@SuppressWarnings("serial")
 @Data
-public class LogLevel implements Comparable<LogLevel>{
+public class LogLevel implements Serializable, Comparable<LogLevel>{
 	private View view;
 	private String name;
 	private Logger logger;;

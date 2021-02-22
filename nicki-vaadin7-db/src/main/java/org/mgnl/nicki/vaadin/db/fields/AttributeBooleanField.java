@@ -30,14 +30,13 @@ import org.mgnl.nicki.vaadin.db.editor.DbBeanValueChangeListener;
 import org.mgnl.nicki.vaadin.db.listener.AttributeInputListener;
 
 import com.vaadin.server.Sizeable.Unit;
-import com.vaadin.v7.ui.AbstractField;
-import com.vaadin.v7.ui.CheckBox;
-import com.vaadin.v7.ui.Field;
+import com.vaadin.ui.AbstractField;
+import com.vaadin.ui.CheckBox;
 
 @SuppressWarnings("serial")
 public class AttributeBooleanField  extends BaseDbBeanAttributeField implements DbBeanAttributeField, Serializable {
 
-	private AbstractField<Boolean> field;
+	private CheckBox field;
 	private DataContainer<Boolean> property;
 	public void init(String attributeName, Object bean, DbBeanValueChangeListener objectListener, String dbContextName) {
 
@@ -48,10 +47,10 @@ public class AttributeBooleanField  extends BaseDbBeanAttributeField implements 
 		if (property != null && property.getValue() != null) {
 			field.setValue(property.getValue());
 		}
-		field.addValueChangeListener(new AttributeInputListener<Boolean>(property, objectListener, null, null));
+		field.addValueChangeListener(new AttributeInputListener<Boolean, Boolean>(property, objectListener, null));
 	}
 
-	public Field<Boolean> getComponent(boolean readOnly) {
+	public AbstractField<Boolean> getComponent(boolean readOnly) {
 		field.setReadOnly(readOnly);
 		return field;
 	}

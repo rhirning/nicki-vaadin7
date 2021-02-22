@@ -33,9 +33,9 @@ import org.mgnl.nicki.vaadin.base.components.NewClassEditor;
 
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CustomComponent;
-import com.vaadin.v7.ui.Label;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
-import com.vaadin.v7.ui.VerticalLayout;
+import com.vaadin.ui.VerticalLayout;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -46,7 +46,7 @@ public class DynamicObjectViewer extends CustomComponent implements NewClassEdit
 	private DynamicObject dynamicObject;
 	private Button saveButton;
 	private boolean create;
-	private DynamicObjectValueChangeListener<String> listener;
+	private DynamicObjectValueChangeListener<DynamicObject> listener;
 	private DynamicObject parent;
 
 	@Deprecated
@@ -68,7 +68,7 @@ public class DynamicObjectViewer extends CustomComponent implements NewClassEdit
 		setCompositionRoot(mainLayout);
 	}
 	
-	public DynamicObjectViewer(DynamicObjectValueChangeListener<String> listener) {
+	public DynamicObjectViewer(DynamicObjectValueChangeListener<DynamicObject> listener) {
 		this.listener = listener;
 	}
 	

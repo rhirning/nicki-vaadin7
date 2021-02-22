@@ -1,6 +1,9 @@
 
 package org.mgnl.nicki.vaadin.base.fields;
 
+import com.vaadin.data.HasValue.ValueChangeListener;
+import com.vaadin.ui.AbstractSingleSelect;
+
 /*-
  * #%L
  * nicki-vaadin-base
@@ -22,15 +25,13 @@ package org.mgnl.nicki.vaadin.base.fields;
  */
 
 
-import com.vaadin.v7.data.Property.ValueChangeListener;
-import com.vaadin.v7.ui.AbstractSelect;
 import com.vaadin.ui.Component;
 
 public class SelectField implements NickiField<String> {
 
-	private AbstractSelect field;
+	private AbstractSingleSelect<String> field;
 	
-	public SelectField(AbstractSelect field) {
+	public SelectField(AbstractSingleSelect<String> field) {
 		this.field = field;
 	}
 
@@ -55,7 +56,7 @@ public class SelectField implements NickiField<String> {
 	}
 
 	@Override
-	public void addValueChangeListener(ValueChangeListener listener) {
+	public void addValueChangeListener(ValueChangeListener<String> listener) {
 		field.addValueChangeListener(listener);
 	}
 

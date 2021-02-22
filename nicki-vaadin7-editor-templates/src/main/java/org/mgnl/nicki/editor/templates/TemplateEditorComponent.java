@@ -32,6 +32,7 @@ import org.mgnl.nicki.dynamic.objects.objects.Org;
 import org.mgnl.nicki.dynamic.objects.objects.Template;
 import org.mgnl.nicki.core.context.NickiContext;
 import org.mgnl.nicki.core.data.DataProvider;
+import org.mgnl.nicki.core.data.TreeData;
 import org.mgnl.nicki.vaadin.base.application.NickiApplication;
 import org.mgnl.nicki.vaadin.base.editor.DynamicObjectRoot;
 import org.mgnl.nicki.vaadin.base.editor.ExportTreeAction;
@@ -61,7 +62,7 @@ public class TemplateEditorComponent extends CustomComponent implements Serializ
 	public Component getEditor() {
 		TemplateViewer templateViewer = new TemplateViewer();
 
-		DataProvider dataProvider = new DynamicObjectRoot(getTemplatesRoot(), new ShowAllFilter());
+		DataProvider<TreeData> dataProvider = new DynamicObjectRoot(getTemplatesRoot(), new ShowAllFilter());
 		TreeEditor editor = new TreeEditor(getNickiApplication(), getNickiApplication().getNickiContext(), dataProvider, getI18nBase());
 		editor.configureClass(Org.class, Icon.FOLDER, TreeEditor.CREATE.ALLOW, TreeEditor.DELETE.ALLOW, TreeEditor.RENAME.ALLOW, Org.class, Template.class );
 		editor.configureClass(Template.class, Icon.DOCUMENT, TreeEditor.CREATE.ALLOW, TreeEditor.DELETE.ALLOW, TreeEditor.RENAME.ALLOW);

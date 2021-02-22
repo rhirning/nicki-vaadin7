@@ -28,13 +28,12 @@ import org.mgnl.nicki.core.objects.DynamicObject;
 import org.mgnl.nicki.vaadin.base.data.DataContainer;
 import org.mgnl.nicki.vaadin.base.editor.DynamicObjectValueChangeListener;
 
-import com.vaadin.v7.data.Property.ValueChangeEvent;
-import com.vaadin.v7.data.Property.ValueChangeListener;
-import com.vaadin.v7.event.FieldEvents.TextChangeEvent;
+import com.vaadin.data.HasValue.ValueChangeEvent;
+import com.vaadin.data.HasValue.ValueChangeListener;
 import com.vaadin.ui.AbstractComponentContainer;
 
 @SuppressWarnings("serial")
-public class ListAttributeListener extends BaseAttributeListener implements ValueChangeListener {
+public class ListAttributeListener extends BaseAttributeListener<String> implements ValueChangeListener<String> {
 
 	private DataContainer<List<String>> property;
 	private AbstractComponentContainer container;
@@ -45,9 +44,7 @@ public class ListAttributeListener extends BaseAttributeListener implements Valu
 		super(dynamicObject, name);
 		this.container = container;
 	}
-	public void textChange(TextChangeEvent event) {
-	}
-	public void valueChange(ValueChangeEvent event) {
+	public void valueChange(ValueChangeEvent<String> event) {
 		List<String> values = collectValues(this.container);
 		property.setValue(values);
 		if (values.size() > 0) {

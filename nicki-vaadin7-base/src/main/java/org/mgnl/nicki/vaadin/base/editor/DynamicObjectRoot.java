@@ -37,7 +37,7 @@ import org.mgnl.nicki.core.data.TreeData;
 
 
 @SuppressWarnings("serial")
-public class DynamicObjectRoot implements DataProvider, Serializable {
+public class DynamicObjectRoot implements DataProvider<TreeData>, Serializable {
 	private String baseDn;
 	private EntryFilter entryFilter;
 
@@ -70,6 +70,11 @@ public class DynamicObjectRoot implements DataProvider, Serializable {
 
 	public EntryFilter getEntryFilter() {
 		return this.entryFilter;
+	}
+
+	@Override
+	public List<? extends TreeData> getChildren(TreeData parent) {
+		return parent.getAllChildren();
 	}
 
 }

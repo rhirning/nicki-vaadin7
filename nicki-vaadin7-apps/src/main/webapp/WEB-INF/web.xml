@@ -71,16 +71,6 @@
 		</init-param>
 	</servlet>
 	<servlet>
-		<servlet-name>Catalog Editor</servlet-name>
-		<servlet-class>org.mgnl.nicki.vaadin.base.application.NickiServlet</servlet-class>
-		<init-param>
-			<description>
-			Vaadin UI class to start</description>
-			<param-name>UI</param-name>
-			<param-value>org.mgnl.nicki.editor.catalogs.CatalogEditor</param-value>
-		</init-param>
-	</servlet>
-	<servlet>
 		<servlet-name>Log4j Editor</servlet-name>
 		<servlet-class>org.mgnl.nicki.vaadin.base.application.NickiServlet</servlet-class>
 		<init-param>
@@ -113,10 +103,6 @@
 	<servlet-mapping>
 		<servlet-name>Script Editor</servlet-name>
 		<url-pattern>/scripts/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>Catalog Editor</servlet-name>
-		<url-pattern>/catalogs/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Log4j Editor</servlet-name>

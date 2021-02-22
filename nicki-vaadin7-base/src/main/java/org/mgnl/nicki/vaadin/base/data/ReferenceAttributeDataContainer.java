@@ -21,14 +21,10 @@ package org.mgnl.nicki.vaadin.base.data;
  * #L%
  */
 
-
-import org.apache.commons.lang.StringUtils;
 import org.mgnl.nicki.core.objects.DynamicObject;
 
-import com.vaadin.v7.data.Property;
-
 @SuppressWarnings("serial")
-public class ReferenceAttributeDataContainer implements DataContainer<String>, Property<String> {
+public class ReferenceAttributeDataContainer implements DataContainer<DynamicObject> {
 
 	public DynamicObject getDynamicObject() {
 		return dynamicObject;
@@ -47,11 +43,11 @@ public class ReferenceAttributeDataContainer implements DataContainer<String>, P
 		this.attributeName = attributeName;
 	}
 
-	public String getValue() {
-		return StringUtils.trimToEmpty((String) dynamicObject.get(attributeName));
+	public DynamicObject getValue() {
+		return (DynamicObject) dynamicObject.get(attributeName);
 	}
 
-	public void setValue(String newValue)  {
+	public void setValue(DynamicObject newValue)  {
 		dynamicObject.put(attributeName, newValue);
 	}
 
@@ -64,8 +60,7 @@ public class ReferenceAttributeDataContainer implements DataContainer<String>, P
 	}
 
 	@Override
-	public Class<? extends String> getType() {
-		return String.class;
+	public String getDisplay() {
+		return dynamicObject.getPath();
 	}
-
 }

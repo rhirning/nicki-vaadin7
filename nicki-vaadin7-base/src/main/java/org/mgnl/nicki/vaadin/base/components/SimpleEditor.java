@@ -24,7 +24,7 @@ package org.mgnl.nicki.vaadin.base.components;
 import org.mgnl.nicki.vaadin.base.data.DataContainer;
 
 import com.vaadin.ui.CustomComponent;
-import com.vaadin.v7.ui.TextArea;
+import com.vaadin.ui.TextArea;
 
 @SuppressWarnings("serial")
 public class SimpleEditor extends CustomComponent {

@@ -26,16 +26,15 @@ import java.io.Serializable;
 
 import org.apache.commons.lang.StringUtils;
 import org.mgnl.nicki.db.helper.BeanHelper;
+import org.mgnl.nicki.vaadin.db.converter.StringToIntegerConverter;
 import org.mgnl.nicki.vaadin.db.data.AttributeDataContainer;
 import org.mgnl.nicki.vaadin.db.data.DataContainer;
 import org.mgnl.nicki.vaadin.db.editor.DbBeanValueChangeListener;
 import org.mgnl.nicki.vaadin.db.listener.AttributeInputListener;
 
-import com.vaadin.v7.data.util.converter.StringToIntegerConverter;
 import com.vaadin.server.Sizeable.Unit;
-import com.vaadin.v7.ui.AbstractField;
-import com.vaadin.v7.ui.Field;
-import com.vaadin.v7.ui.TextField;
+import com.vaadin.ui.AbstractField;
+import com.vaadin.ui.TextField;
 
 @SuppressWarnings("serial")
 public class AttributeIntegerField  extends BaseDbBeanAttributeField implements DbBeanAttributeField, Serializable {
@@ -55,10 +54,10 @@ public class AttributeIntegerField  extends BaseDbBeanAttributeField implements 
 				field.setCaption(getName(bean, attributeName) + ": " +foreignValue);
 			}
 		}
-		field.addValueChangeListener(new AttributeInputListener<Integer>(property, objectListener, new StringToIntegerConverter(), 1));
+		field.addValueChangeListener(new AttributeInputListener<String, Integer>(property, objectListener, new StringToIntegerConverter()));
 	}
 
-	public Field<String> getComponent(boolean readOnly) {
+	public AbstractField<String> getComponent(boolean readOnly) {
 		field.setReadOnly(readOnly);
 		return field;
 	}

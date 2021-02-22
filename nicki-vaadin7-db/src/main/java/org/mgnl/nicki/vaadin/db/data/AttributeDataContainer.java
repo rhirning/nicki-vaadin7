@@ -25,13 +25,11 @@ package org.mgnl.nicki.vaadin.db.data;
 import org.mgnl.nicki.db.helper.BeanHelper;
 import org.mgnl.nicki.db.helper.Type;
 
-import com.vaadin.v7.data.Property;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @SuppressWarnings("serial")
-public class AttributeDataContainer<T> implements DataContainer<T>, Property<T> {
+public class AttributeDataContainer<T> implements DataContainer<T> {
 	private Object orgBean;
 	private Object bean;
 	private String attributeName;

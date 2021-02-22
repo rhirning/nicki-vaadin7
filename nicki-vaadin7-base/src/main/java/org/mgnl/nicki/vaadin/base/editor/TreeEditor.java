@@ -24,13 +24,16 @@ package org.mgnl.nicki.vaadin.base.editor;
 
 import org.mgnl.nicki.core.context.NickiContext;
 import org.mgnl.nicki.core.data.DataProvider;
+import org.mgnl.nicki.core.data.TreeData;
 import org.mgnl.nicki.vaadin.base.application.NickiApplication;
 
 @SuppressWarnings("serial")
 public class TreeEditor extends NickiTreeEditor {
-	private TreeSelector treeSelector = new TreeSelector();
-	public TreeEditor(NickiApplication application, NickiContext ctx, DataProvider treeDataProvider, String messageKeyBase) {
+	private TreeSelector<TreeData> treeSelector = new TreeSelector<>();
+	public TreeEditor(NickiApplication application, NickiContext ctx, DataProvider<TreeData> treeDataProvider, String messageKeyBase) {
 		super(application, ctx);
-		init(treeSelector, treeDataProvider, messageKeyBase);
+		NickiTreeDataProvider nickiTreeDataProvider = new NickiTreeDataProvider(ctx, treeDataProvider);
+		treeSelector.getComponent().setDataProvider(nickiTreeDataProvider);
+		init(treeSelector, nickiTreeDataProvider, messageKeyBase);
 	}
 }

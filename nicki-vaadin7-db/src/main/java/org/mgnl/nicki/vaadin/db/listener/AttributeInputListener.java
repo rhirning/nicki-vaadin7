@@ -1,10 +1,12 @@
 
 package org.mgnl.nicki.vaadin.db.listener;
 
-import java.util.Locale;
-
+import org.mgnl.nicki.vaadin.db.converter.AbstractConverter;
 import org.mgnl.nicki.vaadin.db.data.DataContainer;
 import org.mgnl.nicki.vaadin.db.editor.DbBeanValueChangeListener;
+
+import com.vaadin.data.HasValue.ValueChangeEvent;
+import com.vaadin.data.HasValue.ValueChangeListener;
 
 /*-
  * #%L
@@ -26,37 +28,30 @@ import org.mgnl.nicki.vaadin.db.editor.DbBeanValueChangeListener;
  * #L%
  */
 
-
-import com.vaadin.v7.data.Property.ValueChangeEvent;
-import com.vaadin.v7.data.Property.ValueChangeListener;
-import com.vaadin.v7.data.util.converter.AbstractStringToNumberConverter;
-
 @SuppressWarnings("serial")
-public class AttributeInputListener<T> implements ValueChangeListener {
+public class AttributeInputListener<X, T> implements ValueChangeListener<X> {
 
-	private DataContainer<T> property;
+	private DataContainer<T> data;
 	private DbBeanValueChangeListener objectListener;
-	private AbstractStringToNumberConverter<T> converter;
-	private T dummy;
+	private AbstractConverter<X, T> converter;
 
-	public AttributeInputListener(DataContainer<T> property, DbBeanValueChangeListener objectListener, AbstractStringToNumberConverter<T> converter, T dummy) {
-		this.property = property;
+	public AttributeInputListener(DataContainer<T> property, DbBeanValueChangeListener objectListener, AbstractConverter<X, T> converter) {
+		this.data = property;
 		this.objectListener = objectListener;
 		this.converter = converter;
-		this.dummy = dummy;
 	}
 
 	@SuppressWarnings("unchecked")
-	public void valueChange(ValueChangeEvent event) {
+	public void valueChange(ValueChangeEvent<X> event) {
 		T value;
 		if (converter != null) {
-			value = converter.convertToModel((String) event.getProperty().getValue(), (Class<? extends T>) dummy.getClass(), Locale.GERMANY);
+			value = converter.convert(event.getValue());
 		} else {
-			value = (T) event.getProperty().getValue();
+			value = (T) event.getValue();
 		}
-		property.setValue(value);
+		data.setValue(value);
 		if (objectListener != null) {
-			objectListener.valueChange(property.getBean(), property.getAttributeName(), value);
+			objectListener.valueChange(data.getBean(), data.getAttributeName(), value);
 		}
 	}
 

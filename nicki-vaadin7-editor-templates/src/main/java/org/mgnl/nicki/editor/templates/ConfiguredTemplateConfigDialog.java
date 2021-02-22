@@ -1,6 +1,8 @@
 
 package org.mgnl.nicki.editor.templates;
 
+import java.time.LocalDate;
+
 /*-
  * #%L
  * nicki-editor-templates
@@ -33,9 +35,9 @@ import org.mgnl.nicki.vaadin.base.data.DateHelper;
 import org.mgnl.nicki.vaadin.base.helper.UIHelper;
 
 import com.vaadin.ui.CustomComponent;
+import com.vaadin.ui.DateField;
 import com.vaadin.ui.FormLayout;
-import com.vaadin.v7.ui.PopupDateField;
-import com.vaadin.v7.ui.TextField;
+import com.vaadin.ui.TextField;
 
 public class ConfiguredTemplateConfigDialog extends CustomComponent implements TemplateConfigDialog {
 
@@ -72,24 +74,22 @@ public class ConfiguredTemplateConfigDialog extends CustomComponent implements T
 			for (TemplateParameter templateParameter : templateParameters) {
 				if (!StringUtils.startsWith(templateParameter.getName(), ".")) {
 					if (StringUtils.equalsIgnoreCase("date", templateParameter.getDataType())) {
-						PopupDateField field = new PopupDateField();
+						DateField field = new DateField();
 						field.setCaption(templateParameter.getDisplayName());
 						UIHelper.setImmediate(field, true);
 						field.setWidth("-1px");
 						field.setHeight("-1px");
-						field.setInvalidAllowed(false);
 						mainLayout.addComponent(field);
 						DateHelper.init(field);
-						field.addValueChangeListener(new ParamInputListener(templateParameter.getName(), params, templateConfig));
+						field.addValueChangeListener(new ParamInputListener<LocalDate>(templateParameter.getName(), params, templateConfig));
 					} else if (StringUtils.equalsIgnoreCase("string", templateParameter.getDataType())) {
 						TextField field = new TextField();
 						field.setCaption(templateParameter.getDisplayName());
 						UIHelper.setImmediate(field, true);
 						field.setWidth("-1px");
 						field.setHeight("-1px");
-						field.setInvalidAllowed(false);
 						mainLayout.addComponent(field);
-						field.addValueChangeListener(new ParamInputListener(templateParameter.getName(), params, templateConfig));
+						field.addValueChangeListener(new ParamInputListener<String>(templateParameter.getName(), params, templateConfig));
 					} else if (StringUtils.equalsIgnoreCase("static", templateParameter.getDataType())) {
 						params.put(templateParameter.getName(), templateParameter.getValue());
 					}

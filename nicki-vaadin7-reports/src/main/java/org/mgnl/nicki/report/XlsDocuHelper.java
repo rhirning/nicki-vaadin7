@@ -74,6 +74,7 @@ public class XlsDocuHelper {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	private static InputStream generateJNDI(DOC_TYPE docType, String templatePath, Map<String, Object> dataModel) throws IOException, TemplateException, InvalidPrincipalException, ParserConfigurationException, SAXException, DocumentException {
 		StringBuilder sb = new StringBuilder();
 		String parts[] = StringUtils.split(templatePath, "/");
@@ -95,6 +96,7 @@ public class XlsDocuHelper {
 			return engine.executeTemplateAsXlsx(template, templatePath + ".ftl", dataModel);
 		}
 	}
+	@SuppressWarnings("deprecation")
 	private static InputStream generateClasspath(DOC_TYPE docType, String templatePath, Map<String, Object> dataModel) throws IOException, TemplateException, InvalidPrincipalException, ParserConfigurationException, SAXException, DocumentException {
 
 		String base = "/META-INF/templates";
