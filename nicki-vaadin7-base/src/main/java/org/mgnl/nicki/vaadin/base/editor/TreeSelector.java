@@ -23,14 +23,7 @@ package org.mgnl.nicki.vaadin.base.editor;
 
 
 import java.util.Collection;
-import java.util.List;
-
-import org.mgnl.nicki.core.data.TreeData;
-
-import com.vaadin.contextmenu.GridContextMenu;
-import com.vaadin.event.Action.Handler;
 import com.vaadin.event.ExpandEvent.ExpandListener;
-import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.TreeGrid;
 
@@ -46,6 +39,7 @@ public class TreeSelector<T> extends BasicNickiSelector<T> implements NickiSelec
 		component.setSelectionMode(SelectionMode.SINGLE);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void expandItems(T... object) {
 		component.expand(object);

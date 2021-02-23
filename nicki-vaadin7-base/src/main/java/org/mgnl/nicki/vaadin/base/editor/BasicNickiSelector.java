@@ -26,14 +26,10 @@ import java.util.Collection;
 
 import org.mgnl.nicki.core.data.TreeData;
 
-import com.vaadin.data.HasValue.ValueChangeListener;
 import com.vaadin.data.ValueProvider;
-import com.vaadin.event.Action.Handler;
 import com.vaadin.event.ExpandEvent.ExpandListener;
 import com.vaadin.event.selection.SelectionListener;
 import com.vaadin.server.ThemeResource;
-import com.vaadin.ui.AbstractSingleSelect;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Grid.SelectionMode;
 
@@ -74,6 +70,7 @@ public abstract class BasicNickiSelector<T> implements NickiSelect<T> {
 		component.select(null);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void expandItems(T... object) {
 		log.debug("not implemented");

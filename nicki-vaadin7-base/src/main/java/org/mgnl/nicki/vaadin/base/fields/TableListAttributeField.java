@@ -45,7 +45,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
-public class TableListAttributeField extends BaseDynamicAttributeField implements DynamicAttributeField, Serializable {
+public class TableListAttributeField extends BaseDynamicAttributeField implements DynamicAttributeField<String>, Serializable {
 
 	private DynamicObject dynamicObject;
 	private String attributeName;
@@ -55,7 +55,7 @@ public class TableListAttributeField extends BaseDynamicAttributeField implement
 	private Button deleteEntryButton;
 	private Set<String> data = new TreeSet<String>();
 	
-	public void init(String attributeName, DynamicObject dynamicObject, DynamicObjectValueChangeListener objectListener) {
+	public void init(String attributeName, DynamicObject dynamicObject, DynamicObjectValueChangeListener<String> objectListener) {
 
 		this.dynamicObject = dynamicObject;
 		this.attributeName = attributeName;

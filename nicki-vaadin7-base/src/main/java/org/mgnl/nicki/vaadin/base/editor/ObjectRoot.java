@@ -33,18 +33,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import org.mgnl.nicki.core.context.NickiContext;
 import org.mgnl.nicki.vaadin.base.data.ChildObjectWrapper;
 import org.mgnl.nicki.vaadin.base.data.ObjectWrapper;
 
-import com.vaadin.data.provider.HierarchicalQuery;
-import com.vaadin.server.SerializablePredicate;
-
 import org.mgnl.nicki.core.data.DataProvider;
 import org.mgnl.nicki.core.data.EntryFilter;
-import org.mgnl.nicki.core.data.TreeData;
 
 
 @SuppressWarnings("serial")

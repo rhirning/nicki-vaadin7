@@ -40,21 +40,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class ContainerHelper {
-	/*
-	public static <T extends Object> Container getListContainer(Collection<T> data, String namedProperties) {
-		Container container = new IndexedContainer(data);
-		container.addContainerProperty(namedProperties, String.class, "");
-		return container;
-	}
-	*/
-
-	public static <T extends Object> Container getListContainer(Collection<T> data, String... namedProperties) {
-		Container container = new IndexedContainer(data);
-		for (String name : namedProperties) {
-			container.addContainerProperty(name, String.class, "");
-		}
-		return container;
-	}
 
 	public static <T extends Object> Container getTableContainer(Collection<T> data, String... namedProperties) {
 		return new TableContainer(data, namedProperties);

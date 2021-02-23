@@ -23,24 +23,28 @@ package org.mgnl.nicki.vaadin.base.fields;
 
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.mgnl.nicki.vaadin.base.components.EnterNameHandler;
 
-import com.vaadin.v7.ui.Table;
+import com.vaadin.ui.Grid;
 
 @SuppressWarnings("serial")
 public class NewEntryEnterNameHandler extends EnterNameHandler implements Serializable {
-	private Table table;
+	private Grid<String> table;
+	private List<String> data;
 
-	public NewEntryEnterNameHandler(Table table) {
+	public NewEntryEnterNameHandler(Grid<String> table, List<String> data) {
 		super("");
 		this.table = table;
+		this.data = data;
 	}
 
 	public void setName(String name) throws Exception {
 		if (StringUtils.isNotEmpty(name)) {
-			table.addItem(new Object[]{name}, name);
+			data.add(name);
+			table.setItems(data);
 		}
 	}
 

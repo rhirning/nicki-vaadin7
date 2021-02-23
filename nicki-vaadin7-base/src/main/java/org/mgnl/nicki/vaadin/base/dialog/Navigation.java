@@ -24,15 +24,10 @@ package org.mgnl.nicki.vaadin.base.dialog;
 
 import java.util.List;
 
-import com.vaadin.v7.data.Container;
 import com.vaadin.ui.Component;
 
 public interface Navigation extends Component {
 
 	boolean select(NavigationEntry entry);
 	
-	void init(List<NavigationFolder> navigationFolders);
-	
-	Container getContainer();
-
-}
+	void init(List<NavigationFolder> navigationFolders);}

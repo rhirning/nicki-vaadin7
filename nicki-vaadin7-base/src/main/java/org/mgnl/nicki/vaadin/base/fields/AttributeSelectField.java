@@ -32,7 +32,6 @@ import org.mgnl.nicki.vaadin.base.editor.DynamicObjectValueChangeListener;
 import org.mgnl.nicki.vaadin.base.helper.UIHelper;
 import org.mgnl.nicki.vaadin.base.listener.AttributeInputListener;
 
-import com.vaadin.v7.data.Container;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 
@@ -58,8 +57,8 @@ public class AttributeSelectField extends BaseDynamicAttributeField implements D
 		return field;
 	}
 
-	public void setOptions(Container options) {
-		field.setItems((Collection<String>) options.getItemIds());
+	public void setOptions(Collection<String> options) {
+		field.setItems(options);
 		field.setValue(property.getValue());
 	}
 

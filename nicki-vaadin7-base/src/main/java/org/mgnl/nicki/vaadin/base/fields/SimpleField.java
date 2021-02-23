@@ -55,7 +55,7 @@ public class SimpleField<T> implements NickiField<T> {
 	}
 
 	@Override
-	public void addValueChangeListener(ValueChangeListener listener) {
+	public void addValueChangeListener(ValueChangeListener<T> listener) {
 		field.addValueChangeListener(listener);
 
 	}

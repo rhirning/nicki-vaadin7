@@ -25,14 +25,14 @@ package org.mgnl.nicki.vaadin.base.dialog;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.vaadin.v7.data.Container;
-import com.vaadin.v7.data.util.BeanItemContainer;
 import com.vaadin.ui.CustomComponent;
+
+import lombok.Getter;
 
 public abstract class NavigationBase extends CustomComponent implements Navigation {
 	private static final long serialVersionUID = -4231539383235849692L;
 	private NavigationSelector selector;
-	private List<NavigationElement> list = new ArrayList<NavigationElement>();
+	private @Getter List<NavigationElement> list = new ArrayList<NavigationElement>();
 	
 	public NavigationBase(NavigationSelector mainView) {
 		this.selector = mainView;
@@ -46,12 +46,6 @@ public abstract class NavigationBase extends CustomComponent implements Navigati
 	public void add(NavigationElement navigationElement) {
 		list.add(navigationElement);
 	}
-	
-	@Override
-	public Container getContainer() {
-		return new BeanItemContainer<NavigationElement>(NavigationElement.class, list);
-	}
-	
 	public void initContainer() {
 		list = new ArrayList<NavigationElement>();
 	}

@@ -28,10 +28,8 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.mgnl.nicki.core.objects.DynamicObject;
 
-import com.vaadin.v7.data.Property;
-
 @SuppressWarnings("serial")
-public class PartDataContainer extends AttributeDataContainer<String> implements DataContainer<String>, Property<String> {
+public class PartDataContainer extends AttributeDataContainer<String> implements DataContainer<String> {
 	private String separator;
 	private String name;
 

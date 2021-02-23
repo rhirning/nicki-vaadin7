@@ -24,8 +24,6 @@ package org.mgnl.nicki.vaadin.base.editor;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.List;
-
 import org.mgnl.nicki.core.data.TreeData;
 
 import com.vaadin.data.ValueProvider;
@@ -52,6 +50,7 @@ public interface NickiSelect<T> extends Serializable {
 
 	void unselect(T object);
 
+	@SuppressWarnings("unchecked")
 	void expandItems(T... object);
 
 	void addExpandListener(ExpandListener<T> listener);
