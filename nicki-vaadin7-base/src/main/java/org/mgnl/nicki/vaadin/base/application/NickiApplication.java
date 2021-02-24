@@ -93,8 +93,7 @@ public abstract class NickiApplication extends UI implements Serializable {
 		}
 
 		view = new VerticalLayout();
-		view.setHeight("100%");
-		view.setWidth("100%");
+		view.setSizeFull();
 		view.setSpacing(false);
 		view.setMargin(false);
 		view.addComponent(new Label("Hallo"));

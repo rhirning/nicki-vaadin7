@@ -39,7 +39,6 @@ import org.mgnl.nicki.dynamic.objects.objects.Template;
 import org.mgnl.nicki.template.engine.TemplateParameter;
 import org.mgnl.nicki.vaadin.base.editor.ClassEditor;
 import org.mgnl.nicki.vaadin.base.editor.NickiTreeEditor;
-import org.mgnl.nicki.vaadin.base.helper.UIHelper;
 
 import com.vaadin.server.FileDownloader;
 import com.vaadin.server.StreamResource;
@@ -297,7 +296,6 @@ public class TemplateConfig extends CustomComponent implements ClassEditor {
 		previewButton.setWidth("-1px");
 		previewButton.setHeight("-1px");
 		previewButton.setCaption("Vorschau");
-		UIHelper.setImmediate(previewButton, true);
 		if (usePreview) {
 			horizontalLayout.addComponent(previewButton);
 		}
@@ -305,7 +303,6 @@ public class TemplateConfig extends CustomComponent implements ClassEditor {
 		htmlPreviewButton.setWidth("-1px");
 		htmlPreviewButton.setHeight("-1px");
 		htmlPreviewButton.setCaption("HTML Vorschau");
-		UIHelper.setImmediate(htmlPreviewButton, true);
 		horizontalLayout.addComponent(htmlPreviewButton);
 
 		/*
@@ -323,21 +320,18 @@ public class TemplateConfig extends CustomComponent implements ClassEditor {
 		csvButton.setWidth("-1px");
 		csvButton.setHeight("-1px");
 		csvButton.setCaption("CSV");
-		UIHelper.setImmediate(csvButton, true);
 		horizontalLayout.addComponent(csvButton);
 
 		xlsButton = new Button();
 		xlsButton.setWidth("-1px");
 		xlsButton.setHeight("-1px");
 		xlsButton.setCaption("XLS");
-		UIHelper.setImmediate(xlsButton, true);
 		horizontalLayout.addComponent(xlsButton);
 
 		pdfButton = new Button();
 		pdfButton.setWidth("-1px");
 		pdfButton.setHeight("-1px");
 		pdfButton.setCaption("PDF");
-		UIHelper.setImmediate(pdfButton, true);
 		horizontalLayout.addComponent(pdfButton);
 
 		mainLayout.addComponent(horizontalLayout);

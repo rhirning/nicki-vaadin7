@@ -25,7 +25,6 @@ package org.mgnl.nicki.vaadin.base.listener;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 
-import org.mgnl.nicki.vaadin.base.helper.UIHelper;
 
 import com.vaadin.ui.AbstractComponentContainer;
 import com.vaadin.ui.TextField;
@@ -43,7 +42,6 @@ public class AddAttributeListener implements ClickListener {
 	public void buttonClick(ClickEvent event) {
 		String value = "";
 		TextField input = new TextField(null, value);
-		UIHelper.setImmediate(input, true);
 		input.addValueChangeListener(listener);
 		container.addComponent(input);
 	}

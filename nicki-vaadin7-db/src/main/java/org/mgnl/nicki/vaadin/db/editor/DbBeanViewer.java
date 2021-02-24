@@ -43,12 +43,14 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import com.vaadin.ui.Notification.Type;
+import com.vaadin.ui.Panel;
 
 @Slf4j
 @SuppressWarnings("serial")
 public class DbBeanViewer extends CustomComponent implements NewClassEditor, ClassEditor {
 
-	private VerticalLayout mainLayout;
+	private Panel mainLayout;
+	private VerticalLayout layout;
 	private Object bean;
 	private Button saveButton;
 	private boolean create;
@@ -92,23 +94,26 @@ public class DbBeanViewer extends CustomComponent implements NewClassEditor, Cla
 	}
 
 
-	private VerticalLayout buildMainLayout() {
+	private Panel buildMainLayout() {
+		mainLayout = new Panel();
+		mainLayout.setSizeFull();
 		
-		mainLayout = new VerticalLayout();
-		mainLayout.setMargin(true);
-		mainLayout.setSpacing(true);
-		mainLayout.setWidth("100%");
+		layout = new VerticalLayout();
+		layout.setMargin(true);
+		layout.setSpacing(true);
+		layout.setSizeUndefined();
 		Label label = new Label(I18n.getText(bean.getClass().getName()));
-		mainLayout.addComponent(label);
+		layout.addComponent(label);
 		DbBeanFieldFactory factory = new DbBeanFieldFactory(listener, dbContextName);
-		factory.addFields(mainLayout, bean, create, hiddenAttributes, isReadOnly());
+		factory.addFields(layout, bean, create, hiddenAttributes, isReadOnly());
 		
 		if (!isReadOnly()) {
 			saveButton = new Button(I18n.getText("nicki.editor.generic.button.save"));
 			saveButton.addClickListener(event -> save());
 	
-			mainLayout.addComponent(saveButton);
+			layout.addComponent(saveButton);
 		}
+		mainLayout.setContent(layout);
 		return mainLayout;
 	}
 

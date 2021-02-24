@@ -84,6 +84,7 @@ public class MainView extends CustomComponent {
 		setCompositionRoot(mainLayout);
 		hsplit.setSplitPosition(250, Unit.PIXELS);
 		navigation = new TableNavigation(this);
+		navigation.setSizeFull();
 		// navigation = new ListSelectNavigation(this);
 		// navigation = new ButtonNavigation(this);
 		hsplit.setFirstComponent(navigation);
@@ -96,14 +97,12 @@ public class MainView extends CustomComponent {
 	private VerticalLayout buildMainLayout() {
 		// common part: create layout
 		mainLayout = new VerticalLayout();
-		mainLayout.setWidth("100%");
-		mainLayout.setHeight("100%");
+		mainLayout.setSizeFull();
 		mainLayout.setMargin(false);
 		mainLayout.setSpacing(false);
 
 		// top-level component properties
-		setWidth("100.0%");
-		setHeight("100.0%");
+		setSizeFull();
 
 		// hsplit
 		hsplit = buildHsplit();
@@ -126,8 +125,7 @@ public class MainView extends CustomComponent {
 	private VerticalLayout buildContentLayout() {
 		// common part: create layout
 		contentLayout = new VerticalLayout();
-		contentLayout.setWidth("100.0%");
-		contentLayout.setHeight("100.0%");
+		contentLayout.setSizeFull();
 		contentLayout.setSpacing(false);
 		contentLayout.setMargin(false);
 

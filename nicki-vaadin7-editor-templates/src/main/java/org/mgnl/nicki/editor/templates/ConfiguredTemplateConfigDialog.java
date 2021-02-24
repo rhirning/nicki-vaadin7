@@ -32,7 +32,6 @@ import org.mgnl.nicki.dynamic.objects.objects.Template;
 import org.mgnl.nicki.template.engine.TemplateHelper;
 import org.mgnl.nicki.template.engine.TemplateParameter;
 import org.mgnl.nicki.vaadin.base.data.DateHelper;
-import org.mgnl.nicki.vaadin.base.helper.UIHelper;
 
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.DateField;
@@ -76,7 +75,6 @@ public class ConfiguredTemplateConfigDialog extends CustomComponent implements T
 					if (StringUtils.equalsIgnoreCase("date", templateParameter.getDataType())) {
 						DateField field = new DateField();
 						field.setCaption(templateParameter.getDisplayName());
-						UIHelper.setImmediate(field, true);
 						field.setWidth("-1px");
 						field.setHeight("-1px");
 						mainLayout.addComponent(field);
@@ -85,7 +83,6 @@ public class ConfiguredTemplateConfigDialog extends CustomComponent implements T
 					} else if (StringUtils.equalsIgnoreCase("string", templateParameter.getDataType())) {
 						TextField field = new TextField();
 						field.setCaption(templateParameter.getDisplayName());
-						UIHelper.setImmediate(field, true);
 						field.setWidth("-1px");
 						field.setHeight("-1px");
 						mainLayout.addComponent(field);

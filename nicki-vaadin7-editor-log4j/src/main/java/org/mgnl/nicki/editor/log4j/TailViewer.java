@@ -32,7 +32,6 @@ import org.apache.commons.io.input.Tailer;
 import org.apache.commons.io.input.TailerListenerAdapter;
 import org.mgnl.nicki.core.helper.NameValue;
 import org.mgnl.nicki.vaadin.base.application.NickiApplication;
-import org.mgnl.nicki.vaadin.base.helper.UIHelper;
 import org.mgnl.nicki.vaadin.base.menu.application.View;
 
 import com.vaadin.server.StreamResource;
@@ -96,7 +95,6 @@ public class TailViewer extends CustomComponent implements Serializable, View {
 		
 		// path
 		path = new TextField();
-		UIHelper.setImmediate(path, true);
 		path.setWidth("100%");
 		path.setHeight("-1px");
 		inputPanel.addComponent(path);
@@ -143,7 +141,6 @@ public class TailViewer extends CustomComponent implements Serializable, View {
 		
 		// panel
 		panel = new Panel();
-		UIHelper.setImmediate(panel, true);
 		panel.setSizeFull();
 		table = new Grid<NameValue>();
 		table.setHeight("100%");

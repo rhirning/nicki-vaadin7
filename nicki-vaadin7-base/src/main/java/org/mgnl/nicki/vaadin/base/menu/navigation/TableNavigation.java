@@ -24,11 +24,11 @@ package org.mgnl.nicki.vaadin.base.menu.navigation;
 
 import java.util.List;
 
-import org.mgnl.nicki.vaadin.base.helper.UIHelper;
 import org.mgnl.nicki.vaadin.base.menu.application.MainView;
 
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Grid.SelectionMode;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
@@ -47,24 +47,25 @@ public class TableNavigation extends NavigationBase implements Navigation {
 
 	private VerticalLayout buildMainLayout() {
 		layout = new VerticalLayout();
-		layout.setHeight("100%");
+		layout.setSizeFull();
 		layout.setSpacing(false);
 		layout.setMargin(false);
+		
 		Panel panel = new Panel();
 		panel.setHeight("100px");
 		panel.setStyleName("logo");
 		layout.addComponent(panel);
 		panel.addClickListener(event -> restart());
+		
 		table = new Grid<>();
-		UIHelper.setImmediate(table, true);
 		table.setSelectionMode(SelectionMode.SINGLE);
 		table.addColumn(NavigationElement::getNavigationCaption);
-		table.setWidth("100%");
-		table.setHeight("100%");
+		table.setSizeFull();
+		/*
 		while (table.getHeaderRowCount() > 0) {
 			table.removeHeaderRow(0);
 		}
-
+*/
 		table.addSelectionListener(event -> {
 				if (table.asSingleSelect().getValue() instanceof NavigationEntry) {
 					NavigationEntry entry = (NavigationEntry) table.asSingleSelect().getValue();
@@ -98,7 +99,6 @@ public class TableNavigation extends NavigationBase implements Navigation {
 		
 		layout.addComponent(table);
 		layout.setExpandRatio(table, 1.0f);
-		//layout.setExpandRatio(panel, 0.0f);
 		return layout;
 	}
 	

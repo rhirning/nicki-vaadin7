@@ -29,7 +29,6 @@ import org.mgnl.nicki.core.i18n.I18n;
 import org.mgnl.nicki.core.objects.DynamicObject;
 import org.mgnl.nicki.vaadin.base.editor.LinkResource;
 import org.mgnl.nicki.vaadin.base.editor.PropertyStreamSource;
-import org.mgnl.nicki.vaadin.base.helper.UIHelper;
 
 import com.vaadin.server.StreamResource.StreamSource;
 import com.vaadin.ui.CustomComponent;
@@ -99,7 +98,6 @@ public class SimpleUploadEditor extends CustomComponent implements Receiver, Suc
 		
 		// upload_1
 		upload = new Upload();
-		UIHelper.setImmediate(upload, true);
 		upload.setWidth("-1px");
 		upload.setHeight("-1px");
 		fileLayout.addComponent(upload);

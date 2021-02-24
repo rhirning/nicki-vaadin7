@@ -33,7 +33,6 @@ import org.mgnl.nicki.vaadin.base.components.EnterNameDialog;
 import org.mgnl.nicki.vaadin.base.components.EnterNameHandler;
 import org.mgnl.nicki.vaadin.base.components.VaadinHorizontalLayout;
 import org.mgnl.nicki.vaadin.base.editor.DynamicObjectValueChangeListener;
-import org.mgnl.nicki.vaadin.base.helper.UIHelper;
 
 import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.ui.Button;
@@ -143,7 +142,6 @@ public class TableListAttributeField extends BaseDynamicAttributeField implement
 		entries = new Grid<String>();
 		entries.setWidth("600px");
 		entries.setHeight("100%");
-		UIHelper.setImmediate(entries, true);
 		mainLayout.addComponent(entries);
 		
 		VerticalLayout verticalLayout = new VerticalLayout();

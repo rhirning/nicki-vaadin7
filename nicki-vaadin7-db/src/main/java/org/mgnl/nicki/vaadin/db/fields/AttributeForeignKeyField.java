@@ -28,6 +28,7 @@ import java.util.List;
 
 import org.mgnl.nicki.db.annotation.ForeignKey;
 import org.mgnl.nicki.db.helper.BeanHelper;
+import org.mgnl.nicki.vaadin.db.converter.BeanToIdConverter;
 import org.mgnl.nicki.vaadin.db.data.AttributeDataContainer;
 import org.mgnl.nicki.vaadin.db.data.DataContainer;
 import org.mgnl.nicki.vaadin.db.editor.DbBeanValueChangeListener;
@@ -58,7 +59,7 @@ public class AttributeForeignKeyField  extends BaseDbBeanAttributeField implemen
 		if (property != null && property.getValue() != null) {
 			field.setValue(property.getValue());
 		}
-		field.addValueChangeListener(new AttributeInputListener<Object, Long>(property, objectListener, null));
+		field.addValueChangeListener(new AttributeInputListener<Object, Long>(property, objectListener, new BeanToIdConverter()));
 	}
 
 	private void fill(ComboBox<Object> field, Object bean, String attributeName, String dbContextName) {

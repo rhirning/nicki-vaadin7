@@ -29,7 +29,6 @@ import org.mgnl.nicki.core.objects.DynamicObject;
 import org.mgnl.nicki.vaadin.base.data.AttributeDataContainer;
 import org.mgnl.nicki.vaadin.base.data.DataContainer;
 import org.mgnl.nicki.vaadin.base.editor.DynamicObjectValueChangeListener;
-import org.mgnl.nicki.vaadin.base.helper.UIHelper;
 import org.mgnl.nicki.vaadin.base.listener.AttributeInputListener;
 
 import com.vaadin.ui.ComboBox;
@@ -44,7 +43,6 @@ public class AttributeSelectField extends BaseDynamicAttributeField implements D
 
 		ComboBox<String> select = new ComboBox<String>(getName(dynamicObject, attributeName));
 //		select.setItemCaptionPropertyId("name");
-		UIHelper.setImmediate(select, true);
 		select.setSelectedItem(dynamicObject.getAttribute(attributeName));
 		property = new AttributeDataContainer<String>(dynamicObject, attributeName);
 		select.setValue(property.getValue());

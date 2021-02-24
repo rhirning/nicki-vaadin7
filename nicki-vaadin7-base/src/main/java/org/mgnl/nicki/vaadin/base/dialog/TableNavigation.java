@@ -24,7 +24,6 @@ package org.mgnl.nicki.vaadin.base.dialog;
 
 import java.util.List;
 
-import org.mgnl.nicki.vaadin.base.helper.UIHelper;
 
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Grid.SelectionMode;
@@ -52,7 +51,6 @@ public class TableNavigation extends NavigationBase implements Navigation {
 		panel.setStyleName("logo");
 		layout.addComponent(panel);
 		table = new Grid<>();
-		UIHelper.setImmediate(table, true);
 		table.setSelectionMode(SelectionMode.SINGLE);
 		table.addColumn(NavigationElement::getNavigationCaption);
 		while (table.getHeaderRowCount() > 0) {

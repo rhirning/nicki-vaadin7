@@ -25,7 +25,6 @@ import org.apache.commons.lang.StringUtils;
 import org.mgnl.nicki.core.config.Config;
 import org.mgnl.nicki.core.helper.JsonHelper;
 import org.mgnl.nicki.vaadin.base.application.NickiApplication;
-import org.mgnl.nicki.vaadin.base.helper.UIHelper;
 import org.mgnl.nicki.vaadin.base.helper.ValuePair;
 import org.mgnl.nicki.vaadin.base.menu.application.View;
 
@@ -457,7 +456,6 @@ public class NickiQueueBrowser extends CustomComponent  implements View {
 	private TabSheet buildTabSheet() {
 		// common part: create layout
 		tabSheet = new TabSheet();
-		UIHelper.setImmediate(tabSheet, true);
 		tabSheet.setWidth("100.0%");
 		tabSheet.setHeight("100.0%");
 		
@@ -504,7 +502,6 @@ public class NickiQueueBrowser extends CustomComponent  implements View {
 		// loadButton
 		loadButton = new Button();
 		loadButton.setCaption("Laden");
-		UIHelper.setImmediate(loadButton, true);
 		loadButton.setWidth("-1px");
 		loadButton.setHeight("-1px");
 		horizontalLayout_1.addComponent(loadButton);
@@ -512,7 +509,6 @@ public class NickiQueueBrowser extends CustomComponent  implements View {
 		// removeButton
 		removeButton = new Button();
 		removeButton.setCaption("Löschen");
-		UIHelper.setImmediate(removeButton, true);
 		removeButton.setWidth("-1px");
 		removeButton.setHeight("-1px");
 		horizontalLayout_1.addComponent(removeButton);
@@ -578,7 +574,6 @@ public class NickiQueueBrowser extends CustomComponent  implements View {
 		// sendButton
 		sendButton = new Button();
 		sendButton.setCaption("Send");
-		UIHelper.setImmediate(sendButton, true);
 		sendButton.setWidth("-1px");
 		sendButton.setHeight("-1px");
 		horizontalLayout_2.addComponent(sendButton);
