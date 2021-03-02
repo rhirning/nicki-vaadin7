@@ -59,7 +59,7 @@ public class TableNavigation extends NavigationBase implements Navigation {
 		
 		table = new NoHeaderGrid<>();
 		table.setSelectionMode(SelectionMode.SINGLE);
-		table.addColumn(NavigationElement::getNavigationCaption);
+		table.addColumn(NavigationElement::getNavigationCaption).setMinimumWidth(250);
 		table.setSizeFull();
 
 		table.addSelectionListener(event -> {
