@@ -1,6 +1,8 @@
 
 package org.mgnl.nicki.vaadin.base.editor;
 
+import org.mgnl.nicki.vaadin.base.components.NoHeaderGrid;
+
 /*-
  * #%L
  * nicki-vaadin-base
@@ -27,7 +29,7 @@ import com.vaadin.ui.Grid.SelectionMode;
 
 @SuppressWarnings("serial")
 public class TableSelector<T> extends BasicNickiSelector<T> {
-	private Grid<T> component = new Grid<>();
+	private Grid<T> component = new NoHeaderGrid<>();
 
 	public TableSelector() {
 		super();

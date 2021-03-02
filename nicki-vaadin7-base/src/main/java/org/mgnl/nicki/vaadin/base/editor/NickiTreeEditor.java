@@ -110,9 +110,7 @@ public class NickiTreeEditor extends CustomComponent {
 		selector = select;
 		TreeGrid<TreeData> selectorComponent = (TreeGrid<TreeData>) selector.getComponent();
 
-		while (selectorComponent.getHeaderRowCount() > 0) {
-			selectorComponent.removeHeaderRow(0);
-		}
+
 		initTree(selectorComponent);
 		
 		
@@ -157,7 +155,9 @@ public class NickiTreeEditor extends CustomComponent {
 						}
 					}
 					if (DynamicObject.class.isAssignableFrom(selected.getClass())) {
-						showClassEditor(new DynamicObjectViewer(), selected);
+						if (hsplit.getSecondComponent() != null) {
+							hsplit.removeComponent(hsplit.getSecondComponent());
+						}
 					} else {
 						showClassEditor(new TreeDataViewer(), selected);
 						

@@ -1,6 +1,10 @@
 
 package org.mgnl.nicki.vaadin.base.data;
 
+import java.text.SimpleDateFormat;
+
+import org.mgnl.nicki.core.helper.DataHelper;
+
 import com.vaadin.shared.ui.datefield.DateResolution;
 
 /*-
@@ -25,8 +29,12 @@ import com.vaadin.shared.ui.datefield.DateResolution;
 
 
 import com.vaadin.ui.DateField;
+import com.vaadin.ui.renderers.DateRenderer;
 
 public class DateHelper {
+	public static DateRenderer getDisplayDateRenderer () {
+		return new DateRenderer(new SimpleDateFormat(DataHelper.FORMAT_DISPLAY_DAY));
+	}
 
 	public static void init(DateField field) {
 		field.setResolution(DateResolution.DAY);

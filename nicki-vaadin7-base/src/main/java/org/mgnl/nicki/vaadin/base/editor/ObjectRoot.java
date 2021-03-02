@@ -55,10 +55,10 @@ public class ObjectRoot implements DataProvider<ObjectWrapper>, Serializable {
 	}
 
 	public List<? extends ObjectWrapper> getChildren(NickiContext context) {
-		return Arrays.asList(objects).stream().map(ObjectRoot::wrap).collect(Collectors.toList());
+		return Arrays.asList(objects).stream().map(this::wrap).collect(Collectors.toList());
 	}
 	
-	public static ObjectWrapper wrap(Object object) {
+	public ObjectWrapper wrap(Object object) {
 		return new ObjectWrapper(object);
 	}
 

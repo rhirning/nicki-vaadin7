@@ -30,21 +30,11 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.mgnl.nicki.core.i18n.I18n;
 
-import com.vaadin.v7.data.Container;
-import com.vaadin.v7.data.Item;
-import com.vaadin.v7.data.Property;
-import com.vaadin.v7.data.util.BeanItemContainer;
-import com.vaadin.v7.data.util.IndexedContainer;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class ContainerHelper {
 
-	public static <T extends Object> Container getTableContainer(Collection<T> data, String... namedProperties) {
-		return new TableContainer(data, namedProperties);
-	}
-	
 	public static Collection<ValuePair> getDataContainer(Object data, String[] properties, String i18nBase) {
 		Collection<ValuePair> container = new ArrayList<ValuePair>();
 		for (String property : properties) {
@@ -68,44 +58,6 @@ public class ContainerHelper {
 			}
 		} catch (Exception e) {
 			log.error("Error", e);
-		}
-	}
-	
-	private static <T extends Object> void addItem(Container container, T data, String name, String i18nBase) {
-		String translatedName = name;
-		if (i18nBase != null) {
-			translatedName = I18n.getText(i18nBase + "." + name);
-		}
-		try {
-			
-			if (data != null) {
-				container.addItem(new ValuePair(translatedName, BeanUtils.getProperty(data, name)));
-				
-			} else {
-				container.addItem(new ValuePair(translatedName, ""));
-			}
-		} catch (Exception e) {
-			log.error("Error", e);
-		}
-	}
-	
-	public static class TableContainer extends IndexedContainer implements Container {
-		private static final long serialVersionUID = 1495392912411015597L;
-
-		public <T extends Object> TableContainer(
-				Collection<? extends T> collection, String... namedProperties) throws IllegalArgumentException {
-			super();
-			for (String name : namedProperties) {
-				addContainerProperty(name, Comparable.class, "");
-			}
-			for (T bean : collection) {
-				Item item = addItem(bean);
-				for (String name : namedProperties) {
-					@SuppressWarnings("unchecked")
-					Property<Object> property = item.getItemProperty(name);
-					property.setValue(get(bean, name));
-				}
-			}
 		}
 	}
 

@@ -22,17 +22,12 @@ package org.mgnl.nicki.editor.projects.core;
  */
 
 
-import java.io.Serializable;
-import java.util.List;
-
-import org.apache.commons.lang.StringUtils;
 import org.mgnl.nicki.core.auth.SystemContext;
 import org.mgnl.nicki.core.config.Config;
 import org.mgnl.nicki.core.context.Target;
 import org.mgnl.nicki.core.context.TargetFactory;
 import org.mgnl.nicki.core.data.DataProvider;
 import org.mgnl.nicki.core.data.TreeData;
-import org.mgnl.nicki.core.objects.DynamicObject;
 import org.mgnl.nicki.core.objects.DynamicObjectException;
 import org.mgnl.nicki.dynamic.objects.objects.Org;
 import org.mgnl.nicki.editor.projects.directories.DirectoryEditor;
@@ -44,8 +39,6 @@ import org.mgnl.nicki.editor.projects.objects.Project;
 import org.mgnl.nicki.vaadin.base.application.NickiApplication;
 import org.mgnl.nicki.vaadin.base.application.ShowWelcomeDialog;
 import org.mgnl.nicki.vaadin.base.editor.DynamicObjectRoot;
-import org.mgnl.nicki.vaadin.base.editor.DynamicObjectValueChangeListener;
-import org.mgnl.nicki.vaadin.base.editor.DynamicObjectViewer;
 import org.mgnl.nicki.vaadin.base.editor.Icon;
 import org.mgnl.nicki.vaadin.base.editor.TreeEditor;
 
@@ -75,56 +68,10 @@ public class ProjectEditor extends NickiApplication {
 		editor.setClassEditor(Project.class, new ProjectViewer());
 		editor.setClassEditor(Member.class, new MemberEditor());
 		editor.setClassEditor(Directory.class, new DirectoryEditor());
-		editor.setNewClassEditor(Member.class, new DynamicObjectViewer(new SyncListener(editor)));
 		editor.initActions();
 		return editor;
 	}
 	
-	private class SyncListener implements DynamicObjectValueChangeListener<DynamicObject>, Serializable {
-		private TreeEditor editor;
-		public SyncListener(TreeEditor editor) {
-			this.editor = editor;
-		}
-
-		@Override
-		public void valueChange(DynamicObject dynamicObject, String name,
-				List<DynamicObject> values) {
-		}
-
-		@Override
-		public void valueChange(DynamicObject dynamicObject,
-				String attributeName, DynamicObject value) {
-			/* TODO
-			if (StringUtils.equals(attributeName, "member")) {
-				String namingValue = "";
-				if (StringUtils.isNotEmpty(value)) {
-					Person member = getNickiContext().loadObject(Person.class, value);
-					if (member != null) {
-						namingValue = member.getNamingValue();
-					}
-				}
-				dynamicObject.initNew(dynamicObject.getParentPath(), namingValue);
-			}
-			*/
-		}
-
-		public boolean acceptAttribute(String name) {
-			if (StringUtils.equals(name, "member")) {
-				return true;
-			}
-			return false;
-		}
-
-		
-		public void close(Component component) {
-// TODO			component.getWindow().getParent().removeWindow(component.getWindow());
-		}
-
-		public void refresh(DynamicObject dynamicObject) {
-			editor.refresh(dynamicObject);
-		}
-	}
-
 	@Override
 	public Target getTarget() {
 		return TargetFactory.getDefaultTarget();

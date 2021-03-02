@@ -27,4 +27,5 @@ public interface Deletable {
 	boolean isDeleted();
 	void delete();
 	void undelete();
+	void setDeleted(boolean deleted);
 }

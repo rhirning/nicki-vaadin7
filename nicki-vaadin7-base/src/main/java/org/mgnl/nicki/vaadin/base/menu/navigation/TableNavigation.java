@@ -24,11 +24,11 @@ package org.mgnl.nicki.vaadin.base.menu.navigation;
 
 import java.util.List;
 
+import org.mgnl.nicki.vaadin.base.components.NoHeaderGrid;
 import org.mgnl.nicki.vaadin.base.menu.application.MainView;
 
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Grid.SelectionMode;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
@@ -57,15 +57,11 @@ public class TableNavigation extends NavigationBase implements Navigation {
 		layout.addComponent(panel);
 		panel.addClickListener(event -> restart());
 		
-		table = new Grid<>();
+		table = new NoHeaderGrid<>();
 		table.setSelectionMode(SelectionMode.SINGLE);
 		table.addColumn(NavigationElement::getNavigationCaption);
 		table.setSizeFull();
-		/*
-		while (table.getHeaderRowCount() > 0) {
-			table.removeHeaderRow(0);
-		}
-*/
+
 		table.addSelectionListener(event -> {
 				if (table.asSingleSelect().getValue() instanceof NavigationEntry) {
 					NavigationEntry entry = (NavigationEntry) table.asSingleSelect().getValue();

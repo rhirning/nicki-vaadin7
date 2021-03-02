@@ -23,13 +23,16 @@ package org.mgnl.nicki.vaadin.base.editor;
 
 
 import java.util.Collection;
+
+import org.mgnl.nicki.vaadin.base.components.NoHeaderTreeGrid;
+
 import com.vaadin.event.ExpandEvent.ExpandListener;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.TreeGrid;
 
 @SuppressWarnings("serial")
 public class TreeSelector<T> extends BasicNickiSelector<T> implements NickiSelect<T> {
-	private TreeGrid<T> component = new TreeGrid<>();
+	private TreeGrid<T> component = new NoHeaderTreeGrid<>();
 
 	public TreeSelector() {
 		super();
