@@ -188,6 +188,7 @@ public class NickiTreeEditor extends CustomComponent {
 					if (clazz.isAssignableFrom(target.getClass())) {
 						for (TreeAction nickiCommand : treeActions.get(clazz)) {
 							event.getContextMenu().addItem(nickiCommand.getName(), selectedItem -> nickiCommand.execute(target));
+							System.out.println(target.getDisplayName() + ": " + nickiCommand.getName());
 						}
 					}
 				}
@@ -422,11 +423,13 @@ public class NickiTreeEditor extends CustomComponent {
 			List<TreeAction> rootClassActions = new ArrayList<>();
 			// treeActions
 			List<TreeAction> a = getTreeActions(classDefinition);
+			/*
 			if(a != null && !a.isEmpty()) {
 				for (TreeAction treeAction : a) {
 					addAction(treeAction);
 				}
 			}
+			*/
 			if (this.children.get(classDefinition) != null) {
 				for (Class<? extends TreeData> childClassPattern : this.children
 						.get(classDefinition)) {

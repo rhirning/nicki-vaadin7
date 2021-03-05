@@ -51,5 +51,12 @@ import com.vaadin.ui.CustomComponent;
 		@Override
 		public void close() {
 		}
+		
+		@Override
+		public String toString() {
+			StringBuilder sb = new StringBuilder();
+			sb.append(getName()).append(": ").append(getTargetClass().getSimpleName());
+			return sb.toString();
+		}
 
 	}
