@@ -188,7 +188,7 @@ public class NickiTreeEditor extends CustomComponent {
 					if (clazz.isAssignableFrom(target.getClass())) {
 						for (TreeAction nickiCommand : treeActions.get(clazz)) {
 							event.getContextMenu().addItem(nickiCommand.getName(), selectedItem -> nickiCommand.execute(target));
-							System.out.println(target.getDisplayName() + ": " + nickiCommand.getName());
+							log.debug(target.getDisplayName() + ": " + nickiCommand.getName());
 						}
 					}
 				}
