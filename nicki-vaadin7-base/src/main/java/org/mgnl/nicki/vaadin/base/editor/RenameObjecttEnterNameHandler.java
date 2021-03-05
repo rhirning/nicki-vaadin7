@@ -48,7 +48,8 @@ public class RenameObjecttEnterNameHandler extends EnterNameHandler implements S
 	public void setName(String name) throws DynamicObjectException {
 		TreeData parent = editor.getParent(dynamicObject);
 		dynamicObject.renameObject(name);
-		editor.reloadChildren(parent);
+		parent.unLoadChildren();
+		editor.refresh(parent);
 	}
 
 	@Override

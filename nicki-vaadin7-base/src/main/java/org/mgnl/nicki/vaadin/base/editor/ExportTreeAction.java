@@ -61,7 +61,7 @@ public class ExportTreeAction extends BaseTreeAction {
 
 	public ExportTreeAction(NickiContext context, Class<? extends TreeData> classDefinition,
 			String name, String i18nBase) {
-		super(classDefinition, name);
+		super(classDefinition, name, null);
 		this.context = context;
 		this.i18nBase = i18nBase;
 		buildMainLayout();

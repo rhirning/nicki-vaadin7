@@ -64,7 +64,7 @@ public class PreviewTemplate extends BaseTreeAction {
 	 */
 	public PreviewTemplate(NickiContext context, Class<? extends TreeData> classDefinition,
 			String name, String i18nBase) {
-		super(classDefinition, name);
+		super(classDefinition, name, null);
 		this.context = context;
 		this.i18nBase = i18nBase;
 		buildMainLayout();
@@ -74,7 +74,7 @@ public class PreviewTemplate extends BaseTreeAction {
 	}
 
 	public PreviewTemplate(NickiContext context, String i18nBase, Map<String, Object> params) {
-		super(null, null);
+		super(null, null, null);
 		this.context = context;
 		this.i18nBase = i18nBase;
 		this.params = params;

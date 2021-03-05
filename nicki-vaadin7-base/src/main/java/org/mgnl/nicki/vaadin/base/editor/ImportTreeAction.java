@@ -63,7 +63,7 @@ public class ImportTreeAction extends BaseTreeAction implements  Upload.Succeede
 
 	public ImportTreeAction(TreeEditor treeEditor, Class<? extends DynamicObject> classDefinition,
 			String name, String i18nBase) {
-		super(classDefinition, name);
+		super(classDefinition, name, null);
 		this.treeEditor = treeEditor;
 		this.context = treeEditor.getNickiContext();
 		this.i18nBase = i18nBase;

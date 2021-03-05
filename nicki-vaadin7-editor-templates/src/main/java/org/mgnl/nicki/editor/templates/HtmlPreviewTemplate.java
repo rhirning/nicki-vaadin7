@@ -55,7 +55,7 @@ public class HtmlPreviewTemplate extends BaseTreeAction {
 	private Map<String, Object> params;
 
 	public HtmlPreviewTemplate(NickiContext context, String i18nBase, Map<String, Object> params) {
-		super(null, null);
+		super(null, null, null);
 		this.context = context;
 		this.i18nBase = i18nBase;
 		this.params = params;

@@ -1,5 +1,6 @@
 package org.mgnl.nicki.vaadin.base.editor;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -53,19 +54,23 @@ public class NickiTreeDataProvider extends TreeDataProvider<TreeData> {
 
 	public Stream<TreeData> fetchChildren(HierarchicalQuery<TreeData, SerializablePredicate<TreeData>> query) {
 		TreeData parent = query.getParentOptional().orElse(root);
-		loadChildren(parent, false);
+		loadChildren(parent, false, false);
 		return super.fetchChildren(query);
 	}
 
 	// TODO: LOADED, children allowed
 	
-	public void loadChildren(TreeData parent, boolean loadNextGeneration) {
+	public void loadChildren(TreeData parent, boolean loadNextGeneration, boolean forceLoad) {
 		if (parent == null) {
-			loadChildren(root, loadNextGeneration);
+			loadChildren(root, loadNextGeneration, forceLoad);
 			return;
 		}
 		boolean loaded = loadedSet.contains(parent.getPath());
-		if (!loaded) {
+		if (loaded && forceLoad) {
+			removeChildren(parent);
+			parent.unLoadChildren();
+		}
+		if (!loaded || forceLoad) {
 			if (parent.childrenAllowed()) {
 				if (parent == root) {
 				    Collection<? extends TreeData> children = this.treeDataProvider.getChildren(context);
@@ -73,13 +78,13 @@ public class NickiTreeDataProvider extends TreeDataProvider<TreeData> {
 					    for (TreeData child : children) {
 							addItem(parent, child);
 							if (loadNextGeneration) {
-								loadChildren(child, false);
+								loadChildren(child, false, forceLoad);
 							}
 						}
 				    }
 		
 				} else {
-					addChildren(parent, parent.getAllChildren(), loadNextGeneration);
+					addChildren(parent, parent.getAllChildren(), loadNextGeneration, forceLoad);
 				}
 			}
 			refreshAll();
@@ -90,12 +95,12 @@ public class NickiTreeDataProvider extends TreeDataProvider<TreeData> {
 	}
 	
 	public void addChildren(TreeData parent,
-			Collection<? extends TreeData> children, boolean loadNextGeneration) {
+			Collection<? extends TreeData> children, boolean loadNextGeneration, boolean forceLoad) {
 		if (children != null) {
 			for (TreeData child : children) {
 				addChild(parent, child);
 				if (loadNextGeneration) {
-					loadChildren(child, false);
+					loadChildren(child, false, forceLoad);
 				}
 			}
 		}
@@ -113,6 +118,11 @@ public class NickiTreeDataProvider extends TreeDataProvider<TreeData> {
 		data.addItem(parent, item);
 	}
 	
+	public void removeItem(TreeData item) {
+		com.vaadin.data.TreeData<TreeData> data = getTreeData();
+		data.removeItem(item);
+	}
+	
 	public boolean contains(TreeData item) {
 		com.vaadin.data.TreeData<TreeData> data = getTreeData();
 		return data.contains(item);
@@ -123,14 +133,16 @@ public class NickiTreeDataProvider extends TreeDataProvider<TreeData> {
 		return data.getParent(child);
 	}
 	
-	public void removeChildren(TreeData parent) {
+	public List<TreeData> removeChildren(TreeData parent) {
 		if (parent != null) {
 			com.vaadin.data.TreeData<TreeData> data = getTreeData();
-			for (TreeData child : data.getChildren(parent)) {
-				data.removeItem(child);
-			}
+			List<TreeData> toBeRemoved = new ArrayList<TreeData>();
+			data.getChildren(parent).stream().forEach(child -> toBeRemoved.add(child));
+			toBeRemoved.stream().forEach(item -> data.removeItem(item));
 			refreshAll();
+			return toBeRemoved;
 		}
+		return new ArrayList<>();
 	}
 	
 	public boolean isParent(TreeData parent,
@@ -151,6 +163,13 @@ public class NickiTreeDataProvider extends TreeDataProvider<TreeData> {
 		refreshAll();
 		String newPath = object.getChildPath(parent, object);
 		object.moveTo(newPath);
+	}
+
+	public void unload(List<TreeData> children) {
+		if (children != null) {
+			children.stream().forEach(item -> loadedSet.remove(item));
+		}
+		
 	}
 
 }

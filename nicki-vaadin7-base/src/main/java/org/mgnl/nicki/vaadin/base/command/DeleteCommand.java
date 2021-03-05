@@ -46,7 +46,7 @@ public class DeleteCommand implements Command {
 		} catch (DynamicObjectException | InvalidActionException e) {
 			throw new CommandException(e);
 		}
-		nickiEditor.getSelector().removeItem(target);
+		nickiEditor.removeItem(target);
 		Notification.show(I18n.getText("nicki.editor.delete.info"));
 		if (parent != null) {
 			this.nickiEditor.refresh(parent);

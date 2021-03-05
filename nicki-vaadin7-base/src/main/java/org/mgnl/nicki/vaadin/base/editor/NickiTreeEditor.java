@@ -43,6 +43,7 @@ import org.mgnl.nicki.vaadin.base.components.EnterNameHandler;
 import org.mgnl.nicki.vaadin.base.components.NewClassEditor;
 import org.mgnl.nicki.vaadin.base.components.SimpleNewClassEditor;
 
+import com.sun.mail.imap.protocol.Item;
 import com.vaadin.contextmenu.GridContextMenu;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalSplitPanel;
@@ -197,7 +198,7 @@ public class NickiTreeEditor extends CustomComponent {
 
 		selector.addExpandListener(event -> {
 				TreeData object = event.getExpandedItem();
-				nickiTreeDataProvider.loadChildren(object, true);
+				nickiTreeDataProvider.loadChildren(object, true, false);
 		});
 	}
 	
@@ -240,6 +241,7 @@ public class NickiTreeEditor extends CustomComponent {
 		collapse(object);
 		reloadChildren(object);
 		selector.expandItems(object);
+		nickiTreeDataProvider.refreshAll();
 	}
 
 	protected boolean isRoot(TreeData dynamicObject) {
@@ -347,7 +349,7 @@ public class NickiTreeEditor extends CustomComponent {
 
 	protected void create(TreeData parent,
 			Class<? extends TreeData> classDefinition) {
-		nickiTreeDataProvider.loadChildren(parent, true);
+		nickiTreeDataProvider.loadChildren(parent, true, false);
 		try {
 			addDynamicObject(parent, classDefinition);
 		} catch (Exception e) {
@@ -406,44 +408,24 @@ public class NickiTreeEditor extends CustomComponent {
 		}
 
 		refresh(nickiTreeDataProvider.getRoot());
+		TreeAction refreshAction = new BaseTreeAction(TreeData.class,
+				I18n.getText(this.messageKeyBase + ".action.refresh"), target -> refresh(target));
 
-		TreeAction refreshAction = new BaseTreeAction(TreeData.class, I18n.getText(this.messageKeyBase
-				+ ".action.refresh")) {			
-			@Override
-			public void execute(TreeData target) {
-				refresh(target);
-			}
-		};
 		addAction(refreshAction);
-		
 
-		for (Class<? extends TreeData> classDefinition : this.children
-				.keySet()) {
+		for (Class<? extends TreeData> classDefinition : this.children.keySet()) {
 			List<TreeAction> classActions = new ArrayList<>();
 			List<TreeAction> rootClassActions = new ArrayList<>();
 			// treeActions
 			List<TreeAction> a = getTreeActions(classDefinition);
-			/*
-			if(a != null && !a.isEmpty()) {
-				for (TreeAction treeAction : a) {
-					addAction(treeAction);
-				}
-			}
-			*/
-			if (this.children.get(classDefinition) != null) {
-				for (Class<? extends TreeData> childClassPattern : this.children
-						.get(classDefinition)) {
-					if (this.allowCreate.contains(childClassPattern)) {
-						TreeAction childAction = new BaseTreeAction(
-								classDefinition, I18n.getText(this.messageKeyBase
-										+ ".action."
-										+ getClassName(childClassPattern) + ".new")) {
 
-											@Override
-											public void execute(TreeData target) {
-												create(target, childClassPattern);
-											}
-						};
+			if (this.children.get(classDefinition) != null) {
+				for (Class<? extends TreeData> childClassPattern : this.children.get(classDefinition)) {
+					if (this.allowCreate.contains(childClassPattern)) {
+						TreeAction childAction = new BaseTreeAction(classDefinition,
+								I18n.getText(
+										this.messageKeyBase + ".action." + getClassName(childClassPattern) + ".new"),
+								target -> create(target, childClassPattern));
 						addAction(childAction);
 						classActions.add(childAction);
 						rootClassActions.add(childAction);
@@ -452,34 +434,32 @@ public class NickiTreeEditor extends CustomComponent {
 			}
 			// delete
 			if (this.allowDelete.contains(classDefinition)) {
-				TreeAction deleteAction = new BaseTreeAction(
-						classDefinition, I18n.getText(this.messageKeyBase + ".action.delete")) {
+				TreeAction deleteAction = new BaseTreeAction(classDefinition,
+						I18n.getText(this.messageKeyBase + ".action.delete"),
+						target -> {
+							List<? extends TreeData> children =  target.getAllChildren();
+							if (children != null && children.size() > 0) {
+								Notification.show("Das Objekt hat Kinder und kann nicht gelöscht werden", Type.ERROR_MESSAGE);
+								return;
+							}
+							getNickiApplication().confirm(new DeleteCommand(nickiEditor, target));
+						});
 
-									@Override
-									public void execute(TreeData target) {
-										getNickiApplication().confirm(
-												new DeleteCommand(nickiEditor, target));
-									}
-				};
 				addAction(deleteAction);
 			}
 			// rename
 			if (this.allowRename.contains(classDefinition)) {
-				TreeAction renameAction = new BaseTreeAction(
-						classDefinition, I18n.getText(this.messageKeyBase + ".action.rename")) {
+				TreeAction renameAction = new BaseTreeAction(classDefinition,
+						I18n.getText(this.messageKeyBase + ".action.rename"), target -> {
+							try {
+								if (!isRoot(target)) {
+									renameItem(target);
+								}
+							} catch (Exception e) {
+								log.error("Error", e);
+							}
 
-									@Override
-									public void execute(TreeData target) {
-										try {
-											if (!isRoot(target)) {
-												renameItem(target);
-											}
-										} catch (Exception e) {
-											log.error("Error", e);
-										}
-
-									}
-				};
+						});
 				addAction(renameAction);
 			}
 		}
@@ -512,9 +492,10 @@ public class NickiTreeEditor extends CustomComponent {
 
 	public void reloadChildren(TreeData parent) {
 		hideClassEditor();
-		parent.unLoadChildren();
-		this.nickiTreeDataProvider.removeChildren(parent);
-		nickiTreeDataProvider.loadChildren(parent, true);
+//		parent.unLoadChildren();
+//		List<TreeData> children = this.nickiTreeDataProvider.removeChildren(parent);
+//		nickiTreeDataProvider.unload(children);
+		nickiTreeDataProvider.loadChildren(parent, true, true);
 	}
 
 	public List<Class<? extends TreeData>> getAllowedChildren(
@@ -559,5 +540,9 @@ public class NickiTreeEditor extends CustomComponent {
 
 	public NickiSelect<TreeData> getSelector() {
 		return selector;
+	}
+
+	public void removeItem(TreeData item) {
+		nickiTreeDataProvider.removeItem(item);
 	}
 }

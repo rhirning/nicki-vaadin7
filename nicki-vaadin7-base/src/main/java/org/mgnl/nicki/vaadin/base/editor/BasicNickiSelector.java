@@ -67,7 +67,7 @@ public abstract class BasicNickiSelector<T> implements NickiSelect<T> {
 
 	@Override
 	public void unselect(T object) {
-		component.select(null);
+		component.deselect(object);
 	}
 	
 	@SuppressWarnings("unchecked")
