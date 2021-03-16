@@ -43,7 +43,6 @@ import org.mgnl.nicki.vaadin.base.components.EnterNameHandler;
 import org.mgnl.nicki.vaadin.base.components.NewClassEditor;
 import org.mgnl.nicki.vaadin.base.components.SimpleNewClassEditor;
 
-import com.sun.mail.imap.protocol.Item;
 import com.vaadin.contextmenu.GridContextMenu;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalSplitPanel;
