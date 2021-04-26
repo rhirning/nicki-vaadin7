@@ -3,7 +3,7 @@
 	<artifactId>nicki-vaadin7-apps</artifactId>
 	<parent>
 		<artifactId>nicki-vaadin7</artifactId>
-		<version>8.22-SNAPSHOT</version>
+		<version>8.22</version>
 		<groupId>org.mgnl.nicki.vaadin7</groupId>
 		<relativePath>..</relativePath>
 	</parent>
