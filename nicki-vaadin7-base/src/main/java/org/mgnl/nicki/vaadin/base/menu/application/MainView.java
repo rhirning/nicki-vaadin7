@@ -125,7 +125,8 @@ public class MainView extends CustomComponent {
 	private VerticalLayout buildContentLayout() {
 		// common part: create layout
 		contentLayout = new VerticalLayout();
-		contentLayout.setSizeFull();
+		contentLayout.setWidthFull();
+		contentLayout.setHeight("-1px");
 		contentLayout.setSpacing(false);
 		contentLayout.setMargin(false);
 
