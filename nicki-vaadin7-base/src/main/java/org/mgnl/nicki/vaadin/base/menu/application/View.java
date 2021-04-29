@@ -33,5 +33,9 @@ public interface View extends Component{
 	boolean isModified();
 	
 	void setApplication(NickiApplication application);
+	
+	default boolean needsHeightFull() {
+		return true;
+	}
 
 }

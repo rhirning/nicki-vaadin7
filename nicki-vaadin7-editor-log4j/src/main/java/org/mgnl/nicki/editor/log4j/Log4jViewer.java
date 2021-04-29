@@ -51,7 +51,6 @@ public class Log4jViewer extends CustomComponent implements View {
      * The root appender.
      */
     public static final String ROOT = "Root";
-
     
 	public Log4jViewer() {
 	}

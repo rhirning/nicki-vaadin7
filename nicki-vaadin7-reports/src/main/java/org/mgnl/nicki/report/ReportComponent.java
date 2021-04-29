@@ -33,11 +33,11 @@ import org.mgnl.nicki.dynamic.objects.objects.Template;
 import org.mgnl.nicki.editor.templates.TemplateConfig;
 import org.mgnl.nicki.editor.templates.TemplateEditorComponent;
 import org.mgnl.nicki.vaadin.base.editor.DynamicObjectRoot;
-import org.mgnl.nicki.vaadin.base.editor.Icon;
 import org.mgnl.nicki.vaadin.base.editor.ShowAllFilter;
 import org.mgnl.nicki.vaadin.base.editor.TreeEditor;
 import org.mgnl.nicki.vaadin.base.menu.application.View;
 
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.Component;
 
 @SuppressWarnings("serial")
@@ -50,8 +50,8 @@ public class ReportComponent extends TemplateEditorComponent implements Serializ
 
 		DataProvider<TreeData> dataProvider = new DynamicObjectRoot(getTemplatesRoot(), getEntryFilter());
 		TreeEditor editor = new TreeEditor(getNickiApplication(), getNickiContext(), dataProvider, getI18nBase());
-		editor.configureClass(Org.class, Icon.FOLDER, TreeEditor.CREATE.DENY, TreeEditor.DELETE.DENY, TreeEditor.RENAME.DENY, Org.class, Template.class );
-		editor.configureClass(Template.class, Icon.DOCUMENT, TreeEditor.CREATE.DENY, TreeEditor.DELETE.DENY, TreeEditor.RENAME.DENY);
+		editor.configureClass(Org.class, VaadinIcons.FOLDER_O, TreeEditor.CREATE.DENY, TreeEditor.DELETE.DENY, TreeEditor.RENAME.DENY, Org.class, Template.class );
+		editor.configureClass(Template.class, VaadinIcons.FILE_O, TreeEditor.CREATE.DENY, TreeEditor.DELETE.DENY, TreeEditor.RENAME.DENY);
 		TemplateConfig templateConfig = new TemplateConfig();
 		boolean usePreview = Config.getBoolean("nicki.report.usePreview", false);
 		templateConfig.setUsePreview(usePreview);

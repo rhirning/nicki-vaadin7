@@ -32,11 +32,11 @@ import org.mgnl.nicki.core.data.FileSystemRoot;
 import org.mgnl.nicki.core.data.TreeData;
 import org.mgnl.nicki.vaadin.base.application.NickiApplication;
 import org.mgnl.nicki.vaadin.base.application.ShowWelcomeDialog;
-import org.mgnl.nicki.vaadin.base.editor.Icon;
 import org.mgnl.nicki.vaadin.base.editor.ShowAllFilter;
 import org.mgnl.nicki.vaadin.base.editor.TreeEditor;
 import org.mgnl.nicki.vaadin.base.menu.application.View;
 
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
 
@@ -61,7 +61,7 @@ public class FileSystemViewer extends CustomComponent implements Serializable, V
 
 		DataProvider<TreeData> treeDataProvider = new FileSystemRoot(root, new ShowAllFilter());
 		TreeEditor editor = new TreeEditor(getNickiApplication(), getNickiContext(), treeDataProvider, getI18nBase());
-		editor.configureClass(FileEntry.class, Icon.FOLDER, TreeEditor.CREATE.ALLOW, TreeEditor.DELETE.ALLOW, TreeEditor.RENAME.ALLOW, FileEntry.class);
+		editor.configureClass(FileEntry.class, VaadinIcons.FOLDER_O, TreeEditor.CREATE.ALLOW, TreeEditor.DELETE.ALLOW, TreeEditor.RENAME.ALLOW, FileEntry.class);
 		DirectoryEditor directoryEditor = new DirectoryEditor(); 
 		editor.setClassEditor(FileEntry.class, directoryEditor);
 //		editor.addAction(new ImportTreeAction(editor, Org.class, I18n.getText(getI18nBase() + ".action.import"), getI18nBase()));

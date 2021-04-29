@@ -16,6 +16,7 @@ import org.mgnl.nicki.vaadin.base.navigation.NavigationDialog;
 import org.mgnl.nicki.vaadin.base.navigation.NavigationHelper;
 import com.vaadin.ui.Component;
 
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 @SuppressWarnings("serial")
 @Slf4j
@@ -25,17 +26,21 @@ public abstract class NickiMenuApplication extends NickiApplication implements S
 	private NavigationCommand command;
 	private View navigationView;
 	private String configPath;
+	private @Setter boolean contentHeightFull;
 
 	public NickiMenuApplication(String configPath) {
 		super();
 		this.configPath = configPath;
 	}
-
+	
 
 	@Override
 	public Component getEditor() {
 		
 		mainView = new MainView((Person) getNickiContext().getUser());
+		if (contentHeightFull) {
+			mainView.getContentLayout().setHeightFull();
+		}
 		
 		try {
 			mainView.addNavigation(this, configPath);

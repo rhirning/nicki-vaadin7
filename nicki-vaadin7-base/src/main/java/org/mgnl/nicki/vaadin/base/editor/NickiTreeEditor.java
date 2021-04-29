@@ -44,6 +44,7 @@ import org.mgnl.nicki.vaadin.base.components.NewClassEditor;
 import org.mgnl.nicki.vaadin.base.components.SimpleNewClassEditor;
 
 import com.vaadin.contextmenu.GridContextMenu;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.Notification;
@@ -51,6 +52,7 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TreeGrid;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
+import com.vaadin.ui.renderers.HtmlRenderer;
 import com.vaadin.ui.themes.ValoTheme;
 
 import lombok.extern.slf4j.Slf4j;
@@ -87,6 +89,7 @@ public class NickiTreeEditor extends CustomComponent {
 
 	private Map<Class<? extends TreeData>, ClassEditor> classEditors = new HashMap<>();
 	private Map<Class<? extends TreeData>, NewClassEditor> newClassEditors = new HashMap<>();
+	private Map<Class<? extends TreeData>, VaadinIcons> classIcons = new HashMap<>();
 	private NickiContext context;
 	private NickiApplication application;
 	private HorizontalSplitPanel hsplit;
@@ -155,9 +158,12 @@ public class NickiTreeEditor extends CustomComponent {
 						}
 					}
 					if (DynamicObject.class.isAssignableFrom(selected.getClass())) {
+						showClassEditor(new DynamicObjectViewer(), selected);
+						/*
 						if (hsplit.getSecondComponent() != null) {
 							hsplit.removeComponent(hsplit.getSecondComponent());
 						}
+						*/
 					} else {
 						showClassEditor(new TreeDataViewer(), selected);
 						
@@ -202,7 +208,13 @@ public class NickiTreeEditor extends CustomComponent {
 	}
 	
 	public void initTree(TreeGrid<TreeData> treeGrid) {
-		treeGrid.addColumn(TreeData::getDisplayName);
+		treeGrid.addColumn(treeData -> {
+			if (classIcons.containsKey(treeData.getClass())) {
+				return classIcons.get(treeData.getClass()).getHtml() + " " + treeData.getDisplayName();
+			} else {
+				return treeData.getDisplayName();
+			}
+		}, new HtmlRenderer());
 		
         // add Root
 		//addRootItems(root);
@@ -249,12 +261,12 @@ public class NickiTreeEditor extends CustomComponent {
 
 	// TODO
 	public void setClassIcon(Class<? extends TreeData> classDefinition,
-			Icon icon) {
-		//this.treeContainer.setClassIcon(classDefinition, icon);
+			VaadinIcons icon) {
+		this.classIcons.put(classDefinition, icon);
 	}
 
 	public void configureClass(Class<? extends TreeData> parentClass,
-			Icon icon, CREATE allowCreate, DELETE allowDelete, RENAME allowRename,
+			VaadinIcons icon, CREATE allowCreate, DELETE allowDelete, RENAME allowRename,
 			@SuppressWarnings("unchecked") Class<? extends TreeData>... childClass) {
 
 		List<TreeData> dynamicObjects = new ArrayList<>();
