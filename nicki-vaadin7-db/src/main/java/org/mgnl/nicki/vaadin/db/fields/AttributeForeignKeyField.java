@@ -35,7 +35,6 @@ import org.mgnl.nicki.vaadin.db.editor.DbBeanValueChangeListener;
 import org.mgnl.nicki.vaadin.db.listener.AttributeInputListener;
 
 import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.ItemCaptionGenerator;
 
 @SuppressWarnings("serial")
 public class AttributeForeignKeyField  extends BaseDbBeanAttributeField implements DbBeanAttributeField, Serializable {
@@ -46,18 +45,17 @@ public class AttributeForeignKeyField  extends BaseDbBeanAttributeField implemen
 
 		property = new AttributeDataContainer<Long>(bean, attributeName);
 		field = new ComboBox<Object>(getName(bean, attributeName));
-		field.setItemCaptionGenerator(new ItemCaptionGenerator<Object>() {
-			
-			@Override
-			public String apply(Object item) {
-				ForeignKey foreignKey = BeanHelper.getForeignKey(bean, attributeName);
-				return (String) BeanHelper.getValue(item, foreignKey.display());
-			}
+		field.setItemCaptionGenerator(item -> {
+			ForeignKey foreignKey = BeanHelper.getForeignKey(bean, attributeName);
+			return (String) BeanHelper.getValue(item, foreignKey.display());
 		});
 		fill(field, bean, attributeName, dbContextName);
 		
 		if (property != null && property.getValue() != null) {
-			field.setValue(property.getValue());
+			Object foreignKeyObject = BeanHelper.getForeignKeyObject(bean, attributeName, dbContextName, property.getValue());
+			if (foreignKeyObject != null) {
+				field.setValue(foreignKeyObject);
+			}
 		}
 		field.addValueChangeListener(new AttributeInputListener<Object, Long>(property, objectListener, new BeanToIdConverter()));
 	}
