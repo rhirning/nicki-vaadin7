@@ -31,7 +31,7 @@
 		<module>nicki-vaadin7-mq-browser</module>
 		<module>nicki-vaadin7-reports</module>
 		<module>nicki-vaadin7-user-admin</module>
-	</modules>
+	</modules> 
 	<dependencyManagement>
 		<dependencies>
 		<!-- 
