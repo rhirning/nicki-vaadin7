@@ -71,12 +71,13 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 import com.vaadin.flow.server.StreamResource;
 
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class MainView extends AppLayout implements NavigationMainView {
 
-	public static final String LOGO_PATH = "logoPpath";
+	public static final String LOGO_PATH = "logoPath";
 	public static final String LOGO_HEIGHT = "logoHeight";
 	public static final String LOGO_WIDTH = "logoWidth";
 	public static final String NAVIGATION_WIDTH = "navigationWidth";
@@ -94,6 +95,7 @@ public class MainView extends AppLayout implements NavigationMainView {
 	private ApplicationConfig applicationConfig;
 	private Map<String, String> config;
     private final Button logoutButton;
+    private @Getter @Setter NickiApplication application;
 	private static final long serialVersionUID = 8701670605362637395L;
 
 	public MainView(Person user, String configPath) throws IllegalAccessException, InvocationTargetException, InstantiationException {
@@ -104,16 +106,20 @@ public class MainView extends AppLayout implements NavigationMainView {
 		this.navigation = new NavigationTabSheet(this);
         // Header of the menu (the navbar)
 
+		//setPrimarySection(Section.DRAWER);
         // menu toggle
         final DrawerToggle drawerToggle = new DrawerToggle();
         //drawerToggle.addClassName("menu-toggle");
-        addToNavbar(drawerToggle);
+        //addToDrawer(drawerToggle);
 
         // image, logo
         final HorizontalLayout top = new HorizontalLayout();
         top.setDefaultVerticalComponentAlignment(Alignment.CENTER);
         top.setClassName("menu-header");
 
+
+		VerticalLayout titleLayout = new VerticalLayout();
+		titleLayout.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 		if (config.containsKey(LOGO_PATH)) {			
 			StreamResource resource = new StreamResource("logo.png", () -> MainView2.class.getResourceAsStream(config.get(LOGO_PATH)));
 			Image image = new Image(resource, "Restart");
@@ -123,19 +129,18 @@ public class MainView extends AppLayout implements NavigationMainView {
 			if (config.containsKey(LOGO_WIDTH)) {
 				image.setWidth(config.get(LOGO_WIDTH));
 			}
-			top.add(image);
+			titleLayout.add(image);
 			image.addClickListener(event -> restart());
+		} else if (config.containsKey(TITLE)) {
+	        final H3 title = new H3(config.get(TITLE));
+	        titleLayout.add(title);
+	        title.addClickListener(event -> restart());
 		} else {
 			Span image = new Span("Restart");
-			top.add(image);
+			titleLayout.add(image);
 			image.addClickListener(event -> restart());
 		}
-
-		if (config.containsKey(TITLE)) {
-	        final H3 title = new H3(config.get(TITLE));
-	        top.add(title);
-		}
-        addToNavbar(top);
+        addToDrawer(titleLayout);
 
 		// logout button
 
@@ -146,7 +151,9 @@ public class MainView extends AppLayout implements NavigationMainView {
 	}
 
 	private void logout() {
-		// TODO: logout
+		if (getApplication() != null) {
+			getApplication().logout();
+		}
     }
 
     private Button createMenuButton(String caption, Icon icon) {

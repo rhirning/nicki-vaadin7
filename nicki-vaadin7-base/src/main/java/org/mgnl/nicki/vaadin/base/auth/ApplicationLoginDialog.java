@@ -31,11 +31,14 @@ import org.mgnl.nicki.vaadin.base.notification.Notification;
 import org.mgnl.nicki.vaadin.base.notification.Notification.Type;
 
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.Span;
-import com.vaadin.flow.component.login.LoginForm;
+import com.vaadin.flow.component.Key;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.PasswordField;
+import com.vaadin.flow.component.textfield.TextField;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -44,6 +47,8 @@ public class ApplicationLoginDialog extends FlexLayout implements LoginDialog {
 	
 	private static int MAX_COUNT = 3;
 
+	private TextField userName;
+	private PasswordField password;
 	private NickiApplication application;
 	private int count = 0;
 
@@ -55,62 +60,49 @@ public class ApplicationLoginDialog extends FlexLayout implements LoginDialog {
         setSizeFull();
         setClassName("login-screen");
 
-        // login form, centered in the available part of the screen
-        LoginForm loginForm = new LoginForm();
-        loginForm.addLoginListener(this::login);
-        loginForm.setForgotPasswordButtonVisible(false);
-        /*
-        loginForm.addForgotPasswordListener(
-                event -> Notification.show("Hint: same as username"));
-		*/
         // layout to center login form when there is sufficient screen space
         FlexLayout centeringLayout = new FlexLayout();
         centeringLayout.setSizeFull();
         centeringLayout.setJustifyContentMode(JustifyContentMode.CENTER);
         centeringLayout.setAlignItems(Alignment.CENTER);
-        centeringLayout.add(loginForm);
+        centeringLayout.add(getLoginForm());
 
-        // information text about logging in
-        Component loginInformation = buildLoginInformation();
-
-        //add(loginInformation);
         add(centeringLayout);
     }
-
-    private Component buildLoginInformation() {
-        VerticalLayout loginInformation = new VerticalLayout();
-        loginInformation.setClassName("login-information");
-
-        H1 loginInfoHeader = new H1("Login Information");
-        loginInfoHeader.setWidth("100%");
-        Span loginInfoText = new Span(
-                "Log in as \"admin\" to have full access. Log in with any " +
-                        "other username to have read-only access. For all " +
-                        "users, the password is same as the username.");
-        loginInfoText.setWidth("100%");
-        loginInformation.add(loginInfoHeader);
-        loginInformation.add(loginInfoText);
-
-        return loginInformation;
-    }
     
-    private void login(LoginForm.LoginEvent event) {
+    protected Component getLoginForm() {
+    	FormLayout loginLayout = new FormLayout();
+    	loginLayout.setSizeUndefined();
+    	loginLayout.setHeight("-1px");
+//    	H2 title = new H2("Log in");
+    	userName = new TextField("User");
+    	userName.focus();
+    	password = new PasswordField("Passwort");
+    	Button loginButton = new Button("Log in");
+    	loginButton.getElement().getClassList().add("loginButton");
+    	loginButton.setWidth("100%");
+    	loginButton.addClickListener(e -> login());
+    	loginButton.addClickShortcut(Key.ENTER);
+    	loginLayout.add(userName, password, loginButton);
+    	return loginLayout;
+    }
+
+    private void login() {
 		count++;
 		if (count > MAX_COUNT) {
 			Notification.show(I18n.getText("nicki.application.error.too.many.attempts"), Type.HUMANIZED_MESSAGE);
 			return;
 		}
-		if (getApplication().login(StringUtils.stripToEmpty(event.getUsername()), StringUtils.stripToEmpty(event.getPassword()))) {
+		if (getApplication().login(StringUtils.stripToEmpty(userName.getValue()), StringUtils.stripToEmpty(password.getValue()))) {
 			try {
 				getApplication().start();
 			} catch (DynamicObjectException e) {
 				log.error("Error", e);
 			}
 		} else {
-			event.getSource().setError(true);
 		}
 
-    }
+	}
 	
 	public NickiApplication getApplication() {
 		return application;
