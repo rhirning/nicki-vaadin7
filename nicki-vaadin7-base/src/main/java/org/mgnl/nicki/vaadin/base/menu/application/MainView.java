@@ -110,12 +110,13 @@ public class MainView extends AppLayout implements NavigationMainView {
         // menu toggle
         final DrawerToggle drawerToggle = new DrawerToggle();
         //drawerToggle.addClassName("menu-toggle");
-        //addToDrawer(drawerToggle);
+        addToNavbar(drawerToggle);
 
         // image, logo
         final HorizontalLayout top = new HorizontalLayout();
         top.setDefaultVerticalComponentAlignment(Alignment.CENTER);
         top.setClassName("menu-header");
+        addToNavbar(top);
 
 
 		VerticalLayout titleLayout = new VerticalLayout();
@@ -181,8 +182,8 @@ public class MainView extends AppLayout implements NavigationMainView {
 
         // Finally, add logout button for all users
         navigation.init(navigationFolders);
-
-        addToDrawer(logoutButton, navigation);
+        addToNavbar(logoutButton);
+        addToDrawer(navigation);
         restart();
         
         

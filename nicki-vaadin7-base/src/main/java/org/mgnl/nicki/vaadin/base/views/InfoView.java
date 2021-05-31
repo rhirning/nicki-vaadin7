@@ -182,6 +182,9 @@ public class InfoView extends VerticalLayout implements ConfigurableView {
 	private void buildMainLayout() {
 		setWidth("100.0%");
 		setHeight("100.0%");
+		setMargin(false);
+		setSpacing(false);
+		setPadding(false);
 		
 		// buttonLayout
 		buttonLayout = buildButtonLayout();

@@ -33,9 +33,12 @@ import org.mgnl.nicki.vaadin.base.notification.Notification.Type;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.H5;
+import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 
@@ -65,6 +68,8 @@ public class ApplicationLoginDialog extends FlexLayout implements LoginDialog {
         centeringLayout.setSizeFull();
         centeringLayout.setJustifyContentMode(JustifyContentMode.CENTER);
         centeringLayout.setAlignItems(Alignment.CENTER);
+
+    	
         centeringLayout.add(getLoginForm());
 
         add(centeringLayout);
@@ -74,20 +79,35 @@ public class ApplicationLoginDialog extends FlexLayout implements LoginDialog {
     	FormLayout loginLayout = new FormLayout();
     	loginLayout.setSizeUndefined();
     	loginLayout.setHeight("-1px");
-//    	H2 title = new H2("Log in");
+    	
     	userName = new TextField("User");
     	userName.focus();
+    	
     	password = new PasswordField("Passwort");
+    	
     	Button loginButton = new Button("Log in");
     	loginButton.getElement().getClassList().add("loginButton");
     	loginButton.setWidth("100%");
     	loginButton.addClickListener(e -> login());
     	loginButton.addClickShortcut(Key.ENTER);
+    	
     	loginLayout.add(userName, password, loginButton);
     	return loginLayout;
     }
 
-    private void login() {
+    protected Component getErrorDialog() {
+    	Div div = new Div();
+    	H5 title = new H5("Falscher User oder falsches Passwort");
+    	title.getElement().getClassList().add("login-error");
+    	
+    	Paragraph p = new Paragraph("Prüfen Sie Username und Passwort und versuchen Sie es noch einmal");
+    	p.setWidth("300px");
+    	p.getElement().getClassList().add("login-error");
+    	div.add(title, p);
+		return div;
+	}
+
+	private void login() {
 		count++;
 		if (count > MAX_COUNT) {
 			Notification.show(I18n.getText("nicki.application.error.too.many.attempts"), Type.HUMANIZED_MESSAGE);
@@ -100,6 +120,7 @@ public class ApplicationLoginDialog extends FlexLayout implements LoginDialog {
 				log.error("Error", e);
 			}
 		} else {
+			new Dialog(getErrorDialog()).open();
 		}
 
 	}
