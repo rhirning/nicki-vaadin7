@@ -23,6 +23,7 @@ package org.mgnl.nicki.vaadin.base.editor;
 
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,24 +43,25 @@ import org.mgnl.nicki.vaadin.base.components.EnterNameDialog;
 import org.mgnl.nicki.vaadin.base.components.EnterNameHandler;
 import org.mgnl.nicki.vaadin.base.components.NewClassEditor;
 import org.mgnl.nicki.vaadin.base.components.SimpleNewClassEditor;
+import org.mgnl.nicki.vaadin.base.notification.Notification;
+import org.mgnl.nicki.vaadin.base.notification.Notification.Type;
 
-import com.vaadin.contextmenu.GridContextMenu;
-import com.vaadin.icons.VaadinIcons;
-import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.HorizontalSplitPanel;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.Notification.Type;
-import com.vaadin.ui.TreeGrid;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.Window;
-import com.vaadin.ui.renderers.HtmlRenderer;
-import com.vaadin.ui.themes.ValoTheme;
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.dialog.Dialog;
+import com.vaadin.flow.component.grid.contextmenu.GridContextMenu;
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.splitlayout.SplitLayout;
+import com.vaadin.flow.component.treegrid.TreeGrid;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @SuppressWarnings("serial")
-public class NickiTreeEditor extends CustomComponent {
+public class NickiTreeEditor extends SplitLayout {
 
 	public enum CREATE {
 		ALLOW, DENY
@@ -75,7 +77,7 @@ public class NickiTreeEditor extends CustomComponent {
 
 	private NickiSelect<TreeData> selector;
 	private TreeData selectedObject;
-	private ClassEditor viewer;
+	private Component viewer;
 	private String messageKeyBase;
 	private DataProvider<TreeData> treeDataProvider;
 
@@ -89,10 +91,9 @@ public class NickiTreeEditor extends CustomComponent {
 
 	private Map<Class<? extends TreeData>, ClassEditor> classEditors = new HashMap<>();
 	private Map<Class<? extends TreeData>, NewClassEditor> newClassEditors = new HashMap<>();
-	private Map<Class<? extends TreeData>, VaadinIcons> classIcons = new HashMap<>();
+	private Map<Class<? extends TreeData>, VaadinIcon> classIcons = new HashMap<>();
 	private NickiContext context;
 	private NickiApplication application;
-	private HorizontalSplitPanel hsplit;
 	private NickiTreeEditor nickiEditor;
 	private NickiTreeDataProvider nickiTreeDataProvider;
 
@@ -100,9 +101,9 @@ public class NickiTreeEditor extends CustomComponent {
 		this.nickiEditor = this;
 		this.application = application;
 		this.context = ctx;
-		this.hsplit = new HorizontalSplitPanel();
-		hsplit.setSplitPosition(200, Unit.PIXELS);
-		setCompositionRoot(hsplit);
+		setOrientation(Orientation.HORIZONTAL);
+		setSplitterPosition(25);
+		setSizeFull();
 	}
 
 	public void init(NickiSelect<TreeData> select, NickiTreeDataProvider nickiTreeDataProvider,
@@ -119,8 +120,8 @@ public class NickiTreeEditor extends CustomComponent {
 		
 		selectorComponent.setSizeFull();
 
-		hsplit.setFirstComponent(selectorComponent);
-		hsplit.addStyleName(ValoTheme.SPLITPANEL_LARGE);
+		addToPrimary(selectorComponent);
+		// hsplit.addStyleName(ValoTheme.SPLITPANEL_LARGE);
 
 		selector.setSelectable(true);
 		selector.addSelectionListener(event -> {
@@ -129,7 +130,7 @@ public class NickiTreeEditor extends CustomComponent {
 					if (viewer != null && selectedObject.isModified()) {
 						try {
 							// TODO: ask save/not save/back
-							viewer.save();
+							((ClassEditor) viewer).save();
 						} catch (Exception e) {
 							log.error("Error", e);
 						}
@@ -141,7 +142,7 @@ public class NickiTreeEditor extends CustomComponent {
 				if (viewer != null && selectedObject.isModified()) {
 					try {
 						// TODO: ask save/not save/back
-						viewer.save();
+						((ClassEditor) viewer).save();
 					} catch (Exception e) {
 						log.error("Error", e);
 					}
@@ -183,38 +184,50 @@ public class NickiTreeEditor extends CustomComponent {
 		
 
         GridContextMenu<TreeData> contextMenu = new GridContextMenu<>(selectorComponent);
+
         // handle item right-click
-        contextMenu.addGridBodyContextMenuListener(event -> {
-            event.getContextMenu().removeItems();
-            if (event.getItem() != null) {
-            	TreeData target = (TreeData) event.getItem();
+        contextMenu.setDynamicContentHandler(item -> {
+        	contextMenu.removeAll();
+            if (item != null) {
+            	TreeData target = item;
             	selectorComponent.select(target);
             	
 				for (Class<? extends TreeData> clazz : treeActions.keySet()) {
 					if (clazz.isAssignableFrom(target.getClass())) {
 						for (TreeAction nickiCommand : treeActions.get(clazz)) {
-							event.getContextMenu().addItem(nickiCommand.getName(), selectedItem -> nickiCommand.execute(target));
+							contextMenu.addItem(nickiCommand.getName(), selectedItem -> {
+								selectorComponent.select(target);
+								nickiCommand.execute(target);
+							});
 							log.debug(target.getDisplayName() + ": " + nickiCommand.getName());
 						}
 					}
 				}
             }
+            return true;
         });
-
+/*
 		selector.addExpandListener(event -> {
-				TreeData object = event.getExpandedItem();
-				nickiTreeDataProvider.loadChildren(object, true, false);
+				Collection<TreeData> itemsList = event.getItems();
+				if (itemsList != null && itemsList.size() > 0) {
+					nickiTreeDataProvider.loadChildren(itemsList.iterator().next(), true, false);
+				}
 		});
+		*/
 	}
 	
 	public void initTree(TreeGrid<TreeData> treeGrid) {
-		treeGrid.addColumn(treeData -> {
+		treeGrid.addComponentHierarchyColumn(treeData -> {
+			HorizontalLayout div= new HorizontalLayout();
+			div.setMargin(false);
+			div.setSpacing(true);
+			div.setPadding(false);
 			if (classIcons.containsKey(treeData.getClass())) {
-				return classIcons.get(treeData.getClass()).getHtml() + " " + treeData.getDisplayName();
-			} else {
-				return treeData.getDisplayName();
+				div.add(classIcons.get(treeData.getClass()).create());				
 			}
-		}, new HtmlRenderer());
+			div.add(new Span(treeData.getDisplayName()));
+			return div;
+		});
 		
         // add Root
 		//addRootItems(root);
@@ -224,14 +237,17 @@ public class NickiTreeEditor extends CustomComponent {
 	public void showClassEditor(ClassEditor classEditor, TreeData selected) {
 
 		classEditor.setDynamicObject(getEditor(), selected);
-		viewer = classEditor;
-		hsplit.setSecondComponent(viewer);
+		if (viewer != null) {
+			remove(viewer);
+		}
+		viewer = (Component) classEditor;
+		addToSecondary((viewer));
 		
 	}
 	
 	public void hideClassEditor() {
 		if  (viewer != null) {
-			hsplit.removeComponent(viewer);
+			remove(viewer);
 			viewer = null;
 		}
 	}
@@ -261,12 +277,12 @@ public class NickiTreeEditor extends CustomComponent {
 
 	// TODO
 	public void setClassIcon(Class<? extends TreeData> classDefinition,
-			VaadinIcons icon) {
+			VaadinIcon icon) {
 		this.classIcons.put(classDefinition, icon);
 	}
 
 	public void configureClass(Class<? extends TreeData> parentClass,
-			VaadinIcons icon, CREATE allowCreate, DELETE allowDelete, RENAME allowRename,
+			VaadinIcon icon, CREATE allowCreate, DELETE allowDelete, RENAME allowRename,
 			@SuppressWarnings("unchecked") Class<? extends TreeData>... childClass) {
 
 		List<TreeData> dynamicObjects = new ArrayList<>();
@@ -352,10 +368,10 @@ public class NickiTreeEditor extends CustomComponent {
 				I18n.getText(messageKeyBase
 						+ ".rename.window.title"));
 		dialog.setHandler(handler);
-		dialog.setWidth(440, Unit.PIXELS);
-		dialog.setHeight(500, Unit.PIXELS);
+//		dialog.setWidth("440px");
+//		dialog.setHeight("500px");
 		dialog.setModal(true);
-		UI.getCurrent().addWindow(dialog);
+		dialog.open();
 	}
 
 	protected void create(TreeData parent,
@@ -383,12 +399,12 @@ public class NickiTreeEditor extends CustomComponent {
 							+ getClassName(classDefinition) + ".create.window.title"));
 			editor.init(parent, classDefinition);
 		}
-		if (editor instanceof Window) {
-			Window window = (Window) editor;
-			window.setWidth(440, Unit.PIXELS);
-			window.setHeight(500, Unit.PIXELS);
+		if (editor instanceof Dialog) {
+			Dialog window = (Dialog) editor;
+//			window.setWidth("440px");
+//			window.setHeight("500px");
 			window.setModal(true);
-			UI.getCurrent().addWindow(window);
+			window.open();
 		} else {
 			log.error("editor must be of type Window");
 		}

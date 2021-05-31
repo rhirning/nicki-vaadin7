@@ -58,47 +58,48 @@ import org.mgnl.nicki.vaadin.base.auth.LoginDialog;
 import org.mgnl.nicki.vaadin.base.command.Command;
 import org.mgnl.nicki.vaadin.base.components.ConfirmDialog;
 import org.mgnl.nicki.vaadin.base.components.WelcomeDialog;
+import org.mgnl.nicki.vaadin.base.notification.Notification;
+import org.mgnl.nicki.vaadin.base.notification.Notification.Type;
 
-import com.vaadin.server.Page;
-import com.vaadin.server.VaadinRequest;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.Notification.Type;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.HasSize;
+import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.router.HasDynamicTitle;
+import com.vaadin.flow.router.RouterLayout;
+import com.vaadin.flow.server.VaadinRequest;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @SuppressWarnings("serial")
-public abstract class NickiApplication extends UI implements Serializable {
+public abstract class NickiApplication extends Div implements RouterLayout, Serializable, HasDynamicTitle {
 
 	private NickiContext nickiContext;
 	private DoubleContext doubleContext;
 	private boolean useSystemContext;
 	private boolean useWelcomeDialog;
-
-	VerticalLayout view;
-
-	@Override
+	
+	public NickiApplication() {
+		init();
+	}
+	
 	public void init(VaadinRequest vaadinRequest) {
 		AppContext.setRequest(vaadinRequest);
+	}
+	
+	public void init() {
 		@SuppressWarnings("unchecked")
-		Map<String, String> map = (Map<String, String>) getSession().getSession().getAttribute(NickiServlet.NICKI_PARAMETERS);
+		Map<String, String> map = (Map<String, String>) UI.getCurrent().getSession().getSession().getAttribute(NickiServlet.NICKI_PARAMETERS);
 		AppContext.setRequestParameters(map);
-
-		for (String paramName : map.keySet()) {
-			System.out.println(paramName + "=" + map.get(paramName));
+		if (map != null) {
+			for (String paramName : map.keySet()) {
+				System.out.println(paramName + "=" + map.get(paramName));
+			}
 		}
-
-		view = new VerticalLayout();
-		view.setSizeFull();
-		view.setSpacing(false);
-		view.setMargin(false);
-		view.addComponent(new Label("Hallo"));
-		setContent(view);
-		Page.getCurrent().setTitle(getApplicationTitle());
+		setSizeFull();
+		add(new Label("Hallo"));
 
 		if (Config.getBoolean("nicki.application.auth.no")) {
 			try {
@@ -127,7 +128,8 @@ public abstract class NickiApplication extends UI implements Serializable {
 		}
 	}
 	
-	public String getApplicationTitle() {
+	@Override
+	public String getPageTitle() {
 		return I18n.getText(getI18nBase() + ".main.title");
 	}
 
@@ -137,7 +139,7 @@ public abstract class NickiApplication extends UI implements Serializable {
 	}
 	
 	private void showLoginDialog() {
-		LoginDialog loginDialog = null;
+		Component loginDialog = null;
 		String loginClass = Config.getString("nicki.application.login.class");
 		if (StringUtils.isNotBlank(loginClass)) {
 		try {
@@ -149,9 +151,12 @@ public abstract class NickiApplication extends UI implements Serializable {
 		if (loginDialog == null) {
 			loginDialog = new ApplicationLoginDialog();
 		}
-		loginDialog.setApplication(this);
-		getView().removeAllComponents();
-		getView().addComponent(loginDialog);
+		if (loginDialog instanceof LoginDialog) {
+			LoginDialog dialog = (LoginDialog) loginDialog;
+			dialog.setApplication(this);
+		}
+		removeAll();
+		add(loginDialog);
 	}
 	
 	private void loginJAAS() {
@@ -308,7 +313,7 @@ public abstract class NickiApplication extends UI implements Serializable {
 	}
 
 	public void start() throws DynamicObjectException {
-		getView().removeAllComponents();
+		removeAll();
 		if (isAllowed(this.doubleContext.getLoginContext().getUser())) {
 			showStart();
 		} else {
@@ -317,14 +322,15 @@ public abstract class NickiApplication extends UI implements Serializable {
 	}
 	
 	public void showStart() throws DynamicObjectException {
-		getView().removeAllComponents();
+		removeAll();
 		if (isUseWelcomeDialog()) {
-			getView().addComponent(new WelcomeDialog(this));
+			add(new WelcomeDialog(this));
 		}
 		Component editor = getEditor();
-		getView().addComponent(editor);
-		editor.setSizeFull();
-		getView().setExpandRatio(editor, 1);
+		add(editor);
+		if (editor instanceof HasSize) {
+			((HasSize) editor).setSizeFull();;
+		}
 	}
 	
 	public boolean isAllowed(DynamicObject user) {
@@ -498,17 +504,19 @@ public abstract class NickiApplication extends UI implements Serializable {
 	}
 
 	public void confirm(Command command) {
-		addWindow(new ConfirmDialog(command));
+		new ConfirmDialog(command).open();;
 	}
 
-	public VerticalLayout getView() {
-		return view;
+	public Div getView() {
+		return this;
 	}
 
+	/* TODO: Theme
 	@Override
 	public String getTheme() {
 		return Config.getString("nicki.application.theme", "reindeer");
 	}
+	*/
 
 	public void setDoubleContext(DoubleContext doubleContext) {
 		this.doubleContext = doubleContext;

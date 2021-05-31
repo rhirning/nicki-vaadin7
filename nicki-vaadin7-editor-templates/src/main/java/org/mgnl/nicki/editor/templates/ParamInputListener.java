@@ -24,13 +24,16 @@ package org.mgnl.nicki.editor.templates;
 
 import java.util.Map;
 
-import com.vaadin.data.HasValue.ValueChangeEvent;
-import com.vaadin.data.HasValue.ValueChangeListener;
-import com.vaadin.event.selection.SelectionEvent;
-import com.vaadin.event.selection.SelectionListener;
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.AbstractField.ComponentValueChangeEvent;
+import com.vaadin.flow.component.HasValue.ValueChangeEvent;
+import com.vaadin.flow.component.HasValue.ValueChangeListener;
+import com.vaadin.flow.data.selection.SelectionEvent;
+import com.vaadin.flow.data.selection.SelectionListener;
+
 
 @SuppressWarnings("serial")
-public class ParamInputListener<T> implements ValueChangeListener<T>, SelectionListener<T> {
+public class ParamInputListener<C extends Component, X, T> implements ValueChangeListener<ComponentValueChangeEvent<C, X>> {
 
 	private String name;
 	private Map<String, Object> map;
@@ -46,13 +49,12 @@ public class ParamInputListener<T> implements ValueChangeListener<T>, SelectionL
 		this.templateConfig = templateConfig;
 	}
 
-	public void valueChange(ValueChangeEvent<T> event) {
+	public void valueChanged(ComponentValueChangeEvent<C, X> event) {
 		map.put(name, event.getValue());
 		this.templateConfig.paramsChanged();
 	}
 
-	@Override
-	public void selectionChange(SelectionEvent<T> event) {
+	public void selectionChange(SelectionEvent<C, T> event) {
 		if (event.getFirstSelectedItem().isPresent()) {
 			map.put(name, event.getFirstSelectedItem().get());
 		} else {

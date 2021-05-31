@@ -30,8 +30,9 @@ import org.mgnl.nicki.vaadin.base.data.DataContainer;
 import org.mgnl.nicki.vaadin.base.editor.DynamicObjectValueChangeListener;
 import org.mgnl.nicki.vaadin.base.listener.AttributeInputListener;
 
-import com.vaadin.ui.Component;
-import com.vaadin.ui.TextArea;
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.textfield.TextArea;
+
 
 @SuppressWarnings("serial")
 public class AttributeTextAreaField extends BaseDynamicAttributeField implements DynamicAttributeField<String>, Serializable {
@@ -42,8 +43,8 @@ public class AttributeTextAreaField extends BaseDynamicAttributeField implements
 
 		property = new AttributeDataContainer<String>(dynamicObject, attributeName);
 		field = new TextArea(getName(dynamicObject, attributeName));
-		field.setWidth("600px");
-		field.setHeight("100px");
+//		field.setWidth("600px");
+//		field.setHeight("100px");
 		field.setValue((String) property.getValue());
 		field.addValueChangeListener(new AttributeInputListener<String>(property, objectListener));
 	}

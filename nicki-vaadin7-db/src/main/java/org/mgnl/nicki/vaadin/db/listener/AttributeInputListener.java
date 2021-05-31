@@ -5,8 +5,9 @@ import org.mgnl.nicki.vaadin.db.converter.AbstractConverter;
 import org.mgnl.nicki.vaadin.db.data.DataContainer;
 import org.mgnl.nicki.vaadin.db.editor.DbBeanValueChangeListener;
 
-import com.vaadin.data.HasValue.ValueChangeEvent;
-import com.vaadin.data.HasValue.ValueChangeListener;
+import com.vaadin.flow.component.AbstractField.ComponentValueChangeEvent;
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.HasValue.ValueChangeListener;
 
 /*-
  * #%L
@@ -29,7 +30,7 @@ import com.vaadin.data.HasValue.ValueChangeListener;
  */
 
 @SuppressWarnings("serial")
-public class AttributeInputListener<X, T> implements ValueChangeListener<X> {
+public class AttributeInputListener<C extends Component, X, T> implements ValueChangeListener<ComponentValueChangeEvent<C, X>> {
 
 	private DataContainer<T> data;
 	private DbBeanValueChangeListener objectListener;
@@ -42,7 +43,8 @@ public class AttributeInputListener<X, T> implements ValueChangeListener<X> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void valueChange(ValueChangeEvent<X> event) {
+	@Override
+	public void valueChanged(ComponentValueChangeEvent<C, X> event) {
 		T value;
 		if (converter != null) {
 			value = converter.convert(event.getValue());

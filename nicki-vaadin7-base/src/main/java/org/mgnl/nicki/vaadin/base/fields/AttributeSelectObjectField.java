@@ -34,20 +34,22 @@ import org.mgnl.nicki.vaadin.base.data.ReferenceAttributeDataContainer;
 import org.mgnl.nicki.vaadin.base.editor.DynamicObjectValueChangeListener;
 import org.mgnl.nicki.vaadin.base.listener.AttributeInputListener;
 
-import com.vaadin.ui.Component;
-import com.vaadin.ui.NativeSelect;
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.select.Select;
+
 
 @SuppressWarnings("serial")
 public class AttributeSelectObjectField extends BaseDynamicAttributeField implements DynamicAttributeField<DynamicObject>, Serializable {
 
-	private NativeSelect<DynamicObject> field;
+	private Select<DynamicObject> field;
 	private DataContainer<DynamicObject> property;
 	private List<DynamicObject> options;
 	
 	public void init(String attributeName, DynamicObject dynamicObject, DynamicObjectValueChangeListener<DynamicObject> objectListener) {
 
-		NativeSelect<DynamicObject> select = new NativeSelect<>(getName(dynamicObject, attributeName));
-		select.setItemCaptionGenerator(DynamicObject::getName);
+		Select<DynamicObject> select = new Select<>();
+		select.setLabel(getName(dynamicObject, attributeName));
+		select.setItemLabelGenerator(DynamicObject::getName);
 		getOptions(dynamicObject, dynamicObject.getModel().getDynamicAttribute(attributeName));
 		property = new ReferenceAttributeDataContainer(dynamicObject, attributeName);
 		select(dynamicObject.getAttribute(attributeName));
@@ -57,7 +59,7 @@ public class AttributeSelectObjectField extends BaseDynamicAttributeField implem
 	private void select(String attribute) {
 		for (DynamicObject dynamicObject : options) {
 			if (StringUtils.equals(attribute, ((DynamicObject)dynamicObject).getName())) {
-				field.setSelectedItem(dynamicObject);
+				field.setValue(dynamicObject);
 			}
 		}
 	}

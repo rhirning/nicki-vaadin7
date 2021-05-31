@@ -24,9 +24,7 @@ package org.mgnl.nicki.vaadin.base.menu.navigation;
 
 import java.util.List;
 
-import com.vaadin.ui.Component;
-
-public interface Navigation extends Component {
+public interface Navigation {
 
 	boolean select(NavigationEntry entry);
 	

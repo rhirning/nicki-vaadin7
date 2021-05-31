@@ -41,11 +41,11 @@ import org.mgnl.nicki.vaadin.base.editor.ShowAllFilter;
 import org.mgnl.nicki.vaadin.base.editor.TreeEditor;
 import org.mgnl.nicki.vaadin.base.menu.application.View;
 
-import com.vaadin.icons.VaadinIcons;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.CustomComponent;
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
-public class TemplateEditorComponent extends CustomComponent implements Serializable, View {
+public class TemplateEditorComponent extends VerticalLayout implements Serializable, View {
 
 	private static final long serialVersionUID = -8245147689512577915L;
 	private NickiApplication nickiApplication;
@@ -65,8 +65,8 @@ public class TemplateEditorComponent extends CustomComponent implements Serializ
 
 		DataProvider<TreeData> dataProvider = new DynamicObjectRoot(getTemplatesRoot(), new ShowAllFilter());
 		TreeEditor editor = new TreeEditor(getNickiApplication(), getNickiApplication().getNickiContext(), dataProvider, getI18nBase());
-		editor.configureClass(Org.class, VaadinIcons.FOLDER_O, TreeEditor.CREATE.ALLOW, TreeEditor.DELETE.ALLOW, TreeEditor.RENAME.ALLOW, Org.class, Template.class );
-		editor.configureClass(Template.class, VaadinIcons.FILE_O, TreeEditor.CREATE.ALLOW, TreeEditor.DELETE.ALLOW, TreeEditor.RENAME.ALLOW);
+		editor.configureClass(Org.class, VaadinIcon.FOLDER_O, TreeEditor.CREATE.ALLOW, TreeEditor.DELETE.ALLOW, TreeEditor.RENAME.ALLOW, Org.class, Template.class );
+		editor.configureClass(Template.class, VaadinIcon.FILE_O, TreeEditor.CREATE.ALLOW, TreeEditor.DELETE.ALLOW, TreeEditor.RENAME.ALLOW);
 		editor.setClassEditor(Template.class, templateViewer);
 		editor.addAction(new PreviewTemplate(getNickiContext(), Template.class, I18n.getText(getI18nBase() + ".action.preview"), getI18nBase()));
 		editor.addAction(new ImportTreeAction(editor, Org.class, I18n.getText(getI18nBase() + ".action.import"), getI18nBase()));
@@ -97,8 +97,9 @@ public class TemplateEditorComponent extends CustomComponent implements Serializ
 	@Override
 	public void init() {
 		if (!isInit) {
-			setCompositionRoot(getEditor());
+			add(getEditor());
 			setSizeFull();
+			setPadding(false);
 			isInit = true;
 		}
 	}

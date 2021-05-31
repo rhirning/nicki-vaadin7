@@ -1,6 +1,8 @@
 
 package org.mgnl.nicki.vaadin.base.menu.navigation;
 
+import java.util.HashMap;
+
 /*-
  * #%L
  * nicki-app-menu
@@ -23,44 +25,77 @@ package org.mgnl.nicki.vaadin.base.menu.navigation;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.mgnl.nicki.vaadin.base.components.NoHeaderGrid;
 import org.mgnl.nicki.vaadin.base.menu.application.MainView;
+import org.mgnl.nicki.vaadin.base.menu.application.TableNavigationMainView;
 
-import com.vaadin.ui.Grid;
-import com.vaadin.ui.Grid.SelectionMode;
-import com.vaadin.ui.Panel;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.Grid.SelectionMode;
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.server.StreamResource;
 
 public class TableNavigation extends NavigationBase implements Navigation {
 	private static final long serialVersionUID = -4231539383235849692L;
-	private VerticalLayout layout;
+	public static final String LOGO_PATH = "logoPpath";
+	public static final String LOGO_HEIGHT = "logoHeight";
+	public static final String LOGO_WIDTH = "logoWidth";
+	public static final String NAVIGATION_WIDTH = "navigationWidth";
 	private Grid<NavigationElement> table;
 	private NavigationEntry selected;
+	private Map<String, String> config = new HashMap<String, String>();
 	
-	public TableNavigation(MainView mainView) {
-		super(mainView);
+	public TableNavigation(NavigationMainView tableNavigationMainView,  Map<String, String> config ) {
+		super(tableNavigationMainView);
+		if (config != null) {
+			this.config.putAll(config);
+		}
 		buildMainLayout();
-		setCompositionRoot(layout);
 		setSizeFull();
 	}
 
-	private VerticalLayout buildMainLayout() {
-		layout = new VerticalLayout();
+	private void buildMainLayout() {
+		VerticalLayout layout = new VerticalLayout();
 		layout.setSizeFull();
-		layout.setSpacing(false);
 		layout.setMargin(false);
+		layout.setSpacing(true);
+		layout.setPadding(false);
+		add(layout);
+
+		VerticalLayout logoLayout = new VerticalLayout();
+		logoLayout.setWidthFull();
+		logoLayout.setMargin(false);
+		logoLayout.setPadding(false);
+		layout.add(logoLayout);
 		
-		Panel panel = new Panel();
-		panel.setHeight("100px");
-		panel.setStyleName("logo");
-		layout.addComponent(panel);
-		panel.addClickListener(event -> restart());
-		
+		if (config.containsKey(LOGO_PATH)) {			
+			StreamResource resource = new StreamResource("logo.png", () -> TableNavigation.class.getResourceAsStream(config.get(LOGO_PATH)));
+			Image image = new Image(resource, "Restart");
+			if (config.containsKey(LOGO_HEIGHT)) {
+				image.setHeight(config.get(LOGO_HEIGHT));
+			}
+			if (config.containsKey(LOGO_WIDTH)) {
+				image.setWidth(config.get(LOGO_WIDTH));
+			}
+			logoLayout.add(image);
+			logoLayout.setAlignItems(Alignment.CENTER);
+			image.addClickListener(event -> restart());
+		} else {
+			Span image = new Span("Restart");
+			image.setHeight(LOGO_HEIGHT);
+			logoLayout.add(image);
+			image.addClickListener(event -> restart());
+		}
 		table = new NoHeaderGrid<>();
 		table.setSelectionMode(SelectionMode.SINGLE);
-		table.addColumn(NavigationElement::getNavigationCaption).setMinimumWidth(250);
-		table.setSizeFull();
+		String width = config.containsKey(NAVIGATION_WIDTH) ? config.get(NAVIGATION_WIDTH) : "-1px";
+		table.addComponentColumn(NavigationElement::getNavigationCaption).setWidth(width);
+		table.setSizeFull();		
 
 		table.addSelectionListener(event -> {
 				if (table.asSingleSelect().getValue() instanceof NavigationEntry) {
@@ -79,7 +114,7 @@ public class TableNavigation extends NavigationBase implements Navigation {
 				}
 		});
 		
-		table.setStyleGenerator(item -> {
+		table.setClassNameGenerator(item -> {
 				if (item instanceof NavigationFolder) {
 					return "folder";
 				}
@@ -93,9 +128,8 @@ public class TableNavigation extends NavigationBase implements Navigation {
 		
 		
 		
-		layout.addComponent(table);
-		layout.setExpandRatio(table, 1.0f);
-		return layout;
+		layout.add(table);
+		layout.setFlexGrow(1, table);
 	}
 	
 

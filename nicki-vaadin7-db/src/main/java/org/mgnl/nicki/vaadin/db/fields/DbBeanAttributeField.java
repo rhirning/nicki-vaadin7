@@ -24,7 +24,8 @@ package org.mgnl.nicki.vaadin.db.fields;
 
 import org.mgnl.nicki.vaadin.db.editor.DbBeanValueChangeListener;
 
-import com.vaadin.ui.Component;
+import com.vaadin.flow.component.Component;
+
 
 public interface DbBeanAttributeField {
 

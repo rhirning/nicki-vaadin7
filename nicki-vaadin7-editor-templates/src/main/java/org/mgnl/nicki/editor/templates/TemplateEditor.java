@@ -31,7 +31,7 @@ import org.mgnl.nicki.vaadin.base.application.AccessGroup;
 import org.mgnl.nicki.vaadin.base.application.NickiApplication;
 import org.mgnl.nicki.vaadin.base.application.ShowWelcomeDialog;
 
-import com.vaadin.ui.Component;
+import com.vaadin.flow.component.Component;
 
 @AccessGroup(name = {"nickiAdmins", "IDM-Development"})
 @ShowWelcomeDialog(

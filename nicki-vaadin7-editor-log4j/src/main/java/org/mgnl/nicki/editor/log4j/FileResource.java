@@ -27,14 +27,12 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.io.FileUtils;
-
-import com.vaadin.server.StreamResource.StreamSource;
+import org.mgnl.nicki.vaadin.base.io.StreamSource;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class FileResource implements StreamSource {
-	private static final long serialVersionUID = -2366308187343189975L;
 
 
 	private File file;

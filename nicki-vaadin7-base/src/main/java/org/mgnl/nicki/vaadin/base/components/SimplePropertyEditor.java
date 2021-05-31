@@ -23,25 +23,19 @@ package org.mgnl.nicki.vaadin.base.components;
 
 import org.mgnl.nicki.vaadin.base.data.DataContainer;
 
-import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.TextField;
+import com.vaadin.flow.component.textfield.TextField;
 
 @SuppressWarnings("serial")
-public class SimplePropertyEditor extends CustomComponent {
+public class SimplePropertyEditor extends TextField {
 
-	private TextField editor;
 	private DataContainer<String> data;
 
 	public SimplePropertyEditor(DataContainer<String> dataContainer) {
 		this.data = dataContainer;
-		// editor
-		editor = new TextField();
-		editor.setWidth("100%");
 		setWidth("100%");
 		
-		setCompositionRoot(editor);
-		editor.setValue(data.getValue()!= null ? data.getValue() : "");
-		editor.addValueChangeListener(event -> data.setValue((String) editor.getValue()));
+		setValue(data.getValue()!= null ? data.getValue() : "");
+		addValueChangeListener(event -> data.setValue((String) getValue()));
 	}
 
 }

@@ -33,7 +33,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.vaadin.server.VaadinServlet;
+import com.vaadin.flow.server.VaadinServlet;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -24,16 +24,18 @@ package org.mgnl.nicki.vaadin.base.listener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.mgnl.nicki.core.objects.DynamicObject;
 
-import com.vaadin.data.HasValue.ValueChangeListener;
-import com.vaadin.ui.AbstractComponentContainer;
-import com.vaadin.ui.AbstractField;
-import com.vaadin.ui.Component;
+import com.vaadin.flow.component.AbstractField;
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.HasValue;
+import com.vaadin.flow.component.HasValue.ValueChangeEvent;
+import com.vaadin.flow.component.HasValue.ValueChangeListener;
 
 @SuppressWarnings("serial")
-public abstract class BaseAttributeListener<T> implements ValueChangeListener<T> {
+public abstract class BaseAttributeListener<T> implements ValueChangeListener<ValueChangeEvent<T>> {
 
 	private DynamicObject dynamicObject;
 	private String name;
@@ -42,18 +44,18 @@ public abstract class BaseAttributeListener<T> implements ValueChangeListener<T>
 		this.setName(name);
 	}
 
-	public List<T> collectValues(AbstractComponentContainer cont) {
+	public List<T> collectValues(Component cont) {
 		List<T> list = new ArrayList<T>();
-		for (Component component : cont) {
+		for (Component component : cont.getChildren().collect(Collectors.toList())) {
 			if (component instanceof AbstractField) {
 				@SuppressWarnings("unchecked")
-				T value = ((AbstractField<T>) component).getValue();
+				T value = ((HasValue<ValueChangeEvent<T>, T>) component).getValue();
 				if (value != null) {
 					list.add(value);
 				}
 			}
-			if (component instanceof AbstractComponentContainer) {
-				list.addAll(collectValues((AbstractComponentContainer) component));
+			if (component.getChildren().count() > 0) {
+				component.getChildren().forEach(c -> list.addAll(collectValues(c)));
 			}
 		}
 		return list;

@@ -25,7 +25,8 @@ package org.mgnl.nicki.vaadin.base.search;
 import java.util.Map;
 
 import org.mgnl.nicki.core.objects.DynamicAttribute;
-import com.vaadin.ui.Component;
+
+import com.vaadin.flow.component.Component;
 
 public interface DynamicAttributeSearchField<T> {
 

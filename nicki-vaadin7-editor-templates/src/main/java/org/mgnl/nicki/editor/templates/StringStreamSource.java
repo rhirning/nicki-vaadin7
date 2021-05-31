@@ -28,17 +28,15 @@ import java.util.Map;
 import org.mgnl.nicki.dynamic.objects.objects.Template;
 import org.mgnl.nicki.core.context.NickiContext;
 import org.mgnl.nicki.template.engine.BasicTemplateStreamSource;
-
-import com.vaadin.server.StreamResource.StreamSource;
-
+import org.mgnl.nicki.vaadin.base.io.StreamSource;
 
 public class StringStreamSource extends BasicTemplateStreamSource implements StreamSource {
-	private static final long serialVersionUID = 4222973194514516918L;
 	
 	public StringStreamSource(Template template, NickiContext context, Map<String, Object> params) {
 		super(template, context, params, TYPE.STRING);
 	}
 
+	@Override
 	public InputStream getStream() {
 		return getStringStream();
 	}

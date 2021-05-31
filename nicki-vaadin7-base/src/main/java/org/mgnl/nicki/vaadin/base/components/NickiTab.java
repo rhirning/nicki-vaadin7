@@ -1,6 +1,9 @@
 
 package org.mgnl.nicki.vaadin.base.components;
 
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.tabs.Tab;
+
 /*-
  * #%L
  * nicki-vaadin-base
@@ -22,7 +25,15 @@ package org.mgnl.nicki.vaadin.base.components;
  */
 
 
-public interface NickiTab {
+@SuppressWarnings("serial")
+public class NickiTab extends Tab {
 
-	void init();
+	public NickiTab(String label, Component... components) {
+		super(components);
+		setLabel(label);
+	}
+
+	void init( ) {
+		
+	}
 }

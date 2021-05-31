@@ -23,27 +23,21 @@ package org.mgnl.nicki.vaadin.base.components;
 
 import org.mgnl.nicki.vaadin.base.data.DataContainer;
 
-import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.TextArea;
+import com.vaadin.flow.component.textfield.TextArea;
 
 @SuppressWarnings("serial")
-public class SimpleEditor extends CustomComponent {
+public class SimpleEditor extends TextArea {
 
-	private TextArea editor;
 	private DataContainer<String> data;
 
 	public SimpleEditor(DataContainer<String> dataContainer) {
 		this.data = dataContainer;
-		// editor
-		editor = new TextArea();
-		editor.setSizeFull();
 		setSizeFull();
 		
-		setCompositionRoot(editor);
 		if (data.getValue() != null) {
-			editor.setValue((String) data.getValue());
+			setValue((String) data.getValue());
 		}
-		editor.addValueChangeListener(event -> data.setValue((String) editor.getValue()));
+		addValueChangeListener(event -> data.setValue((String) getValue()));
 	}
 
 }

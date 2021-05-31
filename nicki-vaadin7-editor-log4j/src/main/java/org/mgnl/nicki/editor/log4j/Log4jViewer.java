@@ -31,18 +31,15 @@ import org.apache.logging.log4j.core.LoggerContext;
 import org.mgnl.nicki.vaadin.base.application.NickiApplication;
 import org.mgnl.nicki.vaadin.base.menu.application.View;
 
-
-import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.Grid;
-import com.vaadin.ui.Panel;
-import com.vaadin.ui.renderers.ComponentRenderer;
+import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.data.renderer.ComponentRenderer;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class Log4jViewer extends CustomComponent implements View {
+public class Log4jViewer extends VerticalLayout implements View {
 	private static final long serialVersionUID = 6677098857979852467L;
-	private Panel canvas;
 	private Grid<LogLevel> table;
 	private NickiApplication application;
 	private boolean isInit;
@@ -85,14 +82,12 @@ public class Log4jViewer extends CustomComponent implements View {
 	@Override
 	public void init() {
 		if (!isInit) {
-			canvas = new Panel();
-			canvas.setSizeFull();
+			setSizeFull();
 			table = new Grid<>();
 			table.setSizeFull();
-			canvas.setContent(table);
-			table.addColumn(LogLevel::getName).setCaption("Name");
-			table.addColumn(LogLevel::getComboBox, new ComponentRenderer()).setCaption("Loglevel");
-			setCompositionRoot(canvas);
+			add(table);
+			table.addColumn(LogLevel::getName).setHeader("Name");
+			table.addComponentColumn(LogLevel::getComboBox).setHeader("Loglevel");
 			setSizeFull();
 			isInit = true;
 		}

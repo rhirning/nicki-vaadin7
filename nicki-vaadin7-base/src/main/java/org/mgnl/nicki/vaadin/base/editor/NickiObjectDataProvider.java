@@ -1,5 +1,25 @@
 package org.mgnl.nicki.vaadin.base.editor;
 
+/*-
+ * #%L
+ * nicki-vaadin7-base
+ * %%
+ * Copyright (C) 2020 - 2021 Ralf Hirning
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
@@ -13,10 +33,11 @@ import org.mgnl.nicki.core.context.NickiContext;
 import org.mgnl.nicki.vaadin.base.data.ChildObjectWrapper;
 import org.mgnl.nicki.vaadin.base.data.ObjectWrapper;
 
-import com.vaadin.data.provider.DataProvider;
-import com.vaadin.data.provider.HierarchicalQuery;
-import com.vaadin.data.provider.TreeDataProvider;
-import com.vaadin.server.SerializablePredicate;
+import com.vaadin.flow.data.provider.DataProvider;
+import com.vaadin.flow.data.provider.hierarchy.HierarchicalQuery;
+import com.vaadin.flow.data.provider.hierarchy.TreeData;
+import com.vaadin.flow.data.provider.hierarchy.TreeDataProvider;
+import com.vaadin.flow.function.SerializablePredicate;
 
 @SuppressWarnings("serial")
 public class NickiObjectDataProvider extends TreeDataProvider<ObjectWrapper>
@@ -25,7 +46,7 @@ public class NickiObjectDataProvider extends TreeDataProvider<ObjectWrapper>
 	private org.mgnl.nicki.core.data.DataProvider<ObjectWrapper> treeDataProvider;
 
 	public NickiObjectDataProvider(NickiContext context, org.mgnl.nicki.core.data.DataProvider<ObjectWrapper> treeDataProvider) {
-		super(new com.vaadin.data.TreeData<ObjectWrapper>());
+		super(new TreeData<ObjectWrapper>());
 		this.context = context;
 		this.treeDataProvider = treeDataProvider;
 	}

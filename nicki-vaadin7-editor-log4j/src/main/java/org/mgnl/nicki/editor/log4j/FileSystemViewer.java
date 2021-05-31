@@ -36,19 +36,22 @@ import org.mgnl.nicki.vaadin.base.editor.ShowAllFilter;
 import org.mgnl.nicki.vaadin.base.editor.TreeEditor;
 import org.mgnl.nicki.vaadin.base.menu.application.View;
 
-import com.vaadin.icons.VaadinIcons;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.CustomComponent;
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 @SuppressWarnings("serial")
 @ShowWelcomeDialog(
 		configKey="nicki.app.viewer.filesystem.useWelcomeDialog",
 		groupsConfigName="nicki.app.viewer.filesystem.useWelcomeDialogGroups")
-public class FileSystemViewer extends CustomComponent implements Serializable, View {
+public class FileSystemViewer extends VerticalLayout implements Serializable, View {
 	private NickiApplication nickiApplication;
 	private boolean isInit;
 	
 	public FileSystemViewer() {
+		setSizeFull();
+		setMargin(false);
+		setSpacing(false);
 	}
 	
 	public FileSystemViewer(NickiApplication nickiApplication) {
@@ -61,7 +64,7 @@ public class FileSystemViewer extends CustomComponent implements Serializable, V
 
 		DataProvider<TreeData> treeDataProvider = new FileSystemRoot(root, new ShowAllFilter());
 		TreeEditor editor = new TreeEditor(getNickiApplication(), getNickiContext(), treeDataProvider, getI18nBase());
-		editor.configureClass(FileEntry.class, VaadinIcons.FOLDER_O, TreeEditor.CREATE.ALLOW, TreeEditor.DELETE.ALLOW, TreeEditor.RENAME.ALLOW, FileEntry.class);
+		editor.configureClass(FileEntry.class, VaadinIcon.FOLDER_O, TreeEditor.CREATE.ALLOW, TreeEditor.DELETE.ALLOW, TreeEditor.RENAME.ALLOW, FileEntry.class);
 		DirectoryEditor directoryEditor = new DirectoryEditor(); 
 		editor.setClassEditor(FileEntry.class, directoryEditor);
 //		editor.addAction(new ImportTreeAction(editor, Org.class, I18n.getText(getI18nBase() + ".action.import"), getI18nBase()));
@@ -87,7 +90,7 @@ public class FileSystemViewer extends CustomComponent implements Serializable, V
 	@Override
 	public void init() {
 		if (!isInit) {
-			setCompositionRoot(getEditor());
+			add(getEditor());
 			setSizeFull();
 			isInit = true;
 		}

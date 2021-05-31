@@ -23,7 +23,8 @@ package org.mgnl.nicki.report;
 
 
 import org.mgnl.nicki.editor.templates.TemplateEditor;
-import com.vaadin.ui.Component;
+
+import com.vaadin.flow.component.Component;
 
 import lombok.Getter;
 import lombok.Setter;

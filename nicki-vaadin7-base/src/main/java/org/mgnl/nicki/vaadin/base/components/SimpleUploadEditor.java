@@ -27,100 +27,74 @@ import java.io.OutputStream;
 
 import org.mgnl.nicki.core.i18n.I18n;
 import org.mgnl.nicki.core.objects.DynamicObject;
-import org.mgnl.nicki.vaadin.base.editor.LinkResource;
 import org.mgnl.nicki.vaadin.base.editor.PropertyStreamSource;
+import org.mgnl.nicki.vaadin.base.notification.Notification;
+import org.mgnl.nicki.vaadin.base.notification.Notification.Type;
 
-import com.vaadin.server.StreamResource.StreamSource;
-import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Link;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.Upload;
-import com.vaadin.ui.Notification.Type;
-import com.vaadin.ui.Upload.FailedEvent;
-import com.vaadin.ui.Upload.FailedListener;
-import com.vaadin.ui.Upload.Receiver;
-import com.vaadin.ui.Upload.SucceededEvent;
-import com.vaadin.ui.Upload.SucceededListener;
+import com.vaadin.flow.component.html.Anchor;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.upload.Receiver;
+import com.vaadin.flow.component.upload.Upload;
+import com.vaadin.flow.server.StreamResource;
 
 @SuppressWarnings("serial")
-public class SimpleUploadEditor extends CustomComponent implements Receiver, SucceededListener, FailedListener {
+public class SimpleUploadEditor extends HorizontalLayout implements Receiver {
 
-	private HorizontalLayout fileLayout;
-	private Link link;
+	private Anchor link;
 	private Upload upload;
 	private ByteArrayOutputStream bos = new ByteArrayOutputStream();
 	private DynamicObject dynamicObject;
 	private String attributeName;
-	private String i18nBase;
 
 
 	public SimpleUploadEditor(String i18nBase, DynamicObject dynamicObject, String attributeName, String filename, String mimeType) {
-		this.i18nBase = i18nBase;
 		this.dynamicObject = dynamicObject;
 		this.attributeName = attributeName;
 		// editor
-		HorizontalLayout layout = buildFileLayout();
+		buildFileLayout();
 
 		if (dynamicObject.get(attributeName) == null) {
 			link.setVisible(false);
 		}
 		// "Download"
 		
-		link.setCaption(I18n.getText(i18nBase + ".link.caption"));
-		link.setTargetName("_blank");
-		StreamSource streamSource = new PropertyStreamSource(this.dynamicObject, this.attributeName);
-		link.setResource(new LinkResource(streamSource, filename, mimeType));
+		link.setText(I18n.getText(i18nBase + ".link.caption"));
+		link.setTarget("_blank");
+		StreamResource streamResource = new PropertyStreamSource(this.dynamicObject, this.attributeName, filename);
+		link.setHref(streamResource);
 
 		// upload.setButtonCaption(I18n.getText(i18nBase + ".upload.caption"));
 		upload.setReceiver(this);
-		upload.addSucceededListener(this);
-		upload.addFailedListener(this);
-		
-		setCompositionRoot(layout);
+		upload.addSucceededListener(event -> {
+			dynamicObject.put(attributeName, bos.toByteArray());
+			// "File erfolgreich hochgeladen: " + bos.size() + " Bytes. Bitte Speichern"
+			Notification.show(I18n.getText(i18nBase + ".upload.success", "" + bos.size()));
+			link.setEnabled(true);
+		});
+		upload.addFailedListener(event -> {
+			Notification.show(I18n.getText(i18nBase + ".upload.fail"), Type.ERROR_MESSAGE);
+		});
 	}
 	
 
-	private HorizontalLayout buildFileLayout() {
-		// common part: create layout
-		fileLayout = new HorizontalLayout();
-		fileLayout.setWidth("-1px");
-		fileLayout.setHeight("-1px");
-		fileLayout.setMargin(true);
-		fileLayout.setSpacing(true);
+	private void buildFileLayout() {
+		setWidth("-1px");
+		setHeight("-1px");
+		setMargin(true);
+		setSpacing(true);
 		
 		// link
-		link = new Link();
-		link.setCaption("Link");
+		link = new Anchor();
 		link.setWidth("-1px");
 		link.setHeight("-1px");
-		fileLayout.addComponent(link);
+		add(link);
 		
 		// upload_1
 		upload = new Upload();
 		upload.setWidth("-1px");
 		upload.setHeight("-1px");
-		fileLayout.addComponent(upload);
-		
-		return fileLayout;
+		add(upload);
 	}
-
-
-	@Override
-	public void uploadFailed(FailedEvent event) {
-		// "Fehler beim Hochladendes Files"
-		Notification.show(I18n.getText(i18nBase + ".upload.fail"), Type.ERROR_MESSAGE);
-	}
-
-
-	@Override
-	public void uploadSucceeded(SucceededEvent event) {
-		dynamicObject.put(attributeName, bos.toByteArray());
-		// "File erfolgreich hochgeladen: " + bos.size() + " Bytes. Bitte Speichern"
-		Notification.show(I18n.getText(i18nBase + ".upload.success", "" + bos.size()));
-		link.setEnabled(true);
-	}
-
 
 	@Override
 	public OutputStream receiveUpload(String filename, String mimeType) {

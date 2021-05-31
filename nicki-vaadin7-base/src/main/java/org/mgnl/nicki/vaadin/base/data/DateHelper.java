@@ -1,11 +1,7 @@
 
 package org.mgnl.nicki.vaadin.base.data;
 
-import java.text.SimpleDateFormat;
-
-import org.mgnl.nicki.core.helper.DataHelper;
-
-import com.vaadin.shared.ui.datefield.DateResolution;
+import com.vaadin.flow.component.datepicker.DatePicker;
 
 /*-
  * #%L
@@ -28,17 +24,20 @@ import com.vaadin.shared.ui.datefield.DateResolution;
  */
 
 
-import com.vaadin.ui.DateField;
-import com.vaadin.ui.renderers.DateRenderer;
-
 public class DateHelper {
-	public static DateRenderer getDisplayDateRenderer () {
+
+	public static void init(DatePicker field) {
+		// TODO Auto-generated method stub
+		
+	}
+	/*
+	public static LocalDateRenderer<SOURCE> getDisplayDateRenderer () {
 		return new DateRenderer(new SimpleDateFormat(DataHelper.FORMAT_DISPLAY_DAY));
 	}
 
-	public static void init(DateField field) {
-		field.setResolution(DateResolution.DAY);
-		field.setDateFormat("dd.MM.yyyy");
+	public static void init(DatePicker field) {
+		//field.setResolution(DateResolution.DAY);
+		//field.setDateFormat("dd.MM.yyyy");
 	}
-
+*/
 }

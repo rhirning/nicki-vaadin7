@@ -1,6 +1,13 @@
 
 package org.mgnl.nicki.vaadin.base.listener;
 
+import com.vaadin.flow.component.AbstractField.ComponentValueChangeEvent;
+import com.vaadin.flow.component.ClickEvent;
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.HasOrderedComponents;
+import com.vaadin.flow.component.HasValue.ValueChangeListener;
+import com.vaadin.flow.component.textfield.TextField;
+
 /*-
  * #%L
  * nicki-vaadin-base
@@ -21,20 +28,12 @@ package org.mgnl.nicki.vaadin.base.listener;
  * #L%
  */
 
-
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
-
-
-import com.vaadin.ui.AbstractComponentContainer;
-import com.vaadin.ui.TextField;
-
 @SuppressWarnings("serial")
-public class AddAttributeListener implements ClickListener {
-	private AbstractComponentContainer container;
+public class AddAttributeListener {
+	private HasOrderedComponents<Component> container;
 	ListAttributeListener listener;
 
-	public AddAttributeListener(AbstractComponentContainer container, ListAttributeListener listener) {
+	public AddAttributeListener(HasOrderedComponents<Component> container, ListAttributeListener listener) {
 		this.container = container;
 		this.listener = listener;
 	}
@@ -42,8 +41,8 @@ public class AddAttributeListener implements ClickListener {
 	public void buttonClick(ClickEvent event) {
 		String value = "";
 		TextField input = new TextField(null, value);
-		input.addValueChangeListener(listener);
-		container.addComponent(input);
+		input.addValueChangeListener((ValueChangeListener<? super ComponentValueChangeEvent<TextField, String>>) listener);
+		container.add(input);
 	}
 
 }

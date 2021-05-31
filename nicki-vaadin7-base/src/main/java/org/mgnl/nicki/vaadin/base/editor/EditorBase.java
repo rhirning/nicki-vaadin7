@@ -26,11 +26,10 @@ import java.io.Serializable;
 
 import org.mgnl.nicki.core.context.NickiContext;
 
-
-import com.vaadin.ui.CustomComponent;
+import com.vaadin.flow.component.Component;
 
 @SuppressWarnings("serial")
-public abstract class EditorBase extends CustomComponent implements Serializable {
+public abstract class EditorBase extends Component implements Serializable {
 	public EditorBase(NickiContext context) {
 		super();
 		this.context = context;

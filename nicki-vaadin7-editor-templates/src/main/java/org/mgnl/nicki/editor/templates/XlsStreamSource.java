@@ -28,12 +28,10 @@ import java.util.Map;
 import org.mgnl.nicki.dynamic.objects.objects.Template;
 import org.mgnl.nicki.core.context.NickiContext;
 import org.mgnl.nicki.template.engine.BasicTemplateStreamSource;
-
-import com.vaadin.server.StreamResource.StreamSource;
+import org.mgnl.nicki.vaadin.base.io.StreamSource;
 
 @Deprecated
 public class XlsStreamSource extends BasicTemplateStreamSource implements StreamSource {
-	private static final long serialVersionUID = 4222973194514516918L;
 	public XlsStreamSource(Template template, NickiContext context, Map<String, Object> params) {
 		super(template, context, params, TYPE.XLS);
 	}

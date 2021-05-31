@@ -24,7 +24,7 @@ package org.mgnl.nicki.vaadin.db.editor;
 
 import java.util.List;
 
-import com.vaadin.ui.Component;
+import com.vaadin.flow.component.Component;
 
 public interface DbBeanValueChangeListener {
 

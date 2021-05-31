@@ -25,7 +25,8 @@ package org.mgnl.nicki.vaadin.base.fields;
 import org.mgnl.nicki.core.objects.DynamicObject;
 import org.mgnl.nicki.vaadin.base.editor.DynamicObjectValueChangeListener;
 
-import com.vaadin.ui.Component;
+import com.vaadin.flow.component.Component;
+
 
 public interface DynamicAttributeField<T> {
 

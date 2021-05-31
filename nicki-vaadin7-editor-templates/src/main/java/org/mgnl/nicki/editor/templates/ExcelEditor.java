@@ -27,21 +27,15 @@ import org.mgnl.nicki.vaadin.base.components.SimpleEditor;
 import org.mgnl.nicki.vaadin.base.components.SimpleUploadEditor;
 import org.mgnl.nicki.vaadin.base.data.PartDataContainer;
 
-import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
-public class ExcelEditor extends CustomComponent {
+public class ExcelEditor extends VerticalLayout {
 	private static final long serialVersionUID = -4999034916650372313L;
 
 	public ExcelEditor(String messageBase, Template template) {
-		// common part: create layout
-		VerticalLayout mainLayout = new VerticalLayout();
-		mainLayout.setWidth("100%");
-		mainLayout.setHeight("100%");
-		mainLayout.setMargin(false);
-		// top-level component properties
-		setWidth("100.0%");
-		setHeight("100.0%");
+		setWidth("100%");
+		setHeight("100%");
+		setMargin(false);
 		
 		SimpleUploadEditor simpleUploadEditor = new SimpleUploadEditor(messageBase,
 				template, Template.ATTRIBUTE_FILE,
@@ -49,13 +43,12 @@ public class ExcelEditor extends CustomComponent {
 //		SimpleUploadEditor simpleUploadEditor = new SimpleUploadEditor(
 //				new AttributeDataContainer<byte[]>(template, Template.ATTRIBUTE_FILE),
 //			"ExcelMaster.xls", "application/msexcel");
-		mainLayout.addComponent(simpleUploadEditor);
+		add(simpleUploadEditor);
 
 		SimpleEditor simpleEditor = new SimpleEditor(new PartDataContainer(
 				template, Template.ATTRIBUTE_PARTS, "xls", "="));
-		mainLayout.addComponent(simpleEditor);
-		mainLayout.setExpandRatio(simpleEditor, 1);
-		setCompositionRoot(mainLayout);
+		add(simpleEditor);
+		setFlexGrow(1, simpleEditor);
 	}
 
 }

@@ -28,23 +28,25 @@ import org.mgnl.nicki.core.objects.DynamicObject;
 import org.mgnl.nicki.vaadin.base.data.DataContainer;
 import org.mgnl.nicki.vaadin.base.editor.DynamicObjectValueChangeListener;
 
-import com.vaadin.data.HasValue.ValueChangeEvent;
-import com.vaadin.data.HasValue.ValueChangeListener;
-import com.vaadin.ui.AbstractComponentContainer;
+import com.vaadin.flow.component.AbstractField.ComponentValueChangeEvent;
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.HasValue.ValueChangeEvent;
+import com.vaadin.flow.component.HasValue.ValueChangeListener;
+import com.vaadin.flow.component.textfield.TextField;
 
 @SuppressWarnings("serial")
-public class ListAttributeListener extends BaseAttributeListener<String> implements ValueChangeListener<String> {
+public class ListAttributeListener extends BaseAttributeListener<String> implements ValueChangeListener<ValueChangeEvent<String>> {
 
 	private DataContainer<List<String>> property;
-	private AbstractComponentContainer container;
+	private Component container;
 	private DynamicObjectValueChangeListener<String> objectListener;
 	
-	private ListAttributeListener(AbstractComponentContainer container,
+	private ListAttributeListener(Component container,
 			DynamicObject dynamicObject, String name) {
 		super(dynamicObject, name);
 		this.container = container;
 	}
-	public void valueChange(ValueChangeEvent<String> event) {
+	public void valueChanged(ValueChangeEvent<String> event) {
 		List<String> values = collectValues(this.container);
 		property.setValue(values);
 		if (values.size() > 0) {
@@ -61,7 +63,7 @@ public class ListAttributeListener extends BaseAttributeListener<String> impleme
 		
 	}
 	public ListAttributeListener(DynamicObject dynamicObject, String attributeName,
-			DataContainer<List<String>> property, AbstractComponentContainer container, DynamicObjectValueChangeListener<String> objectListener) {
+			DataContainer<List<String>> property, Component container, DynamicObjectValueChangeListener<String> objectListener) {
 		super(dynamicObject, attributeName);
 		this.property = property;
 		this.container = container;

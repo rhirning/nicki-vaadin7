@@ -26,9 +26,10 @@ import java.util.Collection;
 
 import org.mgnl.nicki.vaadin.base.components.NoHeaderTreeGrid;
 
-import com.vaadin.event.ExpandEvent.ExpandListener;
-import com.vaadin.ui.Grid.SelectionMode;
-import com.vaadin.ui.TreeGrid;
+import com.vaadin.flow.component.ComponentEventListener;
+import com.vaadin.flow.component.grid.Grid.SelectionMode;
+import com.vaadin.flow.component.treegrid.ExpandEvent;
+import com.vaadin.flow.component.treegrid.TreeGrid;
 
 @SuppressWarnings("serial")
 public class TreeSelector<T> extends BasicNickiSelector<T> implements NickiSelect<T> {
@@ -42,14 +43,13 @@ public class TreeSelector<T> extends BasicNickiSelector<T> implements NickiSelec
 		component.setSelectionMode(SelectionMode.SINGLE);
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public void expandItems(T... object) {
+
+	public void expandItems(@SuppressWarnings("unchecked") T... object) {
 		component.expand(object);
 	}
 
 	@Override
-	public void addExpandListener(ExpandListener<T> listener) {
+	public void addExpandListener(ComponentEventListener<ExpandEvent<T, TreeGrid<T>>> listener) {
 		component.addExpandListener(listener);
 	}
 
@@ -59,13 +59,14 @@ public class TreeSelector<T> extends BasicNickiSelector<T> implements NickiSelec
 	}
 
 //	@Override
-//	public void collapseItemsRecursively(TreeData startItemId) {
+@SuppressWarnings("unchecked")
+	//	public void collapseItemsRecursively(TreeData startItemId) {
 //		component.collapse(startItemId);
 //	}
 //
-//	@Override
-//	public void expandItemsRecursively(TreeData object) {
-//		component.expand(object);
-//	}
+	@Override
+	public void expandItemsRecursively(T object) {
+		component.expand(object);
+	}
 
 }

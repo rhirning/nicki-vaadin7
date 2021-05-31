@@ -41,12 +41,12 @@ import org.mgnl.nicki.vaadin.base.editor.ShowAllFilter;
 import org.mgnl.nicki.vaadin.base.editor.TreeEditor;
 import org.mgnl.nicki.vaadin.base.menu.application.View;
 
-import com.vaadin.icons.VaadinIcons;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.CustomComponent;
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 @SuppressWarnings("serial")
-public class ScriptEditorComponent extends CustomComponent implements Serializable, View {
+public class ScriptEditorComponent extends VerticalLayout implements Serializable, View {
 	private NickiApplication nickiApplication;
 	private boolean isInit;
 	
@@ -64,8 +64,8 @@ public class ScriptEditorComponent extends CustomComponent implements Serializab
 
 		DataProvider<TreeData> treeDataProvider = new DynamicObjectRoot(Config.getString("nicki.scripts.basedn"), new ShowAllFilter());
 		TreeEditor editor = new TreeEditor(getNickiApplication(), getNickiContext(), treeDataProvider, getI18nBase());
-		editor.configureClass(Org.class, VaadinIcons.FOLDER_O, TreeEditor.CREATE.ALLOW, TreeEditor.DELETE.ALLOW, TreeEditor.RENAME.ALLOW, Org.class, Script.class );
-		editor.configureClass(Script.class, VaadinIcons.FILE_O, TreeEditor.CREATE.ALLOW, TreeEditor.DELETE.ALLOW, TreeEditor.RENAME.ALLOW);
+		editor.configureClass(Org.class, VaadinIcon.FOLDER_O, TreeEditor.CREATE.ALLOW, TreeEditor.DELETE.ALLOW, TreeEditor.RENAME.ALLOW, Org.class, Script.class );
+		editor.configureClass(Script.class, VaadinIcon.FILE_O, TreeEditor.CREATE.ALLOW, TreeEditor.DELETE.ALLOW, TreeEditor.RENAME.ALLOW);
 		editor.setClassEditor(Script.class, scriptViewer);
 		editor.addAction(new ImportTreeAction(editor, Org.class, I18n.getText(getI18nBase() + ".action.import"), getI18nBase()));
 		editor.addAction(new ExportTreeAction(getNickiContext(), Org.class, I18n.getText(getI18nBase() + ".action.export"), getI18nBase()));
@@ -90,7 +90,7 @@ public class ScriptEditorComponent extends CustomComponent implements Serializab
 	@Override
 	public void init() {
 		if (!isInit) {
-			setCompositionRoot(getEditor());
+			add(getEditor());
 			setSizeFull();
 			isInit = true;
 		}

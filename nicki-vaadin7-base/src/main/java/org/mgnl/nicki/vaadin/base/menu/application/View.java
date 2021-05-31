@@ -24,9 +24,8 @@ import org.mgnl.nicki.vaadin.base.application.NickiApplication;
  */
 
 
-import com.vaadin.ui.Component;
 
-public interface View extends Component{
+public interface View {
 
 	void init();
 

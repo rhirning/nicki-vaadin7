@@ -33,8 +33,8 @@ import org.mgnl.nicki.core.objects.DynamicAttribute;
 import org.mgnl.nicki.core.objects.DynamicObject;
 import org.mgnl.nicki.core.util.Classes;
 
-import com.vaadin.ui.AbstractLayout;
-import com.vaadin.ui.Component;
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.formlayout.FormLayout;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -70,11 +70,11 @@ public class DynamicObjectSearchFieldFactory<T extends DynamicObject> implements
 	}
 	
 	
-	public void addFields(AbstractLayout layout, Class<T> clazz) throws InstantiateDynamicObjectException {
+	public void addFields(FormLayout layout, Class<T> clazz) throws InstantiateDynamicObjectException {
 		DataModel model = context.getDataModel(clazz);
 		for (DynamicAttribute dynAttribute : model.getAttributes().values()) {
 			if (dynAttribute.isSearchable()) {
-				layout.addComponent(createField(dynAttribute));
+				layout.add(createField(dynAttribute));
 			}
 		}
 	}

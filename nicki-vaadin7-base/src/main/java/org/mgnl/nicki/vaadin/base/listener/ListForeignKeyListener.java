@@ -28,20 +28,20 @@ import java.util.List;
 
 import org.mgnl.nicki.core.objects.DynamicObject;
 
-import com.vaadin.data.HasValue.ValueChangeEvent;
-import com.vaadin.data.HasValue.ValueChangeListener;
-import com.vaadin.ui.AbstractComponentContainer;
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.HasValue.ValueChangeEvent;
+import com.vaadin.flow.component.HasValue.ValueChangeListener;
 
 @SuppressWarnings("serial")
-public class ListForeignKeyListener extends BaseAttributeListener<DynamicObject> implements ValueChangeListener<DynamicObject> {
+public class ListForeignKeyListener extends BaseAttributeListener<DynamicObject> implements ValueChangeListener<ValueChangeEvent<DynamicObject>> {
 
-	private AbstractComponentContainer container;
-	public ListForeignKeyListener(AbstractComponentContainer container,
+	private Component container;
+	public ListForeignKeyListener(Component container,
 			DynamicObject dynamicObject, String name) {
 		super(dynamicObject, name);
 		this.container = container;
 	}
-	public void valueChange(ValueChangeEvent<DynamicObject> event) {
+	public void valueChanged(ValueChangeEvent<DynamicObject> event) {
 		List<DynamicObject> values = collectValues(this.container);
 		if (values.size() > 0) {
 			List<String> dns = new ArrayList<String>();

@@ -26,11 +26,12 @@ import java.io.Serializable;
 import java.util.Collection;
 import org.mgnl.nicki.core.data.TreeData;
 
-import com.vaadin.data.ValueProvider;
-import com.vaadin.event.ExpandEvent.ExpandListener;
-import com.vaadin.event.selection.SelectionListener;
-import com.vaadin.server.ThemeResource;
-import com.vaadin.ui.Grid;
+import com.vaadin.flow.component.ComponentEventListener;
+import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.treegrid.ExpandEvent;
+import com.vaadin.flow.component.treegrid.TreeGrid;
+import com.vaadin.flow.data.selection.SelectionListener;
+import com.vaadin.flow.function.ValueProvider;
 
 public interface NickiSelect<T> extends Serializable {
 
@@ -44,22 +45,18 @@ public interface NickiSelect<T> extends Serializable {
 
 	T getValue();
 
-	void addSelectionListener(SelectionListener<T> listener);
+	void addSelectionListener(SelectionListener<Grid<T>, T> listener);
 
 	void removeItem(T target);
 
 	void unselect(T object);
 
-	@SuppressWarnings("unchecked")
-	void expandItems(T... object);
-
-	void addExpandListener(ExpandListener<T> listener);
-
 	void setItems(Collection<T>items);
 
 	void setCaption(ValueProvider<T, String> valueProvider);
 
-	void setIcon(ValueProvider<T, ThemeResource> valueProvider);
+	// TODO: setIcon
+//	void setIcon(ValueProvider<T, ThemeResource> valueProvider);
 
 	Collection<T> rootItemIds();
 
@@ -68,6 +65,10 @@ public interface NickiSelect<T> extends Serializable {
 	void collapseItemsRecursively(TreeData startItemId);
 
 	void setComponent(Grid<T> component);
+
+	void addExpandListener(ComponentEventListener<ExpandEvent<T, TreeGrid<T>>> listener);
+
+	void expandItems(@SuppressWarnings("unchecked") T... object);
 
 
 }

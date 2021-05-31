@@ -26,12 +26,10 @@ import java.util.Collection;
 
 import org.mgnl.nicki.core.data.TreeData;
 
-import com.vaadin.data.ValueProvider;
-import com.vaadin.event.ExpandEvent.ExpandListener;
-import com.vaadin.event.selection.SelectionListener;
-import com.vaadin.server.ThemeResource;
-import com.vaadin.ui.Grid;
-import com.vaadin.ui.Grid.SelectionMode;
+import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.Grid.SelectionMode;
+import com.vaadin.flow.data.selection.SelectionListener;
+import com.vaadin.flow.function.ValueProvider;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -61,24 +59,13 @@ public abstract class BasicNickiSelector<T> implements NickiSelect<T> {
 	}
 
 	@Override
-	public void addSelectionListener(SelectionListener<T> listener) {
+	public void addSelectionListener(SelectionListener<Grid<T>, T> listener) {
 		component.addSelectionListener(listener);
 	}
 
 	@Override
 	public void unselect(T object) {
 		component.deselect(object);
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public void expandItems(T... object) {
-		log.debug("not implemented");
-	}
-
-	@Override
-	public void addExpandListener(ExpandListener<T> listener) {
-		log.debug("not implemented");
 	}
 
 	@Override
@@ -88,7 +75,7 @@ public abstract class BasicNickiSelector<T> implements NickiSelect<T> {
 	}
 
 	@Override
-	public void expandItemsRecursively(Object id) {
+	public void expandItemsRecursively(T id) {
 		log.debug("not implemented");
 	}
 
@@ -120,12 +107,6 @@ public abstract class BasicNickiSelector<T> implements NickiSelect<T> {
 	@Override
 	public void setCaption(ValueProvider<T, String> valueProvider) {
 		component.addColumn(valueProvider);
-	}
-
-	@Override
-	public void setIcon(ValueProvider<T, ThemeResource> valueProvider) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

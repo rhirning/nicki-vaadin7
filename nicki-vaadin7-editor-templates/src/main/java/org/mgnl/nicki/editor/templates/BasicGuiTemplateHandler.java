@@ -29,7 +29,8 @@ import org.mgnl.nicki.dynamic.objects.objects.Template;
 import org.mgnl.nicki.template.engine.BasicTemplateHandler;
 import org.mgnl.nicki.template.engine.TemplateParameter;
 
-import com.vaadin.ui.Component;
+import com.vaadin.flow.component.Component;
+
 
 public class BasicGuiTemplateHandler extends BasicTemplateHandler implements
 		GuiTemplateHandler {

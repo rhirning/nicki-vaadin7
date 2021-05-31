@@ -29,18 +29,18 @@ import org.mgnl.nicki.core.objects.DynamicAttribute;
 import org.mgnl.nicki.core.objects.DynamicObject;
 import org.mgnl.nicki.dynamic.objects.types.TextArea;
 import org.mgnl.nicki.vaadin.base.fields.AttributeTextAreaReadonlyField;
+import org.mgnl.nicki.vaadin.base.fields.AttributeTextField;
 import org.mgnl.nicki.vaadin.base.fields.DynamicAttributeField;
 import org.mgnl.nicki.vaadin.base.fields.TableListReadonlyAttributeField;
 
-import com.vaadin.ui.AbstractOrderedLayout;
-import com.vaadin.ui.Component;
-
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.HasComponents;
 
 @SuppressWarnings("serial")
 public class DynamicObjectFieldFactory implements Serializable {
 	
 
-	public Component createField(Component parent, DynamicObject dynamicObject, String attributeName) {
+	public Component createField(HasComponents parent, DynamicObject dynamicObject, String attributeName) {
 		DynamicAttribute dynAttribute = dynamicObject.getDynamicAttribute(attributeName);
 		DynamicAttributeField<String> field = null;
 
@@ -52,7 +52,7 @@ public class DynamicObjectFieldFactory implements Serializable {
 			} else if (dynAttribute.getAttributeClass() == TextArea.class) {
 				field = new AttributeTextAreaReadonlyField();
 			} else {
-				field = new AttributeTextAreaReadonlyField();
+				field = new AttributeTextField();
 			}
 			field.init(attributeName, dynamicObject, null);
 		}
@@ -60,11 +60,11 @@ public class DynamicObjectFieldFactory implements Serializable {
 	}
 	
 	
-	public void addFields(AbstractOrderedLayout layout, DynamicObject dynamicObject) {
+	public void addFields(HasComponents layout, DynamicObject dynamicObject) {
 		DataModel model = dynamicObject.getModel();
 		for (DynamicAttribute dynAttribute : model.getAttributes().values()) {
 			if (!dynAttribute.isNaming()) {
-				layout.addComponent(createField(layout, dynamicObject, dynAttribute.getName()));
+				layout.add(createField(layout, dynamicObject, dynAttribute.getName()));
 			}
 		}
 	}

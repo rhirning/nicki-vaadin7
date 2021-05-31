@@ -30,18 +30,19 @@ import org.mgnl.nicki.core.objects.DynamicObject;
 import org.mgnl.nicki.core.objects.DynamicObjectException;
 import org.mgnl.nicki.vaadin.base.components.NewClassEditor;
 
-import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @SuppressWarnings("serial")
-public class DynamicObjectViewer extends CustomComponent implements NewClassEditor, ClassEditor {
+public class DynamicObjectViewer extends VerticalLayout implements NewClassEditor, ClassEditor {
 
-	private VerticalLayout mainLayout;
 	private DynamicObject dynamicObject;
 	private DynamicObject parent;
+	private FormLayout formLayout;
 
 	public DynamicObjectViewer() {
 	}
@@ -51,7 +52,6 @@ public class DynamicObjectViewer extends CustomComponent implements NewClassEdit
 		this.dynamicObject = (DynamicObject) dynamicObject;
 		buildMainLayout();
 		setSizeFull();
-		setCompositionRoot(mainLayout);
 	}
 	
 	public void init(TreeData parent, Class<? extends TreeData> classDefinition) throws InstantiateDynamicObjectException, DynamicObjectException {
@@ -63,21 +63,20 @@ public class DynamicObjectViewer extends CustomComponent implements NewClassEdit
 			e.printStackTrace();
 		}
 		buildMainLayout();
-		setCompositionRoot(mainLayout);
 	}
 
 
-	private VerticalLayout buildMainLayout() {
+	private void buildMainLayout() {
 		
-		mainLayout = new VerticalLayout();
-		mainLayout.setMargin(true);
-		mainLayout.setSizeFull();
+		setMargin(true);
+		
 		Label label = new Label(dynamicObject.getClass().getName());
-		mainLayout.addComponent(label);
-		DynamicObjectFieldFactory factory = new DynamicObjectFieldFactory();
-		factory.addFields(mainLayout, dynamicObject);
+		setSizeUndefined();
+		formLayout = new FormLayout();
+		add(label, formLayout);
 		
-		return mainLayout;
+		DynamicObjectFieldFactory factory = new DynamicObjectFieldFactory();
+		factory.addFields(formLayout, dynamicObject);
 	}
 
 	@Override

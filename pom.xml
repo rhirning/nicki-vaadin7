@@ -14,9 +14,9 @@
 		<project.build.sourceEncoding>iso-8859-1</project.build.sourceEncoding>
 		<idm.version>4.7</idm.version>
 		<activemq-version>5.14.5</activemq-version>
-		<nicki.version>8.30</nicki.version>
+		<nicki.version>8.31</nicki.version>
 		<!-- <vaadin.version>7.7.16</vaadin.version> -->
-		<vaadin.version>8.12.4</vaadin.version>
+		<vaadin.version>14.6.1</vaadin.version>
 		<project.scm.id>github</project.scm.id>
 	</properties>
 	<inceptionYear>2020</inceptionYear>
@@ -32,8 +32,73 @@
 		<module>nicki-vaadin7-reports</module>
 		<module>nicki-vaadin7-user-admin</module>
 	</modules>
+	    <dependencies>
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <!-- Replace artifactId with vaadin-core to use only free components -->
+            <artifactId>vaadin-core</artifactId>
+            <exclusions>
+                <!-- Webjars are only needed when running in Vaadin 13 compatibility mode -->
+                <exclusion>
+                    <groupId>com.vaadin.webjar</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.webjars.bowergithub.insites</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.webjars.bowergithub.polymer</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.webjars.bowergithub.polymerelements</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.webjars.bowergithub.vaadin</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.webjars.bowergithub.webcomponents</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- Added to provide logging output as Vaadin uses -->
+        <!-- the unbound SLF4J no-operation (NOP) logger implementation -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>2.0.1.Final</version>
+        </dependency>
+        <!-- Bean validation implementation -->
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>6.0.16.Final</version>
+        </dependency>
+    </dependencies>
 	<dependencyManagement>
-		<dependencies>
+        <dependencies>
+            <dependency>
+                <groupId>com.vaadin</groupId>
+                <artifactId>vaadin-bom</artifactId>
+                <version>${vaadin.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 		<!-- 
 			<dependency>
 				<groupId>com.vaadin</groupId>
@@ -49,8 +114,7 @@
 				<groupId>com.vaadin</groupId>
 				<artifactId>vaadin-compatibility-themes</artifactId>
 				<version>${vaadin.version}</version>
-			</dependency>
-			 -->
+			</dependency>			
 			<dependency>
 				<groupId>com.vaadin</groupId>
 				<artifactId>vaadin-server</artifactId>
@@ -81,6 +145,7 @@
 			    <artifactId>vaadin-context-menu</artifactId>
 			    <version>3.0.2</version>
 			</dependency>
+			 -->
 			<dependency>
 				<groupId>javax.json</groupId>
 				<artifactId>javax.json-api</artifactId>

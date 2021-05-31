@@ -24,17 +24,17 @@ package org.mgnl.nicki.vaadin.base.listener;
 
 import org.mgnl.nicki.core.objects.DynamicObject;
 
-import com.vaadin.data.HasValue.ValueChangeEvent;
-import com.vaadin.data.HasValue.ValueChangeListener;
+import com.vaadin.flow.component.HasValue.ValueChangeEvent;
+import com.vaadin.flow.component.HasValue.ValueChangeListener;
 
 @SuppressWarnings("serial")
-public class ForeignKeyInputListener extends BaseAttributeListener<DynamicObject> implements ValueChangeListener<DynamicObject> {
+public class ForeignKeyInputListener extends BaseAttributeListener<DynamicObject> implements ValueChangeListener<ValueChangeEvent<DynamicObject>> {
 
 	public ForeignKeyInputListener(DynamicObject dynamicObject, String name) {
 		super(dynamicObject, name);
 	}
 
-	public void valueChange(ValueChangeEvent<DynamicObject> event) {
+	public void valueChanged(ValueChangeEvent<DynamicObject> event) {
 		DynamicObject value = event.getValue();
 		if (value != null) {
 			getDynamicObject().put(getName(), value);

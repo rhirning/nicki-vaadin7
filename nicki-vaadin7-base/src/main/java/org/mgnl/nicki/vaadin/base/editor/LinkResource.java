@@ -1,6 +1,10 @@
 
 package org.mgnl.nicki.vaadin.base.editor;
 
+import org.mgnl.nicki.vaadin.base.io.StreamSource;
+
+import com.vaadin.flow.server.StreamResource;
+
 /*-
  * #%L
  * nicki-vaadin-base
@@ -21,23 +25,13 @@ package org.mgnl.nicki.vaadin.base.editor;
  * #L%
  */
 
-
-import com.vaadin.server.StreamResource;
-
-
 public class LinkResource extends StreamResource {
-	private String mimeType = "";
-	public LinkResource(StreamSource streamSource, String filename, String mimeType) {
-		super(streamSource, filename);
-		this.mimeType = mimeType;
+	public LinkResource(String filename, StreamSource streamSource) {
+		super(filename, () -> {
+			return streamSource.getStream();
+		});
 		setCacheTime(1);
 	}
 
 	private static final long serialVersionUID = -426896041747116523L;
-
-	@Override
-	public String getMIMEType() {
-		return mimeType;
-	}
-
 }

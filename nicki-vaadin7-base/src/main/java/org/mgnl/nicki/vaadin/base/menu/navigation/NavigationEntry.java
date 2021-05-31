@@ -24,22 +24,25 @@ package org.mgnl.nicki.vaadin.base.menu.navigation;
 
 import java.io.Serializable;
 
-import org.mgnl.nicki.vaadin.base.menu.application.View;
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.html.Span;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class NavigationEntry implements Serializable, NavigationElement {
+public class NavigationEntry extends Span implements Serializable, NavigationElement {
 	private static final long serialVersionUID = 4285844482143266130L;
 	private String caption;
-	private View view;
+	private Component view;
 	private String navigation;
 
 	@Override
-	public String getNavigationCaption() {
-		return getCaption();
+	public Component getNavigationCaption() {
+		setText(getCaption());
+		getElement().getClassList().add("nav_entry");
+		return this;
 	}
 
 }

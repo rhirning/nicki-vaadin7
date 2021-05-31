@@ -25,24 +25,24 @@ package org.mgnl.nicki.vaadin.base.listener;
 import org.mgnl.nicki.vaadin.base.data.DataContainer;
 import org.mgnl.nicki.vaadin.base.editor.DynamicObjectValueChangeListener;
 
-import com.vaadin.data.HasValue.ValueChangeEvent;
-import com.vaadin.data.HasValue.ValueChangeListener;
-
+import com.vaadin.flow.component.HasValue.ValueChangeEvent;
+import com.vaadin.flow.component.HasValue.ValueChangeListener;
 
 @SuppressWarnings("serial")
-public class BooleanAttributeInputListener implements ValueChangeListener<Boolean> {
+public class BooleanAttributeInputListener implements ValueChangeListener<ValueChangeEvent<Boolean>> {
 
 	private DataContainer<String> property;
-	private DynamicObjectValueChangeListener<String> objectListener;
+	private DynamicObjectValueChangeListener<Boolean> objectListener;
 
-	public BooleanAttributeInputListener(DataContainer<String> property, DynamicObjectValueChangeListener<String> objectListener) {
+	public BooleanAttributeInputListener(DataContainer<String> property, DynamicObjectValueChangeListener<Boolean> objectListener) {
 		this.property = property;
 		this.objectListener = objectListener;
 	}
 
-	public void valueChange(ValueChangeEvent<Boolean> event) {
-		String value = event.getValue().toString();
-		property.setValue(value);
+	@Override
+	public void valueChanged(ValueChangeEvent<Boolean> event) {
+		Boolean value = event.getValue();
+		property.setValue(Boolean.toString(value));
 		property.getDynamicObject().setModified(true);
 		if (objectListener != null) {
 			objectListener.valueChange(property.getDynamicObject(), property.getAttributeName(), value);

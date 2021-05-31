@@ -1,6 +1,8 @@
 
 package org.mgnl.nicki.vaadin.base.menu.navigation;
 
+import com.vaadin.flow.component.Component;
+
 /*-
  * #%L
  * nicki-app-menu
@@ -23,5 +25,5 @@ package org.mgnl.nicki.vaadin.base.menu.navigation;
 
 
 public interface NavigationElement {
-	String getNavigationCaption();
+	Component getNavigationCaption();
 }

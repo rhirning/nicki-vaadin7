@@ -40,20 +40,17 @@ import org.mgnl.nicki.core.objects.SearchResultEntry;
 import org.mgnl.nicki.vaadin.base.data.DynamicObjectGridColumn;
 import org.mgnl.nicki.vaadin.base.helper.GridHelper;
 
-import com.vaadin.ui.AbstractLayout;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.Grid;
-import com.vaadin.ui.Grid.SelectionMode;
-import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.Grid.SelectionMode;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @SuppressWarnings("serial")
-public class DynamicObjectSearchDialog<T extends DynamicObject> extends CustomComponent {
-	private VerticalLayout mainLayout;
+public class DynamicObjectSearchDialog<T extends DynamicObject> extends VerticalLayout {
 	private Button searchButton;
 	private Grid<T> table;
 	private List<T> container = new ArrayList<>();
@@ -74,44 +71,39 @@ public class DynamicObjectSearchDialog<T extends DynamicObject> extends CustomCo
 		this.searcher = searcher;
 		this.baseDn = baseDn;
 		buildMainLayout();
-		setCompositionRoot(mainLayout);
 	}
 
 
-	private AbstractLayout buildMainLayout() throws InstantiateDynamicObjectException {
-		mainLayout = new VerticalLayout();
-		mainLayout.setWidth("100%");
-		mainLayout.setMargin(true);
-		AbstractLayout searchLayout = getLayout();
-		mainLayout.addComponent(searchLayout);
+	private void buildMainLayout() throws InstantiateDynamicObjectException {
+		setWidth("100%");
+		setMargin(true);
+		FormLayout searchLayout = getLayout();
+		add(searchLayout);
 		DynamicObjectSearchFieldFactory<T> factory = new DynamicObjectSearchFieldFactory<T>(context, searchDataMap);
 		factory.addFields(searchLayout, clazz);
 		
 		searchButton = new Button(I18n.getText("nicki.editor.generic.button.search"));
 		searchButton.addClickListener(event -> search());
 
-		mainLayout.addComponent(searchButton);
+		add(searchButton);
 		table = new Grid<>();
 		table.setSelectionMode(SelectionMode.SINGLE);
 		container = new ArrayList<>();
 		for (DynamicObjectGridColumn<T> column : GridHelper.getColumns(context, clazz)) {
-			table.addColumn(column).setCaption(column.getCaption());
+			table.addColumn(column).setHeader(column.getCaption());
 		}
-		mainLayout.addComponent(table);
+		add(table);
 		saveButton = new Button(I18n.getText("nicki.editor.generic.button.save"));
 		saveButton.addClickListener(event -> save());
 
-		mainLayout.addComponent(saveButton);
+		add(saveButton);
 		
 		
-		return mainLayout;
 	}
 
-	private GridLayout getLayout() {
-		GridLayout layout = new GridLayout();
-		layout.setColumns(2);
+	private FormLayout getLayout() {
+		FormLayout layout = new FormLayout();
 		layout.setWidth("100%");
-		layout.setSpacing(true);
 		return layout;
 	}
 

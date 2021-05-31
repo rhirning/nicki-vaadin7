@@ -30,37 +30,45 @@ import org.apache.commons.lang.StringUtils;
 import org.mgnl.nicki.core.objects.DynamicObject;
 import org.mgnl.nicki.vaadin.base.editor.ValidationException;
 
-import com.vaadin.ui.AbstractField;
-import com.vaadin.ui.NativeSelect;
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.HasValue;
+import com.vaadin.flow.component.select.Select;
+
 
 public class Validation {
-	public static void notNull(AbstractField<?> component, DynamicObject dynamicObject, String error) throws ValidationException {
+	private static void focus(Component component) {
+		// TODO: focus
+		
+	}
+	
+	public static void notNull(Component component, DynamicObject dynamicObject, String error) throws ValidationException {
 		if (dynamicObject == null) {
 			if (component != null) {
-				component.focus();
+				focus(component);
 			}
 			throw new ValidationException(error);
 		}
 	}
+	
 	public static void notNull(DynamicObject dynamicObject, String error) throws ValidationException {
 		if (dynamicObject == null) {
 			throw new ValidationException(error);
 		}
 	}
 
-	public static void notNull(AbstractField<?> component, Date date, String error) throws ValidationException {
+	public static void notNull(Component component, Date date, String error) throws ValidationException {
 		if (date == null) {
 			if (component != null) {
-				component.focus();
+				focus(component);
 			}
 			throw new ValidationException(error);
 		}
 	}
 
-	public static void notNull(AbstractField<?> component, LocalDate date, String error) throws ValidationException {
+	public static void notNull(Component component, LocalDate date, String error) throws ValidationException {
 		if (date == null) {
 			if (component != null) {
-				component.focus();
+				focus(component);
 			}
 			throw new ValidationException(error);
 		}
@@ -72,25 +80,34 @@ public class Validation {
 		}
 	}
 
-	public static void dateInFuture(AbstractField<?> component, Date date, String error) throws ValidationException {
+	public static void dateInFuture(Component component, Date date, String error) throws ValidationException {
 		if ((date == null) || (date.compareTo(new Date()) < 0)) {
 			if (component != null) {
-				component.focus();
+				focus(component);
 			}
 			throw new ValidationException(error);
 		}
 	}
 
-	public static void dateInPast(AbstractField<?> component, Date date, String error) throws ValidationException {
+	public static void dateInPast(Component component, Date date, String error) throws ValidationException {
 		if ((date == null) || (date.compareTo(new Date()) > 0)) {
 			if (component != null) {
-				component.focus();
+				focus(component);
 			}
 			throw new ValidationException(error);
 		}
 	}
 
-	public static void notEmpty(AbstractField<?> component, String error) throws ValidationException {
+	public static void notEmpty(HasValue<?,?> component, String error) throws ValidationException {
+		if (!StringUtils.isNotBlank((String) component.getValue())) {
+			if (component != null) {
+				focus((Component) component);
+			}
+			throw new ValidationException(error);
+		}
+	}
+
+	public static void notEmpty(Select<?> component, String error) throws ValidationException {
 		if (!StringUtils.isNotBlank((String) component.getValue())) {
 			if (component != null) {
 				component.focus();
@@ -99,28 +116,19 @@ public class Validation {
 		}
 	}
 
-	public static void notEmpty(NativeSelect<?> component, String error) throws ValidationException {
-		if (!StringUtils.isNotBlank((String) component.getValue())) {
-			if (component != null) {
-				component.focus();
-			}
-			throw new ValidationException(error);
-		}
-	}
-
-	public static void isTrue(AbstractField<?> component, boolean check, String error) throws ValidationException {
+	public static void isTrue(Component component, boolean check, String error) throws ValidationException {
 		if (!check) {
 			if (component != null) {
-				component.focus();
+				focus(component);
 			}
 			throw new ValidationException(error);
 		}
 	}
 
-	public static void isNumeric(AbstractField<?> component, String error) throws ValidationException {
+	public static void isNumeric(HasValue<?,?> component, String error) throws ValidationException {
 		if (!StringUtils.isNumeric((String) component.getValue())) {
 			if (component != null) {
-				component.focus();
+				focus((Component) component);
 			}
 			throw new ValidationException(error);
 		}

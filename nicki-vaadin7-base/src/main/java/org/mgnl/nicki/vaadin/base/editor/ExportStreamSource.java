@@ -24,6 +24,7 @@ package org.mgnl.nicki.vaadin.base.editor;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.io.StringWriter;
 import java.io.Writer;
 
@@ -31,27 +32,16 @@ import org.mgnl.nicki.core.context.NickiContext;
 import org.mgnl.nicki.core.data.TreeData;
 import org.mgnl.nicki.core.util.XMLBuilder;
 
-import com.vaadin.server.StreamResource.StreamSource;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ExportStreamSource implements StreamSource{
+public class ExportStreamSource implements Serializable {
 
 	private static final long serialVersionUID = -8068031351212191141L;
-	private TreeData dynamicObject;
-	private NickiContext context;
-	private boolean selfOnly;
-	
-	public ExportStreamSource(TreeData dynamicObject, NickiContext context, boolean selfOnly) {
-		this.dynamicObject = dynamicObject;
-		this.context = context;
-		this.selfOnly = selfOnly;
-	}
 
-	public InputStream getStream() {
+	public static InputStream getStream(TreeData dynamicObject, NickiContext context, boolean selfOnly) {
 		try {
-			XMLBuilder builder = new XMLBuilder(this.context, this.dynamicObject.getPath(), selfOnly);
+			XMLBuilder builder = new XMLBuilder(context, dynamicObject.getPath(), selfOnly);
 			Writer writer = new StringWriter();
 			builder.write(writer);
 			

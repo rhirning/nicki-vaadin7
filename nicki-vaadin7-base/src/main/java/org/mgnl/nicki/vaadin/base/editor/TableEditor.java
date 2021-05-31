@@ -27,8 +27,7 @@ import org.mgnl.nicki.core.data.DataProvider;
 import org.mgnl.nicki.core.data.TreeData;
 import org.mgnl.nicki.vaadin.base.application.NickiApplication;
 
-import com.vaadin.ui.Grid;
-
+import com.vaadin.flow.component.grid.Grid;
 
 @SuppressWarnings("serial")
 public class TableEditor extends NickiTreeEditor {

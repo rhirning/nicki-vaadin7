@@ -25,17 +25,17 @@ package org.mgnl.nicki.vaadin.base.menu.navigation;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.mgnl.nicki.vaadin.base.menu.application.MainView;
+import com.vaadin.flow.component.html.Div;
 
-import com.vaadin.ui.CustomComponent;
-
-public abstract class NavigationBase extends CustomComponent implements Navigation {
+public abstract class NavigationBase extends Div implements Navigation {
 	private static final long serialVersionUID = -4231539383235849692L;
-	private MainView mainView;
+	private NavigationMainView mainView;
 	private List<NavigationElement> list = new ArrayList<NavigationElement>();
 	
-	public NavigationBase(MainView mainView) {
-		this.mainView = mainView;
+	public NavigationBase(NavigationMainView tableNavigationMainView) {
+		this.mainView = tableNavigationMainView;
+
+		setSizeFull();
 	}
 
 	@Override

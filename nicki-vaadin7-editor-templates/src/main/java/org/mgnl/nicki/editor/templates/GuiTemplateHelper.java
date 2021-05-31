@@ -28,7 +28,7 @@ import org.mgnl.nicki.core.util.Classes;
 import org.mgnl.nicki.dynamic.objects.objects.Template;
 import org.mgnl.nicki.template.engine.TemplateHelper;
 
-import com.vaadin.ui.Component;
+import com.vaadin.flow.component.Component;
 
 import lombok.extern.slf4j.Slf4j;
 

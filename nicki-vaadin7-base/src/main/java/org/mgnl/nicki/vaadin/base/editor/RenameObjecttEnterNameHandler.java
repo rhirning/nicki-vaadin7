@@ -28,7 +28,6 @@ import org.mgnl.nicki.core.objects.DynamicObjectException;
 import org.mgnl.nicki.core.data.TreeData;
 import org.mgnl.nicki.vaadin.base.components.EnterNameHandler;
 
-import com.vaadin.ui.UI;
 
 @SuppressWarnings("serial")
 public class RenameObjecttEnterNameHandler extends EnterNameHandler implements Serializable {
@@ -42,7 +41,7 @@ public class RenameObjecttEnterNameHandler extends EnterNameHandler implements S
 	}
 
 	public void closeEnterNameDialog() {
-		UI.getCurrent().removeWindow(getDialog());
+		getDialog().close();;
 	}
 
 	public void setName(String name) throws DynamicObjectException {

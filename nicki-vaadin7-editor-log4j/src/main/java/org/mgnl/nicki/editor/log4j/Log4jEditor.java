@@ -29,9 +29,9 @@ import org.mgnl.nicki.core.i18n.I18n;
 import org.mgnl.nicki.vaadin.base.application.AccessGroup;
 import org.mgnl.nicki.vaadin.base.application.NickiApplication;
 import org.mgnl.nicki.vaadin.base.application.ShowWelcomeDialog;
+import org.mgnl.nicki.vaadin.base.components.NickiTabSheet;
 
-import com.vaadin.ui.Component;
-import com.vaadin.ui.TabSheet;
+import com.vaadin.flow.component.Component;
 
 @SuppressWarnings("serial")
 @AccessGroup(name = {"nickiAdmins", "IDM-Development"})
@@ -46,7 +46,7 @@ public class Log4jEditor extends NickiApplication {
 
 	@Override
 	public Component getEditor() {
-		TabSheet tabSheet = new TabSheet();
+		NickiTabSheet tabSheet = new NickiTabSheet();
 		TailViewer tailViewer = new TailViewer();
 		tailViewer.init();
 		tabSheet.addTab(tailViewer, I18n.getText(getI18nBase() + ".tab.tailviewer"));

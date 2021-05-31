@@ -20,8 +20,6 @@ package org.mgnl.nicki.vaadin.base.navigation;
  * #L%
  */
 
-import com.vaadin.ui.Component;
-
-public interface NavigationDialog extends Component {
+public interface NavigationDialog {
 	void navigate(NavigationCommand command);
 }

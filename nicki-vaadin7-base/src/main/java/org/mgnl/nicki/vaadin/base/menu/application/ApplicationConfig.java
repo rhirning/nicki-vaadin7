@@ -21,6 +21,7 @@ package org.mgnl.nicki.vaadin.base.menu.application;
  */
 
 import java.util.List;
+import java.util.Map;
 
 import org.mgnl.nicki.core.util.Classes;
 import org.mgnl.nicki.dynamic.objects.objects.Person;
@@ -29,6 +30,8 @@ import org.mgnl.nicki.vaadin.base.application.AccessRoleEvaluator;
 import org.mgnl.nicki.vaadin.base.application.DefaultGroupEvaluator;
 import org.mgnl.nicki.vaadin.base.application.DefaultRoleEvaluator;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -37,16 +40,10 @@ public class ApplicationConfig {
 	private AccessRoleEvaluator accessRoleEvaluator = new DefaultRoleEvaluator();
 	private String accessGroupEvaluatorClass;
 	private String accessRoleEvaluatorClass;
-	private ApplicationView start;
-	private List<ApplicationChapter> chapters;
+	private @Getter @Setter ApplicationView start;
+	private @Getter @Setter List<ApplicationChapter> chapters;
+	private @Getter @Setter Map<String, String> config;
 
-	public List<ApplicationChapter> getChapters() {
-		return chapters;
-	}
-
-	public void setChapters(List<ApplicationChapter> chapters) {
-		this.chapters = chapters;
-	}
 
 	public String getAccessGroupEvaluatorClass() {
 		return accessGroupEvaluatorClass;
@@ -94,14 +91,5 @@ public class ApplicationConfig {
 	private boolean isEmpty(List<String> groups) {
 		return groups == null || groups.size() == 0;
 	}
-
-	public ApplicationView getStart() {
-		return start;
-	}
-
-	public void setStart(ApplicationView start) {
-		this.start = start;
-	}
-
 
 }

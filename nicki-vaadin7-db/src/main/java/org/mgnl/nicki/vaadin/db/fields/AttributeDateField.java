@@ -33,25 +33,27 @@ import org.mgnl.nicki.vaadin.db.data.DataContainer;
 import org.mgnl.nicki.vaadin.db.editor.DbBeanValueChangeListener;
 import org.mgnl.nicki.vaadin.db.listener.AttributeInputListener;
 
-import com.vaadin.server.Sizeable.Unit;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.DateField;
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.datepicker.DatePicker;
+
 
 @SuppressWarnings("serial")
 public class AttributeDateField  extends BaseDbBeanAttributeField implements DbBeanAttributeField, Serializable {
 
-	private DateField field;
+	private DatePicker field;
 	private DataContainer<Date> property;
 	public void init(String attributeName, Object bean, DbBeanValueChangeListener objectListener, String dbContextName) {
 
 		property = new AttributeDataContainer<Date>(bean, attributeName);
-		field = new DateField(getName(bean, attributeName));
-		field.setHeight(2, Unit.EM);
+		field = new DatePicker(getName(bean, attributeName));
+/*
+		field.setHeight("2em");
 		field.setWidth("600px");
+*/
 		if (property != null && property.getValue() != null) {
 			field.setValue(DataHelper.getLocalDate(property.getValue()));
 		}
-		field.addValueChangeListener(new AttributeInputListener<LocalDate, Date>(property, objectListener,  new LocalDateToDateConverter()));
+		field.addValueChangeListener(new AttributeInputListener<DatePicker, LocalDate, Date>(property, objectListener,  new LocalDateToDateConverter()));
 	}
 
 	public Component getComponent(boolean readOnly) {

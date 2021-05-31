@@ -34,14 +34,12 @@ import org.mgnl.nicki.vaadin.base.components.EnterNameHandler;
 import org.mgnl.nicki.vaadin.base.components.VaadinHorizontalLayout;
 import org.mgnl.nicki.vaadin.base.editor.DynamicObjectValueChangeListener;
 
-import com.vaadin.server.Sizeable.Unit;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Grid;
-import com.vaadin.ui.Grid.SelectionMode;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.Grid.SelectionMode;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 @SuppressWarnings("serial")
 public class TableListAttributeField extends BaseDynamicAttributeField implements DynamicAttributeField<String>, Serializable {
@@ -99,10 +97,10 @@ public class TableListAttributeField extends BaseDynamicAttributeField implement
 		EnterNameDialog dialog = new EnterNameDialog("nicki.editor.catalogs.entry.new",
 				I18n.getText("nicki.editor.catalogs.entry.new.window.title"));
 		dialog.setHandler(new NameHandler(""));
-		dialog.setWidth(440, Unit.PIXELS);
-		dialog.setHeight(500, Unit.PIXELS);
+		dialog.setWidth("440px");
+		dialog.setHeight("500px");
 		dialog.setModal(true);
-		UI.getCurrent().addWindow(dialog);
+		dialog.open();
 	}
 
 	private class NameHandler extends EnterNameHandler {
@@ -124,7 +122,7 @@ public class TableListAttributeField extends BaseDynamicAttributeField implement
 	}
 
 	
-	public ComponentContainer getComponent(boolean readOnly) {
+	public Component getComponent(boolean readOnly) {
 		mainLayout.setReadOnly(readOnly);
 		return mainLayout;
 	}
@@ -142,23 +140,23 @@ public class TableListAttributeField extends BaseDynamicAttributeField implement
 		entries = new Grid<String>();
 		entries.setWidth("600px");
 		entries.setHeight("100%");
-		mainLayout.addComponent(entries);
+		mainLayout.add(entries);
 		
 		VerticalLayout verticalLayout = new VerticalLayout();
-		mainLayout.addComponent(verticalLayout);
+		mainLayout.add(verticalLayout);
 		// newEntryButton
 		newEntryButton = new Button();
 		newEntryButton.setWidth("-1px");
 		newEntryButton.setHeight("-1px");
-		newEntryButton.setCaption("Neu");
-		verticalLayout.addComponent(newEntryButton);
+		newEntryButton.setText("Neu");
+		verticalLayout.add(newEntryButton);
 		
 		// deleteEntryButton
 		deleteEntryButton = new Button();
 		deleteEntryButton.setWidth("-1px");
 		deleteEntryButton.setHeight("-1px");
-		deleteEntryButton.setCaption("Löschen");
-		verticalLayout.addComponent(deleteEntryButton);
+		deleteEntryButton.setText("Löschen");
+		verticalLayout.add(deleteEntryButton);
 		return mainLayout;
 	}
 }

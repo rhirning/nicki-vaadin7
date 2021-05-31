@@ -33,16 +33,13 @@ import org.mgnl.nicki.template.engine.TemplateHelper;
 import org.mgnl.nicki.template.engine.TemplateParameter;
 import org.mgnl.nicki.vaadin.base.data.DateHelper;
 
-import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.DateField;
-import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.TextField;
+import com.vaadin.flow.component.datepicker.DatePicker;
+import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.textfield.TextField;
 
-public class ConfiguredTemplateConfigDialog extends CustomComponent implements TemplateConfigDialog {
+public class ConfiguredTemplateConfigDialog extends FormLayout implements TemplateConfigDialog {
 
 	private static final long serialVersionUID = -1295818262583276359L;
-
-	private FormLayout mainLayout;
 	
 	private Template template;
 	private Map<String, Object> params;
@@ -54,47 +51,37 @@ public class ConfiguredTemplateConfigDialog extends CustomComponent implements T
 		this.templateConfig = templateConfig;
 		
 		buildMainLayout();
-		setCompositionRoot(mainLayout);
 	}
 
-	private FormLayout buildMainLayout() {
-		// common part: create layout
-		mainLayout = new FormLayout();
-		mainLayout.setWidth("100%");
-		mainLayout.setHeight("100%");
-		mainLayout.setMargin(false);
-		
-		// top-level component properties
-		setWidth("100.0%");
-		setHeight("100.0%");
+	private void buildMainLayout() {
+		setWidth("100%");
+		setHeight("100%");
 		
 		List<TemplateParameter> templateParameters = TemplateHelper.getTemplateHandler(template).getTemplateParameters();
 		if (templateParameters != null) {
 			for (TemplateParameter templateParameter : templateParameters) {
 				if (!StringUtils.startsWith(templateParameter.getName(), ".")) {
 					if (StringUtils.equalsIgnoreCase("date", templateParameter.getDataType())) {
-						DateField field = new DateField();
-						field.setCaption(templateParameter.getDisplayName());
+						DatePicker field = new DatePicker();
+						field.setLabel(templateParameter.getDisplayName());
 						field.setWidth("-1px");
 						field.setHeight("-1px");
-						mainLayout.addComponent(field);
+						add(field);
 						DateHelper.init(field);
-						field.addValueChangeListener(new ParamInputListener<LocalDate>(templateParameter.getName(), params, templateConfig));
+						field.addValueChangeListener(new ParamInputListener<DatePicker, LocalDate, LocalDate>(templateParameter.getName(), params, templateConfig));
 					} else if (StringUtils.equalsIgnoreCase("string", templateParameter.getDataType())) {
 						TextField field = new TextField();
-						field.setCaption(templateParameter.getDisplayName());
+						field.setLabel(templateParameter.getDisplayName());
 						field.setWidth("-1px");
 						field.setHeight("-1px");
-						mainLayout.addComponent(field);
-						field.addValueChangeListener(new ParamInputListener<String>(templateParameter.getName(), params, templateConfig));
+						add(field);
+						field.addValueChangeListener(new ParamInputListener<TextField, String, String>(templateParameter.getName(), params, templateConfig));
 					} else if (StringUtils.equalsIgnoreCase("static", templateParameter.getDataType())) {
 						params.put(templateParameter.getName(), templateParameter.getValue());
 					}
 				}
 			}
 		}
-		
-		return mainLayout;
 	}
 
 }

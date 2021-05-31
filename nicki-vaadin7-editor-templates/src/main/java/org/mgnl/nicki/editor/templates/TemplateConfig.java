@@ -39,27 +39,23 @@ import org.mgnl.nicki.dynamic.objects.objects.Template;
 import org.mgnl.nicki.template.engine.TemplateParameter;
 import org.mgnl.nicki.vaadin.base.editor.ClassEditor;
 import org.mgnl.nicki.vaadin.base.editor.NickiTreeEditor;
+import org.mgnl.nicki.vaadin.base.io.StreamSource;
+import org.mgnl.nicki.vaadin.base.notification.Notification;
 
-import com.vaadin.server.FileDownloader;
-import com.vaadin.server.StreamResource;
-import com.vaadin.server.StreamResource.StreamSource;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.html.Anchor;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.server.StreamResource;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @SuppressWarnings("serial")
-public class TemplateConfig extends CustomComponent implements ClassEditor {
+public class TemplateConfig extends VerticalLayout implements ClassEditor {
 	public static final String DIALOG_WIDTH = ".dialogWidth";
 	public static final String DIALOG_HEIGHT = ".dialogHeight";
-
-	private VerticalLayout mainLayout;
-
 	private Component configDialog;
 	private Template template;
 	private Button previewButton;
@@ -69,12 +65,9 @@ public class TemplateConfig extends CustomComponent implements ClassEditor {
 	private Link pdfLink;
 	private Link xlsLink;
 	 */
-	private Button csvButton;
-	private Button pdfButton;
-	private Button xlsButton;
-	private FileDownloader csvFileDownloader;
-	private FileDownloader pdfFileDownloader;
-	private FileDownloader xlsFileDownloader;
+	private Anchor csvAnchor;
+	private Anchor pdfAnchor;
+	private Anchor xlsAnchor;
 	private boolean usePreview = true;
 	private NickiTreeEditor editor;
 	private Map<String, Object> params = new HashMap<String, Object>();
@@ -94,12 +87,8 @@ public class TemplateConfig extends CustomComponent implements ClassEditor {
 	public void setDynamicObject(NickiTreeEditor nickiEditor, TreeData dynamicObject) {
 		this.editor = nickiEditor;
 		this.template = (Template) dynamicObject;
-		csvFileDownloader = null;
-		pdfFileDownloader = null;
-		xlsFileDownloader = null;
 		params = new HashMap<String, Object>();
 		buildEditor();
-		setCompositionRoot(mainLayout);
 		initI18n();
 
 		if (usePreview) {
@@ -158,16 +147,16 @@ public class TemplateConfig extends CustomComponent implements ClassEditor {
 	}
 
 	private void initI18n() {
-		previewButton.setCaption(I18n.getText(editor.getMessageKeyBase() + ".config.button.preview"));
-		htmlPreviewButton.setCaption(I18n.getText(editor.getMessageKeyBase() + ".config.button.htmlpreview"));
+		previewButton.setText(I18n.getText(editor.getMessageKeyBase() + ".config.button.preview"));
+		htmlPreviewButton.setText(I18n.getText(editor.getMessageKeyBase() + ".config.button.htmlpreview"));
 		/*
 		pdfLink.setCaption(I18n.getText(editor.getMessageKeyBase() + ".config.link.pdf"));
 		csvLink.setCaption(I18n.getText(editor.getMessageKeyBase() + ".config.link.csv"));
 		xlsLink.setCaption(I18n.getText(editor.getMessageKeyBase() + ".config.link.xls"));
 		 */
-		pdfButton.setCaption(I18n.getText(editor.getMessageKeyBase() + ".config.link.pdf"));
-		csvButton.setCaption(I18n.getText(editor.getMessageKeyBase() + ".config.link.csv"));
-		xlsButton.setCaption(I18n.getText(editor.getMessageKeyBase() + ".config.link.xls"));
+		pdfAnchor.setText(I18n.getText(editor.getMessageKeyBase() + ".config.link.pdf"));
+		csvAnchor.setText(I18n.getText(editor.getMessageKeyBase() + ".config.link.csv"));
+		xlsAnchor.setText(I18n.getText(editor.getMessageKeyBase() + ".config.link.xls"));
 	}
 
 	protected void close() {
@@ -189,7 +178,8 @@ public class TemplateConfig extends CustomComponent implements ClassEditor {
 	}
 
 	protected StreamResource createCSVStream() {
-		return new StreamResource(() -> {
+		return new StreamResource(template != null ? template.getName() + "_" + DataHelper.getTime(new Date()) + ".csv" : "template.csv",
+				() -> {
 				StreamSource csvStreamSource = null;
 				if (isComplete()) {
 					if (template.hasPart("pdf")) {
@@ -203,13 +193,13 @@ public class TemplateConfig extends CustomComponent implements ClassEditor {
 				} else {
 					return null;
 				}
-		}, template != null ? template.getName() + "_" + DataHelper.getTime(new Date()) + ".csv" : "template.csv");
+		});
 	}
 
 	@SuppressWarnings("deprecation")
 	@Deprecated
 	protected StreamResource createXLSStream() {
-		return new StreamResource(() -> {
+		return new StreamResource(template != null ? template.getName() + "_" + DataHelper.getTime(new Date()) + ".xls" : "template.xls", () -> {
 				StreamSource xlsStreamSource = null;
 				if (isComplete() && template.hasPart("xls")) {
 					xlsStreamSource = new XlsStreamSource(template, template.getContext(), params);
@@ -219,11 +209,12 @@ public class TemplateConfig extends CustomComponent implements ClassEditor {
 				} else {
 					return null;
 				}
-		}, template != null ? template.getName() + "_" + DataHelper.getTime(new Date()) + ".xls" : "template.xls");
+		});
 	}
 
 	protected StreamResource createXLSXStream() {
-		return new StreamResource(() -> {
+		return new StreamResource(template != null ? template.getName() + "_" + DataHelper.getTime(new Date()) + ".xlsX" : "template.xls",
+				() -> {
 				StreamSource xlsStreamSource = null;
 				if (isComplete() && template.hasPart("xls")) {
 					xlsStreamSource = new XlsxStreamSource(template, template.getContext(), params);
@@ -233,11 +224,12 @@ public class TemplateConfig extends CustomComponent implements ClassEditor {
 				} else {
 					return null;
 				}
-		}, template != null ? template.getName() + "_" + DataHelper.getTime(new Date()) + ".xlsX" : "template.xls");
+		});
 	}
 
 	protected StreamResource createPDFStream() {
-		return new StreamResource(()-> {
+		return new StreamResource(template != null ? template.getName() + "_" + DataHelper.getTime(new Date()) + ".pdf" : "template.pdf",
+				()-> {
 				StreamSource pdfStreamSource = null;
 				if (isComplete()) {
 					if (template.hasPart("pdf")) {
@@ -249,7 +241,7 @@ public class TemplateConfig extends CustomComponent implements ClassEditor {
 				} else {
 					return null;
 				}
-		}, template != null ? template.getName() + "_" + DataHelper.getTime(new Date()) + ".pdf" : "template.pdf");
+		});
 	}
 
 	protected boolean isComplete() {
@@ -262,17 +254,11 @@ public class TemplateConfig extends CustomComponent implements ClassEditor {
 
 	}
 
-	private VerticalLayout buildEditor() {
-		// common part: create layout
-		mainLayout = new VerticalLayout();
-		mainLayout.setMargin(true);
-		mainLayout.setSpacing(true);
-		mainLayout.setHeight("-1px");
-		mainLayout.setWidth("100%");
-
-		// top-level component properties
-		// setWidth("100.0%");
-		// setHeight("100.0%");
+	private void buildEditor() {
+		setMargin(true);
+		setSpacing(true);
+		setHeight("-1px");
+		setWidth("100%");
 
 		GuiTemplateHandler handler = GuiTemplateHelper.getGuiTemplateHandler(template);
 		configDialog = handler.getConfigDialog(template, params, this);
@@ -282,28 +268,29 @@ public class TemplateConfig extends CustomComponent implements ClassEditor {
 		
 		setHeight(height);
 		setWidth(width);
-		configDialog.setWidth("100%");
+		// TODO: component.setWith, component.setHeight
+//		configDialog.setWidth("100%");
+//
+//		configDialog.setHeight("100%");
 
-		configDialog.setHeight("100%");
-
-		mainLayout.addComponent(configDialog);
+		add(configDialog);
 
 		HorizontalLayout horizontalLayout = new HorizontalLayout();
 		horizontalLayout.setSpacing(true);
-		horizontalLayout.setHeight(40, Unit.PIXELS);
+		horizontalLayout.setHeight("40px");
 
 		previewButton = new Button();
 		previewButton.setWidth("-1px");
 		previewButton.setHeight("-1px");
-		previewButton.setCaption("Vorschau");
+		previewButton.setText("Vorschau");
 		if (usePreview) {
-			horizontalLayout.addComponent(previewButton);
+			horizontalLayout.add(previewButton);
 		}
 		htmlPreviewButton = new Button();
 		htmlPreviewButton.setWidth("-1px");
 		htmlPreviewButton.setHeight("-1px");
-		htmlPreviewButton.setCaption("HTML Vorschau");
-		horizontalLayout.addComponent(htmlPreviewButton);
+		htmlPreviewButton.setText("HTML Vorschau");
+		horizontalLayout.add(htmlPreviewButton);
 
 		/*
 		pdfLink = new Link();
@@ -316,27 +303,25 @@ public class TemplateConfig extends CustomComponent implements ClassEditor {
 		horizontalLayout.addComponent(xlsLink);
 		 */
 
-		csvButton = new Button();
-		csvButton.setWidth("-1px");
-		csvButton.setHeight("-1px");
-		csvButton.setCaption("CSV");
-		horizontalLayout.addComponent(csvButton);
+		csvAnchor = new Anchor();
+		csvAnchor.setWidth("-1px");
+		csvAnchor.setHeight("-1px");
+		csvAnchor.setText("CSV");
+		horizontalLayout.add(csvAnchor);
 
-		xlsButton = new Button();
-		xlsButton.setWidth("-1px");
-		xlsButton.setHeight("-1px");
-		xlsButton.setCaption("XLS");
-		horizontalLayout.addComponent(xlsButton);
+		xlsAnchor = new Anchor();
+		xlsAnchor.setWidth("-1px");
+		xlsAnchor.setHeight("-1px");
+		xlsAnchor.setText("XLS");
+		horizontalLayout.add(xlsAnchor);
 
-		pdfButton = new Button();
-		pdfButton.setWidth("-1px");
-		pdfButton.setHeight("-1px");
-		pdfButton.setCaption("PDF");
-		horizontalLayout.addComponent(pdfButton);
+		pdfAnchor = new Anchor();
+		pdfAnchor.setWidth("-1px");
+		pdfAnchor.setHeight("-1px");
+		pdfAnchor.setText("PDF");
+		horizontalLayout.add(pdfAnchor);
 
-		mainLayout.addComponent(horizontalLayout);
-		
-		return mainLayout;
+		add(horizontalLayout);
 	}
 
 	private String getTemplateParameter(List<TemplateParameter> templateParams,
@@ -351,40 +336,25 @@ public class TemplateConfig extends CustomComponent implements ClassEditor {
 
 	public void paramsChanged() {
 		if (GuiTemplateHelper.isComplete(template, params)) {
-			if (pdfFileDownloader != null) {
-				pdfButton.removeExtension(pdfFileDownloader);
-				pdfFileDownloader = null;
-			}
 			StreamResource pdfSource = createPDFStream();
-			pdfFileDownloader = new FileDownloader(pdfSource);
-			pdfFileDownloader.extend(pdfButton);
-			pdfButton.setEnabled(true);
+			pdfAnchor.setHref(pdfSource);
+			pdfAnchor.setEnabled(true);
 
-			if (csvFileDownloader != null) {
-				csvButton.removeExtension(csvFileDownloader);
-				csvFileDownloader = null;
-			}
 			StreamResource csvSource = createCSVStream();
-			csvFileDownloader = new FileDownloader(csvSource);
-			csvFileDownloader.extend(csvButton);
-			csvButton.setEnabled(true);
+			csvAnchor.setHref(csvSource);
+			csvAnchor.setEnabled(true);
 			if (template.hasPart("xls")) {
-				if (xlsFileDownloader != null) {
-					xlsButton.removeExtension(xlsFileDownloader);
-					xlsFileDownloader = null;
-				}
 				StreamResource xlsSource = createXLSStream();
-				xlsFileDownloader = new FileDownloader(xlsSource);
-				xlsFileDownloader.extend(xlsButton);
-				xlsButton.setEnabled(true);
+				xlsAnchor.setHref(xlsSource);
+				xlsAnchor.setEnabled(true);
 			}
 		} else {
 			//pdfLink.setEnabled(false);
-			pdfButton.setEnabled(false);
+			pdfAnchor.setEnabled(false);
 			//csvLink.setEnabled(false);
-			csvButton.setEnabled(false);
+			csvAnchor.setEnabled(false);
 			//xlsLink.setEnabled(false);
-			xlsButton.setEnabled(false);
+			xlsAnchor.setEnabled(false);
 		}
 	}
 

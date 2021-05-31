@@ -1,6 +1,8 @@
 
 package org.mgnl.nicki.user.admin.app;
 
+import java.lang.reflect.InvocationTargetException;
+
 /*-
  * #%L
  * nicki-user-admin
@@ -32,7 +34,7 @@ import org.mgnl.nicki.vaadin.base.application.NickiApplication;
 import org.mgnl.nicki.vaadin.base.application.ShowWelcomeDialog;
 import org.mgnl.nicki.vaadin.base.menu.application.MainView;
 
-import com.vaadin.ui.Component;
+import com.vaadin.flow.component.Component;
 
 @AccessGroup(name = {"nickiAdmins", "IDM-Development"})
 @SuppressWarnings("serial")
@@ -47,14 +49,21 @@ public class UserAdmin extends NickiApplication {
 
 	@Override
 	public Component getEditor() {
-		MainView mainView = new MainView((Person) getNickiContext().getUser());
+		MainView mainView;
+		try {
+			mainView = new MainView((Person) getNickiContext().getUser(), "");
+			mainView.addNavigationEntry(I18n.getText("Administration"),
+					I18n.getText("User"), new UserView(), "userAdmin");
+	
+			mainView.initNavigation();
+			
+			return mainView;
+		} catch (IllegalAccessException | InvocationTargetException | InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 		
-		mainView.addNavigationEntry(I18n.getText("Administration"),
-				I18n.getText("User"), new UserView(), "userAdmin");
-
-		mainView.initNavigation();
-		
-		return mainView;
 	}
 
 	@Override

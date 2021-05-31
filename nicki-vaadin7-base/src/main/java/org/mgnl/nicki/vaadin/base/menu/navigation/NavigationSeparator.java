@@ -1,6 +1,9 @@
 
 package org.mgnl.nicki.vaadin.base.menu.navigation;
 
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.html.Span;
+
 /*-
  * #%L
  * nicki-app-menu
@@ -22,11 +25,17 @@ package org.mgnl.nicki.vaadin.base.menu.navigation;
  */
 
 
-public class NavigationSeparator implements NavigationElement {
+@SuppressWarnings("serial")
+public class NavigationSeparator extends Span implements NavigationElement {
+
+	private static Span span = new Span("-----------------");
+	static {
+		span.getElement().getClassList().add("nav_separator");
+	}
 
 	@Override
-	public String getNavigationCaption() {
-		return "-----------------";
+	public Component getNavigationCaption() {
+		return span;
 	}
 
 }

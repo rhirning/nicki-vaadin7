@@ -26,7 +26,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NavigationFolder implements Serializable, NavigationElement {
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.html.Label;
+
+public class NavigationFolder extends Label implements Serializable, NavigationElement {
 	private static final long serialVersionUID = -4136800742337761293L;
 	private NavigationLabel label;
 	private boolean separator = false;
@@ -46,6 +49,10 @@ public class NavigationFolder implements Serializable, NavigationElement {
 	public NavigationFolder(NavigationLabel label) {
 		super();
 		this.label = label;
+		setText(label.getCaption());
+		setSizeFull();
+		getElement().getClassList().add("nav_folder");
+
 	}
 	
 	public void addEntry(NavigationEntry entry) {
@@ -61,8 +68,8 @@ public class NavigationFolder implements Serializable, NavigationElement {
 	}
 
 	@Override
-	public String getNavigationCaption() {
-		return label.getCaption();
+	public Component getNavigationCaption() {
+		return this;
 	}
 
 }

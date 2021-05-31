@@ -30,28 +30,27 @@ import org.mgnl.nicki.vaadin.db.data.DataContainer;
 import org.mgnl.nicki.vaadin.db.editor.DbBeanValueChangeListener;
 import org.mgnl.nicki.vaadin.db.listener.AttributeInputListener;
 
-import com.vaadin.server.Sizeable.Unit;
-import com.vaadin.ui.AbstractField;
-import com.vaadin.ui.TextField;
+import com.vaadin.flow.component.textfield.TextField;
+
 
 @SuppressWarnings("serial")
 public class AttributeFloatField  extends BaseDbBeanAttributeField implements DbBeanAttributeField, Serializable {
 
-	private AbstractField<String> field;
+	private TextField field;
 	private DataContainer<Float> property;
 	public void init(String attributeName, Object bean, DbBeanValueChangeListener objectListener, String dbContextName) {
 
 		property = new AttributeDataContainer<Float>(bean, attributeName);
 		field = new TextField(getName(bean, attributeName));
-		field.setHeight(2, Unit.EM);
-		field.setWidth("600px");
+//		field.setHeight("2em");
+//		field.setWidth("600px");
 		if (property != null && property.getValue() != null) {
 			field.setValue(Float.toString(property.getValue()));
 		}
-		field.addValueChangeListener(new AttributeInputListener<String, Float>(property, objectListener, new StringToFloatConverter()));
+		field.addValueChangeListener(new AttributeInputListener<TextField, String, Float>(property, objectListener, new StringToFloatConverter()));
 	}
 
-	public AbstractField<String> getComponent(boolean readOnly) {
+	public TextField getComponent(boolean readOnly) {
 		field.setReadOnly(readOnly);
 		return field;
 	}

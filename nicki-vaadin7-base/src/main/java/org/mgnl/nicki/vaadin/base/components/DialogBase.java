@@ -24,54 +24,53 @@ package org.mgnl.nicki.vaadin.base.components;
 
 import org.mgnl.nicki.vaadin.base.command.Command;
 
-import com.vaadin.ui.Component;
-import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.dialog.Dialog;
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
-public class DialogBase extends Window {
+
+public class DialogBase extends Dialog {
 	private static final long serialVersionUID = -3504431507552994635L;
 	
-	private VerticalLayout layout;
+	private Div div;
 
 	public DialogBase(Command command) {
-		setCaption(command.getTitle());
-		init();
-
-        layout = new VerticalLayout();
-        layout.setWidth("100%");
-        layout.setHeight("100%");
-        layout.setMargin(false);
-        layout.setSpacing(false);
-        // make it undefined for auto-sizing window
-//        layout.setSizeUndefined();
-        setContent(layout);
-		
+		this(command.getTitle());
 	}
 	
 
 
 	public DialogBase(String title) {
-		setCaption(title);
 		init();
+		setCaption(title);
+	}
+
+	public DialogBase(String title, Component components) {
+		this(title);
+		div.add(components);
+	}
+
+
+
+	private void setCaption(String title) {
+		Span titleSpan = new Span(title);
+		div.addComponentAsFirst(titleSpan);
 	}
 
 
 
 	private void init() {
 
-        layout = new VerticalLayout();
-        layout.setWidth("100%");
-        layout.setHeight("100%");
-        layout.setMargin(false);
-        layout.setSpacing(false);
-        // make it undefined for auto-sizing window
-//        layout.setSizeUndefined();
-        setContent(layout);
+        div = new Div();
+        div.setSizeUndefined();
+        add(div);
 		
 	}
 
 	public void setCompositionRoot(Component component) {
-		layout.addComponent(component);
+		div.add(component);
 	}
 
 

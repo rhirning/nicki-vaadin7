@@ -27,7 +27,7 @@ import java.util.Map;
 import org.mgnl.nicki.dynamic.objects.objects.Template;
 import org.mgnl.nicki.template.handler.TemplateHandler;
 
-import com.vaadin.ui.Component;
+import com.vaadin.flow.component.Component;
 
 public interface GuiTemplateHandler extends TemplateHandler {
 

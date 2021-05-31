@@ -31,32 +31,29 @@ import org.mgnl.nicki.db.annotation.Attribute;
 import org.mgnl.nicki.db.context.DBContext;
 import org.mgnl.nicki.db.context.DBContextManager;
 import org.mgnl.nicki.db.helper.BeanHelper;
+import org.mgnl.nicki.vaadin.base.notification.Notification;
+import org.mgnl.nicki.vaadin.base.notification.Notification.Type;
 
-import com.vaadin.ui.Button;
-import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
-import com.vaadin.ui.Notification.Type;
-import com.vaadin.ui.Panel;
-
 @Slf4j
 @SuppressWarnings("serial")
-public class DbBeanViewer extends CustomComponent implements NewClassEditor, ClassEditor {
+public class DbBeanViewer extends VerticalLayout implements NewClassEditor, ClassEditor {
 
-	private Panel mainLayout;
-	private VerticalLayout layout;
 	private Object bean;
 	private Button saveButton;
 	private boolean create;
 	private DbBeanValueChangeListener listener;
 	private String dbContextName;
 	private String[] hiddenAttributes;
+	private FormLayout formLayout;
 	private @Getter @Setter boolean readOnly;
 
 	public void setDbBean(Object bean, String...hiddenAttributes) {
@@ -65,7 +62,6 @@ public class DbBeanViewer extends CustomComponent implements NewClassEditor, Cla
 		this.hiddenAttributes = hiddenAttributes;
 		this.create = false;
 		buildMainLayout();
-		setCompositionRoot(mainLayout);
 	}
 
 	@Override
@@ -74,7 +70,6 @@ public class DbBeanViewer extends CustomComponent implements NewClassEditor, Cla
 		this.bean = bean;
 		this.create = false;
 		buildMainLayout();
-		setCompositionRoot(mainLayout);
 	}
 	
 	public DbBeanViewer(DbBeanValueChangeListener listener) {
@@ -90,31 +85,24 @@ public class DbBeanViewer extends CustomComponent implements NewClassEditor, Cla
 		}
 		this.create = true;
 		buildMainLayout();
-		setCompositionRoot(mainLayout);
 	}
 
 
-	private Panel buildMainLayout() {
-		mainLayout = new Panel();
-		mainLayout.setSizeFull();
+	private void buildMainLayout() {
 		
-		layout = new VerticalLayout();
-		layout.setMargin(true);
-		layout.setSpacing(true);
-		layout.setSizeUndefined();
+		setSizeUndefined();
 		Label label = new Label(I18n.getText(bean.getClass().getName()));
-		layout.addComponent(label);
+		formLayout = new FormLayout();
+		add(label, formLayout);
 		DbBeanFieldFactory factory = new DbBeanFieldFactory(listener, dbContextName);
-		factory.addFields(layout, bean, create, hiddenAttributes, isReadOnly());
+		factory.addFields(formLayout, bean, create, hiddenAttributes, isReadOnly());
 		
 		if (!isReadOnly()) {
 			saveButton = new Button(I18n.getText("nicki.editor.generic.button.save"));
 			saveButton.addClickListener(event -> save());
 	
-			layout.addComponent(saveButton);
+			add(saveButton);
 		}
-		mainLayout.setContent(layout);
-		return mainLayout;
 	}
 
 	public void save() {

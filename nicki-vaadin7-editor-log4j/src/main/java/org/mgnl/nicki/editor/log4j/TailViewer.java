@@ -33,32 +33,25 @@ import org.apache.commons.io.input.TailerListenerAdapter;
 import org.mgnl.nicki.core.helper.NameValue;
 import org.mgnl.nicki.vaadin.base.application.NickiApplication;
 import org.mgnl.nicki.vaadin.base.menu.application.View;
+import org.mgnl.nicki.vaadin.base.notification.Notification;
+import org.mgnl.nicki.vaadin.base.notification.Notification.Type;
 
-import com.vaadin.server.StreamResource;
-import com.vaadin.shared.ui.BorderStyle;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.Grid;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Link;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.Notification.Type;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.checkbox.Checkbox;
+import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.Anchor;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.server.StreamResource;
 
 import lombok.extern.slf4j.Slf4j;
 
-import com.vaadin.ui.Panel;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.VerticalLayout;
-
 @Slf4j
 @SuppressWarnings("serial")
-public class TailViewer extends CustomComponent implements Serializable, View {
+public class TailViewer extends VerticalLayout implements Serializable, View {
 
 	static final Object VISIBLE_COLUMNS[] = {"value"};
-
-	private VerticalLayout mainLayout;
-	private Panel panel;
 	private TextField path;
 	private HorizontalLayout inputPanel;
 	private Grid<NameValue> table;
@@ -67,7 +60,7 @@ public class TailViewer extends CustomComponent implements Serializable, View {
 	private List<NameValue> container = new ArrayList<NameValue>();
 	private TextField numberOfLinesField;
 	private long numberOfLines = 1000;
-	private CheckBox checkBox;
+	private Checkbox checkBox;
 	private boolean end = true;
 	private long lastUse;
 	private String activePath;
@@ -83,37 +76,36 @@ public class TailViewer extends CustomComponent implements Serializable, View {
 		return container;
 	}
 
-	private VerticalLayout buildMainLayout() {
-		// common part: create layout
-		mainLayout = new VerticalLayout();
-		mainLayout.setSizeFull();
+	private void buildMainLayout() {
+		setSizeFull();
 		
 		inputPanel = new HorizontalLayout();
 		inputPanel.setWidth("100%");
 		inputPanel.setHeight("-1px");
-		mainLayout.addComponent(inputPanel);
+		add(inputPanel);
 		
 		// path
 		path = new TextField();
 		path.setWidth("100%");
 		path.setHeight("-1px");
-		inputPanel.addComponent(path);
+		inputPanel.add(path);
 
 		LogFileResource logFileResource = new LogFileResource(this);
-		StreamResource streamResource = new StreamResource(logFileResource, "complete.txt");
+		StreamResource streamResource = new StreamResource("complete.txt", () -> logFileResource.getStream());
 		streamResource.setCacheTime(0);
-		Link link = new Link("download file", streamResource, "_blank", 1000, 600, BorderStyle.DEFAULT);
-		inputPanel.addComponent(link);
+		Anchor link = new Anchor(streamResource, "download file");
+		link.setTarget("_blank");
+		inputPanel.add(link);
 		
-		checkBox = new CheckBox("head", false);
+		checkBox = new Checkbox("head", false);
 		checkBox.addBlurListener(event -> {
 				end = !checkBox.getValue();
 		});
-		inputPanel.addComponent(checkBox);
+		inputPanel.add(checkBox);
 		
 		Button loadButton = new Button("Load");
 		loadButton.addClickListener(event -> reload());
-		inputPanel.addComponent(loadButton);
+		inputPanel.add(loadButton);
 		
 		numberOfLinesField = new TextField();
 		numberOfLinesField.setValue(Long.toString(numberOfLines));
@@ -125,32 +117,28 @@ public class TailViewer extends CustomComponent implements Serializable, View {
 				}
 				checkContainer();
 		});
-		inputPanel.addComponent(numberOfLinesField);
+		inputPanel.add(numberOfLinesField);
 
 		ContainerFileResource containerFileResource = new ContainerFileResource(this);
-		StreamResource containerStreamResource = new StreamResource(containerFileResource, "table.txt");
+		StreamResource containerStreamResource = new StreamResource("table.txt", () -> containerFileResource.getStream());
 		containerStreamResource.setCacheTime(0);
-		Link containerLink = new Link("download", containerStreamResource, "_blank", 1000, 600, BorderStyle.DEFAULT);
-		inputPanel.addComponent(containerLink);
+		Anchor containerLink = new Anchor(containerStreamResource, "download");
+		containerLink.setTarget("_blank");
+		inputPanel.add(containerLink);
 		
 		Button refreshButton = new Button("Update");
 		refreshButton.addClickListener(event -> refresh());
-		inputPanel.addComponent(refreshButton);
+		inputPanel.add(refreshButton);
 		
-		inputPanel.setExpandRatio(path, 1);
+		inputPanel.setFlexGrow(1, path);
 		
-		// panel
-		panel = new Panel();
-		panel.setSizeFull();
 		table = new Grid<NameValue>();
 		table.setHeight("100%");
 		table.setItems(container);
-		panel.setContent(table);
 		table.setWidth("100%");
-		mainLayout.addComponent(table);
-		mainLayout.setExpandRatio(table, 1);
+		add(table);
+		setFlexGrow(1, table);
 		
-		return mainLayout;
 	}
 
 	protected synchronized void checkContainer() {
@@ -207,7 +195,6 @@ public class TailViewer extends CustomComponent implements Serializable, View {
 		if (!isInit) {
 
 			buildMainLayout();
-			setCompositionRoot(mainLayout);
 			setSizeFull();
 			isInit = true;
 		}

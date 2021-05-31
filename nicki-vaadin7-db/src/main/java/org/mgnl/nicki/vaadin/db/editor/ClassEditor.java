@@ -22,9 +22,8 @@ package org.mgnl.nicki.vaadin.db.editor;
  */
 
 
-import com.vaadin.ui.Component;
 
-public interface ClassEditor extends Component {
+public interface ClassEditor {
 	void setDbBean(Object bean);
 	void save() throws Exception;
 

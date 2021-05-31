@@ -23,7 +23,8 @@ package org.mgnl.nicki.vaadin.base.auth;
 
 
 import org.mgnl.nicki.core.auth.SSOAdapter;
-import com.vaadin.server.VaadinServletRequest;
+
+import com.vaadin.flow.server.VaadinServletRequest;
 
 
 public class BasicAuthAdapter extends org.mgnl.nicki.core.auth.BasicAuthAdapter implements SSOAdapter {

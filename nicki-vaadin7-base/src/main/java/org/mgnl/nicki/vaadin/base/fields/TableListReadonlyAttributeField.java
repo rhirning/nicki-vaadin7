@@ -31,11 +31,12 @@ import org.mgnl.nicki.core.objects.DynamicObject;
 import org.mgnl.nicki.vaadin.base.components.VaadinHorizontalLayout;
 import org.mgnl.nicki.vaadin.base.editor.DynamicObjectValueChangeListener;
 
-import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Grid;
-import com.vaadin.ui.Grid.SelectionMode;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.Grid.SelectionMode;
+import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 @SuppressWarnings("serial")
 public class TableListReadonlyAttributeField extends BaseDynamicAttributeField implements DynamicAttributeField<String>, Serializable {
@@ -70,7 +71,7 @@ public class TableListReadonlyAttributeField extends BaseDynamicAttributeField i
 		entries.setItems(data);
 	}
 	
-	public ComponentContainer getComponent(boolean readOnly) {
+	public Component getComponent(boolean readOnly) {
 		return mainLayout;
 	}
 	
@@ -83,14 +84,18 @@ public class TableListReadonlyAttributeField extends BaseDynamicAttributeField i
 		// top-level component properties
 		mainLayout.setWidth("-1px");
 		
+		VerticalLayout verticalLayout = new VerticalLayout();
+		verticalLayout.setSizeFull();
+		verticalLayout.setMargin(false);
+		mainLayout.add(verticalLayout);
+		
+		Label label = new Label(getName(dynamicObject, attributeName));
+		
 		// entries
-		entries = new Grid<String>(getName(dynamicObject, attributeName));
+		entries = new Grid<String>();
 		entries.setWidth("600px");
 		entries.setHeight("100%");
-		mainLayout.addComponent(entries);
-		
-		VerticalLayout verticalLayout = new VerticalLayout();
-		mainLayout.addComponent(verticalLayout);
+		verticalLayout.add(label, entries);
 		return mainLayout;
 	}
 }

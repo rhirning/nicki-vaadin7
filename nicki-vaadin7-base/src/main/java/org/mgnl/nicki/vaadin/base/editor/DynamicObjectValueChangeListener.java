@@ -26,7 +26,7 @@ import java.util.List;
 
 import org.mgnl.nicki.core.objects.DynamicObject;
 
-import com.vaadin.ui.Component;
+import com.vaadin.flow.component.Component;
 
 public interface DynamicObjectValueChangeListener<T> {
 

@@ -27,11 +27,10 @@ import java.util.function.Consumer;
 
 import org.mgnl.nicki.core.data.TreeData;
 
-
-import com.vaadin.ui.CustomComponent;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 	@SuppressWarnings("serial")
-	public class BaseTreeAction extends CustomComponent implements TreeAction, Serializable {
+	public class BaseTreeAction extends VerticalLayout implements TreeAction, Serializable {
 
 		private Class<? extends TreeData> targetClass;
 		private String name;
@@ -41,6 +40,8 @@ import com.vaadin.ui.CustomComponent;
 			this.targetClass = classDefinition;
 			this.name = name;
 			this.command = command;
+			setSpacing(false);
+			setMargin(false);
 		}
 
 		public String getName() {

@@ -28,6 +28,8 @@ import org.mgnl.nicki.core.data.TreeData;
 import org.mgnl.nicki.core.i18n.I18n;
 import org.mgnl.nicki.core.objects.DynamicObjectException;
 import org.mgnl.nicki.dynamic.objects.objects.Template;
+import org.mgnl.nicki.vaadin.base.components.DialogBase;
+import org.mgnl.nicki.vaadin.base.components.NickiTabSheet;
 import org.mgnl.nicki.vaadin.base.components.SimpleEditor;
 import org.mgnl.nicki.vaadin.base.components.SimplePropertyEditor;
 import org.mgnl.nicki.vaadin.base.components.TestDataView;
@@ -37,28 +39,23 @@ import org.mgnl.nicki.vaadin.base.data.PartDataContainer;
 import org.mgnl.nicki.vaadin.base.editor.ClassEditor;
 import org.mgnl.nicki.vaadin.base.editor.NickiTreeEditor;
 
-import com.vaadin.ui.Button;
-import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.TabSheet;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.dialog.Dialog;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @SuppressWarnings("serial")
-public class TemplateViewer extends CustomComponent implements ClassEditor {
-
-	private VerticalLayout mainLayout;
+public class TemplateViewer extends VerticalLayout implements ClassEditor {
 	
-	private TabSheet tab;
+	private NickiTabSheet tab;
 	private Template template;
 	private Button saveButton;
 	private Button executeButton;
 	private NickiTreeEditor editor;
-	private Window previewWindow;	
+	private Dialog previewWindow;	
 
 	/**
 	 * The constructor should first build the main layout, set the
@@ -74,7 +71,6 @@ public class TemplateViewer extends CustomComponent implements ClassEditor {
 		this.editor = nickiEditor;
 		this.template = (Template) dynamicObject;
 		buildEditor();
-		setCompositionRoot(mainLayout);
 		setSizeFull();
 		initI18n();
 		
@@ -98,19 +94,19 @@ public class TemplateViewer extends CustomComponent implements ClassEditor {
 	}
 	
 	private void initI18n() {
-		saveButton.setCaption(I18n.getText(editor.getMessageKeyBase() + ".button.save"));
-		executeButton.setCaption(I18n.getText(editor.getMessageKeyBase() + ".button.execute"));
+		saveButton.setText(I18n.getText(editor.getMessageKeyBase() + ".button.save"));
+		executeButton.setText(I18n.getText(editor.getMessageKeyBase() + ".button.execute"));
 	}
 
 	protected void execute() throws DynamicObjectException, NamingException {
 		save();
 		TemplateConfig configDialog = new TemplateConfig();
 		configDialog.setDynamicObject(editor, template);
-		previewWindow = new Window(I18n.getText(editor.getMessageKeyBase() + ".config.window.title"), configDialog);
+		previewWindow = new DialogBase(I18n.getText(editor.getMessageKeyBase() + ".config.window.title"), configDialog);
 		previewWindow.setModal(true);
-		previewWindow.setWidth(configDialog.getWidth() + 80, Unit.PIXELS);
-		previewWindow.setHeight(configDialog.getHeight() + 120, Unit.PIXELS);
-		UI.getCurrent().addWindow(previewWindow);
+		previewWindow.setWidth("" + (configDialog.getWidth() + 80) + "px");
+		previewWindow.setHeight("" + (configDialog.getHeight() + 120) + "px");
+		previewWindow.open();
 	}
 
 	private void createSheets() {
@@ -130,38 +126,35 @@ public class TemplateViewer extends CustomComponent implements ClassEditor {
 		}
 	}
 	
-	private VerticalLayout buildEditor() {
-		// common part: create layout
-		mainLayout = new VerticalLayout();
-		mainLayout.setSizeFull();
+	private void buildEditor() {
+		setSizeFull();
+		removeAll();
 		
-		tab = new TabSheet();
+		tab = new NickiTabSheet();
 		tab.setSizeFull();
-		mainLayout.addComponent(tab);
-		mainLayout.setExpandRatio(tab, 1);
-		mainLayout.setSpacing(false);
-		mainLayout.setMargin(false);
+		add(tab);
+		setFlexGrow(1, tab);
+		setSpacing(false);
+		setMargin(false);
 
 		HorizontalLayout horizontalLayout = new HorizontalLayout();
 		horizontalLayout.setSpacing(true);
-		horizontalLayout.setHeight(40, Unit.PIXELS);
-		mainLayout.addComponent(horizontalLayout);
+		horizontalLayout.setHeight("40px");
+		add(horizontalLayout);
 		saveButton = new Button();
 		saveButton.setWidth("-1px");
 		saveButton.setHeight("-1px");
-		saveButton.setCaption("Speichern");
-		horizontalLayout.addComponent(saveButton);
+		saveButton.setText("Speichern");
+		horizontalLayout.add(saveButton);
 		
 		executeButton = new Button();
 		executeButton.setWidth("-1px");
 		executeButton.setHeight("-1px");
-		executeButton.setCaption("Execute");
-		horizontalLayout.addComponent(executeButton);
-				
-		return mainLayout;
+		executeButton.setText("Execute");
+		horizontalLayout.add(executeButton);
 	}
 
-	public TabSheet getTab() {
+	public NickiTabSheet getTab() {
 		return tab;
 	}
 
