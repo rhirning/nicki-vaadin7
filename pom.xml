@@ -17,6 +17,7 @@
 		<nicki.version>8.17</nicki.version>
 		<vaadin.version>7.7.16</vaadin.version>
 		<vaadin.plugin.version>7.7.16</vaadin.plugin.version>
+		<project.scm.id>github</project.scm.id>
 	</properties>
 	<inceptionYear>2020</inceptionYear>
 	<modules>
