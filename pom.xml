@@ -24,16 +24,16 @@
 		<module>nicki-vaadin7-apps</module>
 		<module>nicki-vaadin7-base</module>
 		<module>nicki-vaadin7-db</module>
-		<module>nicki-vaadin7-editor-catalogs</module>
-		<module>nicki-vaadin7-editor-jcr</module>
+		
+		
 		<module>nicki-vaadin7-editor-log4j</module>
 		<module>nicki-vaadin7-editor-projects</module>
 		<module>nicki-vaadin7-editor-scripts</module>
 		<module>nicki-vaadin7-editor-templates</module>
-		<module>nicki-vaadin7-jcr-apps</module>
+		
 		<module>nicki-vaadin7-mq-browser</module>
 		<module>nicki-vaadin7-reports</module>
-		<module>nicki-vaadin7-shop</module>
+		
 		<module>nicki-vaadin7-user-admin</module>
 	</modules>
 	<dependencyManagement>
