@@ -20,11 +20,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.mgnl.nicki.vaadin7</groupId>
-			<artifactId>nicki-vaadin7-editor-catalogs</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.mgnl.nicki.vaadin7</groupId>
 			<artifactId>nicki-vaadin7-editor-log4j</artifactId>
 			<version>${project.version}</version>
 		</dependency>
