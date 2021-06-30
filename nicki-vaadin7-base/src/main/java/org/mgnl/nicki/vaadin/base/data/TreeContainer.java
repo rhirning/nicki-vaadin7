@@ -48,12 +48,12 @@ public class TreeContainer implements Serializable {
 	private HierarchicalContainer container = new HierarchicalContainer();
 	private String name;
 	private TreeData root;
-	private DataProvider treeDataProvider;
+	private DataProvider<TreeData> treeDataProvider;
 	private Map<Class<? extends TreeData>, Icon> classIcons= new HashMap<>();
 	private EntryFilter entryFilter;
 	private NickiContext context;
 	
-	public TreeContainer(NickiContext context, DataProvider treeDataProvider, String name) {
+	public TreeContainer(NickiContext context, DataProvider<TreeData> treeDataProvider, String name) {
 		this.context = context;
 		this.treeDataProvider = treeDataProvider;
 		this.root = treeDataProvider.getRoot(context);

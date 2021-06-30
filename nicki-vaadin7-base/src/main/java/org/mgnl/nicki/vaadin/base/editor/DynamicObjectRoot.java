@@ -23,6 +23,7 @@ package org.mgnl.nicki.vaadin.base.editor;
 
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -37,7 +38,7 @@ import org.mgnl.nicki.core.data.TreeData;
 
 
 @SuppressWarnings("serial")
-public class DynamicObjectRoot implements DataProvider, Serializable {
+public class DynamicObjectRoot implements DataProvider<TreeData>, Serializable {
 	private String baseDn;
 	private EntryFilter entryFilter;
 
@@ -70,6 +71,11 @@ public class DynamicObjectRoot implements DataProvider, Serializable {
 
 	public EntryFilter getEntryFilter() {
 		return this.entryFilter;
+	}
+
+	@Override
+	public Collection<? extends TreeData> getChildren(TreeData parent) {
+		return parent.getAllChildren();
 	}
 
 }
