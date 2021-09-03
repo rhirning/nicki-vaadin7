@@ -378,7 +378,7 @@ public class TemplateConfig extends CustomComponent implements ClassEditor {
 					xlsButton.removeExtension(xlsFileDownloader);
 					xlsFileDownloader = null;
 				}
-				StreamResource xlsSource = createXLSStream();
+				StreamResource xlsSource = createXLSXStream();
 				xlsFileDownloader = new FileDownloader(xlsSource);
 				xlsFileDownloader.extend(xlsButton);
 				xlsButton.setEnabled(true);
