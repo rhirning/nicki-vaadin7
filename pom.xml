@@ -63,6 +63,7 @@
 			    	<groupId>org.apache.logging.log4j</groupId>
 			   	<artifactId>log4j-slf4j-impl</artifactId>
 				<version>${log4j.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>org.apache.jackrabbit</groupId>
 				<artifactId>jackrabbit-webapp</artifactId>
