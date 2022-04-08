@@ -2,10 +2,8 @@ package org.mgnl.nicki.editor.log4j.test;
 
 import java.io.IOException;
 import java.util.Properties;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.config.Configurator;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 public class ConfigLog4j {
 
@@ -44,8 +42,8 @@ public class ConfigLog4j {
         Level logLevel = Level.toLevel(level);
         try
         {
-		logger = (ROOT.equalsIgnoreCase(loggerName) ? LogManager.getRootLogger() : LogManager.getLogger(loggerName));
-		Configurator.setLevel(logger.getName(), Level.toLevel(level));
+            logger = (ROOT.equalsIgnoreCase(loggerName) ? Logger.getRootLogger() : Logger.getLogger(loggerName));
+            logger.setLevel(logLevel);
         }
         catch (Throwable e)
         {
